@@ -24,6 +24,7 @@
          <img src="..\assets\QQ.png" alt=""  class="QQ"/>
         <img src="..\assets\email.png" alt=""  class="email"/> <br>
         <span>Contact me through these channels</span>
+        
         </div>
     </div>
 

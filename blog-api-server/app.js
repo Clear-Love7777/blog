@@ -18,7 +18,27 @@
         password: '123456',
         database: 'blog'
     })
+//登录
+router.post('/login',async ctx => {
+    const username = ctx.request.body.username
+    const password = ctx.request.body.password
+    var sql = `SELECT * FROM admin where username = '${username}' and password= '${password}'`
+    const [data] = await con.query(sql)
 
+    console.log(data)
+    if(data.length > 0){
+        ctx.body = {
+            code:200,
+            tips:'登录成功',
+            id :data[0].id
+        }
+    }else{
+        ctx.body = {
+            code:400,
+            tips:'登录失败'
+        } 
+    }
+})
 //获取所有最新的文章
 router.get('/blogAllData',async ctx =>{
     const sql = `SELECT * FROM article`

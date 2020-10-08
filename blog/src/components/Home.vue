@@ -7,11 +7,13 @@
         <span class="name">Jun Xiao</span><br />
         <span>Personal blog</span><br />
         <div class="searchlabel">
-          <input
+          <input 
+           v-model="queryInfo.query"
             type="text"
             value=" 搜索"
             onfocus="if(value == defaultValue){value=''}"
-            onblur="if(!value){value = defaultValue}"
+            onblur="if(value != defaultValue){value = defaultValue} "
+             @click="blogAllData"
           />
         </div>
       <div class="icon">
@@ -26,27 +28,23 @@
     <!-- 中间区域 -->
     <div class="mainindex">
         <!-- 路由占位符 -->
-      <router-view></router-view> 
+      <router-view :data="blogList"></router-view> 
     </div>
 
     <!-- 右边区域 -->
     <div class="rightindex">
-      <ul>
-        <li class="rightindex-title">公告</li>
-        <li>欢迎交流和分享经验！</li>
-      </ul>
-      <ul>
+      <ul class="rightindex-sort">
         <li class="rightindex-title">分类</li>
-        <li  v-for="item in blogList" class="sort" :style="{'backgroundColor':item.color}">{{item.sort}}</li>
+        <li  v-for="item in sort" class="sort" :style="{'backgroundColor':item.color}">{{item.sort}}</li>
     
       </ul>
-      <ul>
+      <ul  class="rightindex-label">
         <li class="rightindex-title" >标签</li>
-        <li v-for="item in blogList" class="licontent">{{item.label}}</li>
+        <li v-for="item in label" class="licontent">{{item.label}}</li>
       </ul>
-      <ul>
+      <ul  class="rightindex-article">
         <li class="rightindex-title">最新文章</li>
-        <li v-for="item in blogList" class="licontent">{{item.title}}</li>
+        <li v-for="item in article" class="licontent">{{item.title}}</li>
       </ul>
     </div>
   </div>
@@ -56,28 +54,47 @@
 export default {
   data() {
     return {
-        // nav: [
-        //         {name: '首页', path: 'index',src:require('../assets/首页.png'),index:'/index'},
-        //         {name: '分类', path: 'sort',src:require('../assets/分类.png'),index:'/sort'},
-        //         {name: '标签',src:require('../assets/标签.png'),index:'/label'},
-        //         {name: '项目',src:require('../assets/项目.png'),index:'/project'},
-        //         {name: '关于',src:require('../assets/关于.png'),index:'/about'}
-        // ],
-      blogList: [],
+     queryInfo: {
+        query: '',
+        //当前页数
+        pagenum: 1,
+        //当前每页显示多少条数据
+        pagesize: 5,
+      },
+      blogList:[],
+      sort:[],
+      label:[],
+      article:[],
     };
   },
   created() {
-    this.getBlogAllData(); //调用获取所有博客数据方法
+    this.blogAllData(); 
+    this.getSort();
+    this.getLabel();
+    this.getNewArticles();
   },
 
   methods: {
-    async getBlogAllData() {
-      const { data: res } = await this.$http.get("blogAllData");
+    async blogAllData() {
+      const { data: res } = await this.$http.post("blogAllData",this.queryInfo);
       if (res.code != 200) return this.$message.error("获取文章失败");
       this.blogList = res.data;
-        console.log(this.blogList);
     },
-
+    async getSort() {
+      const { data: res } = await this.$http.get("getSort");
+      if (res.code != 200) return this.$message.error("获取分类失败");
+      this.sort = res.data;
+    },
+    async getLabel() {
+      const { data: res } = await this.$http.get("getLabel");
+      if (res.code != 200) return this.$message.error("获取标签失败");
+      this.label = res.data;
+    },
+    async getNewArticles() {
+      const { data: res } = await this.$http.get("getNewArticles");
+      if (res.code != 200) return this.$message.error("获取最新文章失败");
+      this.article = res.data;
+    },
   },
 };
 </script>
@@ -104,6 +121,7 @@ export default {
 .searchlabel input {
   width: 170px;
   height: 25px;
+  border-radius: 5px;
   background-image: url(../assets/search.png);
   background-size: 20px 20px;
   background-repeat: no-repeat;
@@ -161,7 +179,7 @@ export default {
 }
 .rightindex {
   height: 100vh;
-  width: 200px;    
+  width: 200px;
 }
 .rightindex-title {
   font-size: 18px;

@@ -2,7 +2,7 @@
   <div class="main">
     <!-- 中间区域 -->
     <div class="mainindex">
-      <div class="article" v-for="item in blogList">
+      <div class="article" v-for="item in blogList" :key="item.id">
         <div class="mainindex-title">
           {{ item.title }}
         </div>
@@ -11,11 +11,11 @@
             <img src="../assets/日历.png" alt="" />
             <span>{{ item.date | dateFormat }}</span>
           </div>
-          <div class="mainindex-sort">
+          <div class="mainindex-sort" v-for="item in sort" >
             <img src="../assets/分类.png" alt="" />
             <span>{{ item.sort }}</span>
           </div>
-          <div class="mainindex-label">
+          <div class="mainindex-label" v-for="item in label" >
             <img src="../assets/标签.png" alt="" />
             <span>{{ item.label }}</span>
           </div>
@@ -25,29 +25,75 @@
         </div>
       </div>
     </div>
+         <!-- 分页区域 -->
+      <el-pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="queryInfo.pagenum"
+        :page-sizes="[1, 2, 5, 10]"
+        :page-size="queryInfo.pagesize"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+      ></el-pagination>
+      <!-- {{data}} -->
   </div>
 </template>
 
 <script>
 export default {
+  props:['data'],
   data() {
     return {
+      //获取article列表的参数对象
+      queryInfo: {
+        query: '',
+        //当前页数
+        pagenum: 1,
+        //当前每页显示多少条数据
+        pagesize: 5,
+      },
       blogList: [],
     };
   },
-
   created() {
     this.getBlogAllData(); //调用获取所有博客数据方法
+      this.getSort();
+    this.getLabel();
   },
-
+  watch:{
+    data(value){
+      this.blogList = value
+    }
+  },
   methods: {
     async getBlogAllData() {
-      const { data: res } = await this.$http.get("blogAllData");
+      const { data: res } = await this.$http.post("blogAllData",this.queryInfo)
       if (res.code != 200) return this.$message.error("获取文章失败");
       this.blogList = res.data;
+      this.total = res.total;
+      this.blogList = this.data
     },
-
+     async getSort() {
+      const { data: res } = await this.$http.get("getSort");
+      if (res.code != 200) return this.$message.error("获取分类失败");
+      this.sort = res.data;
+    },
+    async getLabel() {
+      const { data: res } = await this.$http.get("getLabel");
+      if (res.code != 200) return this.$message.error("获取标签失败");
+      this.label = res.data;
+    },
+    //监听pagesizes 改变的事件
+    handleSizeChange(newSize) {
+      this.queryInfo.pagesize = newSize
+      this.getBlogAllData()
+    },
+    //监听页码值改变的事件
+    handleCurrentChange(newPage) {
+      this.queryInfo.pagenum = newPage
+      this.getBlogAllData()
   },
+  }
 };
 </script>
 
@@ -55,11 +101,11 @@ export default {
 .main {
   display: flex;
   width: 800px;
-  height: 100vh;
+  // height: 100vh;
   margin: 0 auto;
+  flex-direction: column;
 }
 .mainindex {
-  flex: 1;
   .mainindex-title {
     color: black;
     font-size: 20px;
@@ -91,5 +137,8 @@ export default {
 }
 .mainindex-title {
   margin-bottom: 8px;
+}
+.el-pagination{
+  margin: 10px auto;
 }
 </style>

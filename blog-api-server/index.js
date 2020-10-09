@@ -33,6 +33,30 @@ index.post('/blogAllData',async ctx =>{
     } 
 }
 })
+
+//获取分类、标签表的所有数据
+index.get('/blogdatadetail', async ctx => {
+    const con = await Mysql.createConnection(blog)
+    const sql = `SELECT * FROM sort`
+    const sql2 = `SELECT * FROM label`
+    const [data] = await conn.query(sql)
+    const [data2] = await con.query(sql2)
+    con.end(function (err) { }) //连接结束
+    
+    if (data.length >= 0 && data2.length >= 0) {
+        ctx.body = {
+            data: {data,data2},
+            code:200,
+            tips:'获取数据成功'
+        }
+    } else {
+        ctx.body = {
+            code:400,
+            tips:'获取数据失败'
+        }
+    }
+    
+})
 //获取分类
 index.get('/getSort',async ctx =>{
     const con = await Mysql.createConnection(blog)//连接数据库

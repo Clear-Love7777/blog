@@ -9,13 +9,22 @@ index.post('/blogAllData',async ctx =>{
     const pagesize = ctx.request.body.pagesize
     const query = ctx.request.body.query
     const con = await Mysql.createConnection(blog)//连接数据库
-    const sql = `SELECT * FROM article`
-    if(query !== ''){
-    var sql2  = `SELECT * FROM article WHERE title LIKE '%${query}'`
+    if(query == '' || query == null){
+        var sql = `SELECT a.id,a.date,a.title,a.date,
+        a.content,a.sortId,a.labelId,b.sort,
+        c.label FROM article a,sort b,label c 
+        WHERE a.sortId = b.id and a.labelId = c.id
+        LIMIT ${pagenum * pagesize},${pagesize}`
+        var [data] = await con.query(sql)
     }else{
-     var  sql2 = `SELECT * FROM article LIMIT ${pagenum * pagesize},${pagesize}`
+        var sql = `SELECT a.id,a.date,a.title,a.date,
+        a.content,a.sortId,a.labelId,b.sort,
+        c.label FROM article a,sort b,label c 
+        WHERE a.sortId = b.id and a.labelId = c.id and a.title like '%${query}%'
+        LIMIT ${pagenum * pagesize},${pagesize}`
+       var [data] = await con.query(sql)
     }
-    const [data] = await con.query(sql)
+    const sql2 = `SELECT * FROM article`
     const [data2] = await con.query(sql2)
     con.end(function (err) { }) //连接结束
     //  console.log(data2);
@@ -23,7 +32,7 @@ index.post('/blogAllData',async ctx =>{
     ctx.body = {
         code:200,
         tips:'获取数据成功',
-        data:data2,
+        data,
         total:data.length
     }
 }else{
@@ -34,29 +43,6 @@ index.post('/blogAllData',async ctx =>{
 }
 })
 
-//获取分类、标签表的所有数据
-index.get('/blogdatadetail', async ctx => {
-    const con = await Mysql.createConnection(blog)
-    const sql = `SELECT * FROM sort`
-    const sql2 = `SELECT * FROM label`
-    const [data] = await conn.query(sql)
-    const [data2] = await con.query(sql2)
-    con.end(function (err) { }) //连接结束
-    
-    if (data.length >= 0 && data2.length >= 0) {
-        ctx.body = {
-            data: {data,data2},
-            code:200,
-            tips:'获取数据成功'
-        }
-    } else {
-        ctx.body = {
-            code:400,
-            tips:'获取数据失败'
-        }
-    }
-    
-})
 //获取分类
 index.get('/getSort',async ctx =>{
     const con = await Mysql.createConnection(blog)//连接数据库

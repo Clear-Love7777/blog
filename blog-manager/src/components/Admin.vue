@@ -2,8 +2,9 @@
  <el-container class="user-container">
       <!-- 头部 -->
       <el-header>
-      <div>
-        <span>博客后台系统</span>
+      <div class="touxiang"> 
+        <img src="https://s1.ax1x.com/2020/10/13/0hgDkF.jpg">
+        <span>博客后台管理系统</span>
       </div>
       <el-button type="info" @click="logout">退出</el-button>
     </el-header>
@@ -24,16 +25,16 @@
       >
      
    <el-menu-item index="allarticles">
-        <i class="el-icon-menu"></i>
-        <span slot="title">导航1</span>
+        <span slot="title">博客信息</span>
       </el-menu-item>
-      <el-menu-item index="2">
-        <i class="el-icon-document"></i>
-        <span slot="title">导航2</span>
+      <el-menu-item index="sortmessages">
+        <span slot="title">分类信息</span>
       </el-menu-item>
-      <el-menu-item index="3">
-        <i class="el-icon-setting"></i>
-        <span slot="title">导航3</span>
+      <el-menu-item index="labelmessages">
+        <span slot="title">标签信息</span>
+      </el-menu-item>
+        <el-menu-item index="publishblog">
+        <span slot="title">发布博客</span>
       </el-menu-item>
     </el-menu>
      </el-aside>
@@ -73,6 +74,12 @@ export default {
 
 
 <style lang="less" scoped>
+.touxiang img{
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  margin-left: 15px;
+}
 .el-header {
   background-color: #373d41;
   display: flex;

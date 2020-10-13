@@ -7,15 +7,15 @@
         </div>
         <div class="content">
           <div class="mainindex-date" >
-            <img src="../assets/日历.png" alt="" />
+             <i class="el-icon-date"></i>
             <span>{{ item.date | dateFormat }}</span>
           </div>
           <div class="mainindex-sort" >
-            <img src="../assets/分类.png" alt="" />
+            <i class="el-icon-menu"></i>
             <span>{{ item.sort }}</span>
           </div>
           <div class="mainindex-label" >
-            <img src="../assets/标签.png" alt="" />
+           <i class="el-icon-collection-tag"></i>
             <span>{{ item.label }}</span>
           </div>
           <div class="mainindex-countwords">
@@ -74,6 +74,12 @@ export default {
       this.queryInfo.pagenum = newPage
       this.blogAllData()
   },
+  //根据点击的分类标签id获取所有有关此分类的数据
+        async getAboutSortData(id){
+            const {data:res} = await this.$http.get('/getAboutSortData',{params:{id}})
+            if(res.code != 200) return this.$message.error("获取文章失败");
+            this.blogList = res.data
+        },
   }
 };
 </script>
@@ -107,10 +113,6 @@ export default {
   padding: 20px 20px;
   box-sizing: border-box;
   color: #000;
-}
-.article img {
-  width: 10px;
-  height: 10px;
 }
 .article div {
   font-size: 10px;

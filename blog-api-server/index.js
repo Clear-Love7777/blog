@@ -11,15 +11,15 @@ index.post('/blogAllData',async ctx =>{
     const con = await Mysql.createConnection(blog)//连接数据库
     if(query == '' || query == null){
         var sql = `SELECT a.id,a.date,a.title,a.date,
-        a.content,a.sortId,a.labelId,b.sort,
-        c.label FROM article a,sort b,label c 
+        a.content,a.sortId,a.labelId,a.skill,b.sort_name,
+        c.label_name FROM article a,sort b,label c 
         WHERE a.sortId = b.id and a.labelId = c.id
         LIMIT ${pagenum * pagesize},${pagesize}`
         var [data] = await con.query(sql)
     }else{
         var sql = `SELECT a.id,a.date,a.title,a.date,
-        a.content,a.sortId,a.labelId,b.sort,
-        c.label FROM article a,sort b,label c 
+        a.content,a.sortId,a.labelId,a.skill,b.sort_name,
+        c.label_name FROM article a,sort b,label c 
         WHERE a.sortId = b.id and a.labelId = c.id and a.title like '%${query}%'
         LIMIT ${pagenum * pagesize},${pagesize}`
        var [data] = await con.query(sql)
@@ -27,13 +27,12 @@ index.post('/blogAllData',async ctx =>{
     const sql2 = `SELECT * FROM article`
     const [data2] = await con.query(sql2)
     con.end(function (err) { }) //连接结束
-    //  console.log(data2);
   if(data.length >= 0 && data2.length>=0){
     ctx.body = {
         code:200,
         tips:'获取数据成功',
         data,
-        total:data.length
+        total:data2.length
     }
 }else{
     ctx.body = {
@@ -61,6 +60,31 @@ index.get('/getSort',async ctx =>{
         tips:'获取数据失败'
     } 
 }
+})
+//获取所有与指定分类有关的博客数据
+index.get('/getAboutSortData',async ctx => {
+    const id = ctx.request.query.id
+
+    const con = await Mysql.createConnection(blog)
+    var sql = `SELECT a.id,a.date,a.title,
+                    a.content,a.sortId,a.labelId,b.sort,
+                 c.label FROM article a,sort b,label c 
+                 WHERE a.sortId = '${id}' and a.sortId = b.id and a.labelId = c.id`
+    var [data] = await con.query(sql)
+    con.end(function (err) { }) //连接结束
+
+    if (data.length >= 0) {
+        ctx.body = {
+            data,
+            code:200,
+            tips:'获取数据成功'
+        }
+    } else {
+        ctx.body = {
+            code:400,
+            tips:'获取数据失败'
+        }
+    }
 })
 //获取标签
 index.get('/getLabel',async ctx =>{
@@ -100,5 +124,6 @@ index.get('/getNewArticles',async ctx =>{
     } 
 }
 })
+
 
 module.exports = index

@@ -11,14 +11,14 @@ index.post('/blogAllData',async ctx =>{
     const con = await Mysql.createConnection(blog)//连接数据库
     if(query == '' || query == null){
         var sql = `SELECT a.id,a.date,a.title,a.date,
-        a.content,a.sortId,a.labelId,a.skill,b.sort_name,
+        a.content,a.sortId,a.labelId,a.introduce,a.mdname,b.sort_name,
         c.label_name FROM article a,sort b,label c 
         WHERE a.sortId = b.id and a.labelId = c.id
         LIMIT ${pagenum * pagesize},${pagesize}`
         var [data] = await con.query(sql)
     }else{
         var sql = `SELECT a.id,a.date,a.title,a.date,
-        a.content,a.sortId,a.labelId,a.skill,b.sort_name,
+        a.content,a.sortId,a.labelId,a.introduce,a.mdname,b.sort_name,
         c.label_name FROM article a,sort b,label c 
         WHERE a.sortId = b.id and a.labelId = c.id and a.title like '%${query}%'
         LIMIT ${pagenum * pagesize},${pagesize}`
@@ -67,8 +67,8 @@ index.get('/getAboutSortData',async ctx => {
 
     const con = await Mysql.createConnection(blog)
     var sql = `SELECT a.id,a.date,a.title,
-                    a.content,a.sortId,a.labelId,b.sort,
-                 c.label FROM article a,sort b,label c 
+                    a.content,a.sortId,a.labelId,a.introduce,a.mdname,b.sort_name,
+                 c.label_name FROM article a,sort b,label c 
                  WHERE a.sortId = '${id}' and a.sortId = b.id and a.labelId = c.id`
     var [data] = await con.query(sql)
     con.end(function (err) { }) //连接结束
@@ -123,6 +123,94 @@ index.get('/getNewArticles',async ctx =>{
         tips:'获取数据失败'
     } 
 }
+})
+//更新博客
+index.put('/updateblog', async ctx => {
+    const data = ctx.request.body
+    const con = await Mysql.createConnection(blog)
+    const sql = `UPDATE article SET  date='${data.date}',title='${data.title}',content='${data.content}',
+                sortId=${data.sort_name},labelId=${data.label_name},
+                introduce='${data.introduce}',mdname='${data.mdname}'WHERE id = ${data.id}`
+    const [rs] = await con.query(sql)
+    con.end(function (err) {}) //连接结束
+    if (rs.affectedRows > 0) {
+        ctx.body = {
+            code:200,
+            tips:'更新博客成功',
+            data
+        }
+    } else {
+        ctx.body = {
+            code:400,
+            tips:'更新博客失败',
+        }
+    }
+})
+
+//获取分类、标签表的所有数据
+index.get('/blogdatadetail', async ctx => {
+    const con = await Mysql.createConnection(blog)
+    const sql = `SELECT * FROM sort`
+    const sql2 = `SELECT * FROM label`
+    const [data] = await con.query(sql)
+    const [data2] = await con.query(sql2)
+    con.end(function (err) { }) //连接结束
+    
+    if (data.length >= 0 && data2.length >= 0) {
+        ctx.body = {
+            data: {data,data2},
+            code:200,
+            tips:'获取数据成功'
+        }
+    } else {
+        ctx.body = {
+            code:400,
+            tips:'获取数据失败'
+        }
+    }
+    
+})
+
+//添加博客
+index.post('/addblog', async ctx => {
+    const data = ctx.request.body  
+    var con = await Mysql.createConnection(blog)
+    const sql = `INSERT INTO article (title,introduce,date,sortId,mdname,labelId,content) VALUE
+    ('${data.title}', '${data.introduce}', '${data.date}', '${data.sortname}', 
+    '${data.mdname}', '${data.labelname}', '${data.content}')`
+    const [rs] = await con.query(sql)
+    con.end(function (err) {}) //连接结束
+
+    if (rs.affectedRows > 0) {
+        ctx.body = {
+            code:200,
+            tips:'添加博客成功'
+        }
+    } else {
+        ctx.body = {
+            code:400,
+            tips:'添加博客失败'
+        }
+    }
+})
+//根据mdname获取博客内容
+index.get('/readmd/:name', async ctx => {
+    const name = ctx.params.name
+    const con = await Mysql.createConnection(blog)
+    const [data] = await con.query(`SELECT content FROM article where mdname = '${name}'`)
+    con.end(function (err) { }) //连接结束
+    if (data.length > 0) {
+        ctx.body = {
+            data,
+            code:200,
+            tips:'获取博客成功'
+        }
+    } else {
+        ctx.body = {
+            code:400,
+            tips:'获取博客失败'
+        }
+    }
 })
 
 

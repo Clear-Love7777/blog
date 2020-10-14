@@ -18,28 +18,35 @@
         </div>
         <div class="contact">
           <!-- weixin -->
-          <div class="wechat"><svg class="icon icon-edit" aria-hidden="true">
-            <use xlink:href="#icon-wechat"></use>
-          </svg> <div class="Qecard"><img src="../assets/wechat.jpg" alt=""></div></div>
-           
-           <!-- QQ -->
-             <a href="tencent://QQInterLive/?Cmd=2&Uin=1601645717"> 
-           <el-tooltip class="item" effect="dark" content="点击添加QQ" placement="top">
-          <svg class="icon icon-edit" aria-hidden="true"> 
-            <use xlink:href="#icon-QQ" @click=""></use>
-          </svg>
-             </el-tooltip>
-             </a>
-             <!-- github -->
-            <a href="https://github.com/Clear-Love7777">
-           <el-tooltip content="点击进入GitHub" placement="right">
-           <svg class="icon icon-edit" aria-hidden="true">
-            <use xlink:href="#icon-github"></use>
-          </svg>
-           </el-tooltip>
-            </a>
+          <div class="wechat">
+            <svg class="icon icon-edit" aria-hidden="true">
+              <use xlink:href="#icon-wechat"></use>
+            </svg>
+            <div class="Qecard"><img src="../assets/wechat.jpg" alt="" /></div>
+          </div>
+
+          <!-- QQ -->
+          <a href="tencent://QQInterLive/?Cmd=2&Uin=1601645717">
+            <el-tooltip
+              class="item"
+              effect="dark"
+              content="点击添加QQ"
+              placement="top"
+            >
+              <svg class="icon icon-edit" aria-hidden="true">
+                <use xlink:href="#icon-QQ" @click=""></use>
+              </svg>
+            </el-tooltip>
+          </a>
+          <!-- github -->
+          <a href="https://github.com/Clear-Love7777">
+            <el-tooltip content="点击进入GitHub" placement="right">
+              <svg class="icon icon-edit" aria-hidden="true">
+                <use xlink:href="#icon-github"></use>
+              </svg>
+            </el-tooltip>
+          </a>
           <span>Contact me through these channels</span>
-          
         </div>
       </div>
     </div>
@@ -59,9 +66,8 @@
             class="sort"
             :key="item.id"
             @click="click_sort(item.id)"
-            :style="{ backgroundColor: item.color }"
           >
-            {{ item.sort }}
+            {{ item.sort_name }}
           </button>
         </div>
       </ul>
@@ -70,7 +76,7 @@
         <li class="rightindex-title">
           <i class="el-icon-collection-tag"></i>标签
         </li>
-        <li v-for="item in label" class="licontent">{{ item.label }}</li>
+        <li v-for="item in label" class="licontent">{{ item.label_name }}</li>
       </ul>
       <el-divider></el-divider>
       <ul class="rightindex-article">
@@ -80,6 +86,7 @@
         <li v-for="item in article" class="licontent">{{ item.title }}</li>
       </ul>
     </div>
+    
   </div>
 </template>
 
@@ -135,76 +142,105 @@ export default {
 <style lang="less" scoped>
 .main {
   display: flex;
-  width: 1200px;
+  width: 1500px;
   height: 100vh;
   margin: 0 auto;
+  > header {
+    min-height: 60px;
+    max-height: 60px;
+    background-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  }
 }
-.Qecard{
-  margin-top:100px ;
+main{
+  margin-top: 50px;
+}
+section {
+  width: 80vw;
+  margin: 0 auto;
+  > a {
+    display: flex;
+    align-items: center;
+    margin-right: 2vw;
+    &:hover span {
+      color: #1e90ff;
+    }
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 20px;
+    }
+    span {
+      color: #000;
+      font-size: 20px;
+      transition: color 0.25s;
+    }
+  }
+}
+
+.mainindex {
+  flex: 1;
+}
+.Qecard {
+  margin-top: 125px;
   position: absolute;
   display: none;
 }
-.Qecard img{
-  width: 150px;
-  height: 150px;
+.Qecard img {
+  width: 175px;
+  height: 175px;
 }
-.wechat:hover .Qecard { 
-     display: block;
-   }
+.wechat:hover .Qecard {
+  display: block;
+}
 .leftindex {
-  width: 200px;
-  margin-top: 15px;
+  width: 250px;
+  margin-top: 20px;
   text-align: center;
-  height: 300px;
+  height: 350px;
   background-color: rgba(255, 255, 255, 0.4);
-  border-radius: 8px;
-  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 10px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.12);
   box-sizing: border-box;
   color: #000;
 }
 .searchlabel input {
-  width: 170px;
-  height: 25px;
+  width: 200px;
+  height: 30px;
   border-radius: 5px;
   background-image: url(../assets/search.png);
-  background-size: 20px 20px;
+  background-size: 25px 25px;
   background-repeat: no-repeat;
-  background-position: 150px 2px;
-  font-size: 13px;
+  background-position: 175px 2px;
+  font-size: 16px;
 }
 .searchlabel img {
   float: right;
-  margin-right: 26px;
 }
 .leftindex .touxiang {
   display: block;
-  width: 100px;
-  height: 100px;
+  width: 125px;
+  height: 125px;
   border-radius: 50%;
-  margin: 16px auto 0px;
+  margin: 20px auto 0px;
 }
 
 .leftindex span {
   display: inline-block;
   color: black;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
 }
 .leftindex .name {
-  margin-top: 12px;
-  margin-bottom: 4px;
+  margin-top: 15px;
+  margin-bottom: 5px;
 }
-.leftindex-main ul li {
-  color: aliceblue;
+
+.icon-edit {
   margin-top: 25px;
-  text-align: left;
-  margin-left: 15px;
-  height: 35px;
-}
-  .icon-edit{
-    margin-top:15px;
-    margin-left:16px;
-   float: left;
+  margin-left: 40px;
+  float: left;
 }
 
 .leftindex .contact span {
@@ -212,7 +248,7 @@ export default {
 }
 .rightindex {
   height: 100vh;
-  width: 200px;
+  width: 350px;
 }
 .rightindex-title {
   font-size: 16px;
@@ -223,30 +259,33 @@ export default {
   font-weight: bold;
 }
 .rightindex ul li {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 .licontent {
-  font-size: 12px;
+  font-size: 16px;
   color: grey;
 }
 .rightindex-sort {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  width: 200px;
+  width: 350px;
 
   button {
     margin-top: 10px;
     margin-right: 15px;
-    min-width: 50px;
+    width: 80px;
     height: 20px;
+   background-color: rgba(231,76,60);
+  &:nth-child(2n+1){background-color: rgba(112,161,225);}
+ &:nth-child(3n){background-color: rgba(112,196,169);}
   }
 }
 
 .sort {
   text-align: center;
-  border-radius: 5px;
-  font-size: 14px;
+  border-radius: 7px;
+  font-size: 16px;
   color: #fff;
   border: none;
 }

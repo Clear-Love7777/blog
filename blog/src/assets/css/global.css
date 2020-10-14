@@ -2,13 +2,16 @@
     margin: 0;
     padding: 0;
 }
-ul li{
+li{
   list-style: none;
+}
+a{
+  text-decoration: none;
 }
 
 .icon {
-  width: 1.4em;
-  height: 1.4em;
+  width: 1.6em;
+  height: 1.6em;
   vertical-align: -0.15em;
   fill: currentColor;
   overflow: hidden;

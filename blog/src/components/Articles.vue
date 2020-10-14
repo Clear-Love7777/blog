@@ -2,7 +2,7 @@
      <!-- 中间区域 -->
     <div class="mainindex">
       <div class="article" v-for="item in blogList" :key="item.id">
-        <div class="mainindex-title">
+        <div class="mainindex-title" @click="changePath(item)">
           {{ item.title }}
         </div>
         <div class="content">
@@ -12,11 +12,11 @@
           </div>
           <div class="mainindex-sort" >
             <i class="el-icon-menu"></i>
-            <span>{{ item.sort }}</span>
+            <span>{{ item.sort_name }}</span>
           </div>
           <div class="mainindex-label" >
            <i class="el-icon-collection-tag"></i>
-            <span>{{ item.label }}</span>
+            <span>{{ item.label_name }}</span>
           </div>
           <div class="mainindex-countwords">
             <span>字数统计:{{item.content.length}}(字)</span>
@@ -74,6 +74,11 @@ export default {
       this.queryInfo.pagenum = newPage
       this.blogAllData()
   },
+    //监听要查看的博客地址
+        changePath(item){
+            this.$store.commit('setMdname',item.mdname)
+            this.$router.push({path:`/content?${item.mdname}`})
+        },
   //根据点击的分类标签id获取所有有关此分类的数据
         async getAboutSortData(id){
             const {data:res} = await this.$http.get('/getAboutSortData',{params:{id}})
@@ -88,38 +93,39 @@ export default {
 
 <style lang="less" scoped>
 .mainindex {
-  width: 800px; 
+   width: 100%;
   flex-direction: column;
   .mainindex-title {
     color: black;
-    font-size: 20px;
+    font-size: 25px;
   }
   .content span {
-    margin-left: 3px;
+    margin-left: 5px;
+    font-size: 14px;
   }
   .el-pagination{
-    width: 400px;
-   margin: 20px auto;
+    width: 600px;
+   margin: 40px auto;
 }
 }
 .content {
   display: flex;
 }
 .article {
-  margin: 20px 30px 10px 30px;
+  margin: 25px 33px 12px 33px;
   background-color: rgba(255, 255, 255, 0.4);
-  border-radius: 8px;
-  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-  padding: 20px 20px;
+  border-radius: 10px;
+  box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.12);
+  padding: 25px 25px;
   box-sizing: border-box;
   color: #000;
 }
 .article div {
-  font-size: 10px;
+  font-size: 12px;
   color: grey;
-  margin-right: 8px;
+  margin-right: 10px;
 }
 .mainindex-title {
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 </style>

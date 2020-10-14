@@ -6,7 +6,7 @@ import Welcome from '../components/Welcome.vue'
 import Allarticles from '../components/Allarticles.vue'
 import Sortmessages from '../components/Sortmessages.vue'
 import Labelmessages from '../components/Labelmessages.vue'
-
+import Publishblog from '../components/Publishblog.vue'
 Vue.use(VueRouter)
 
 
@@ -23,6 +23,7 @@ const router = new VueRouter({
      {path:'/allarticles',component:Allarticles},
      {path:'/sortmessages',component:Sortmessages},
      {path:'/labelmessages',component:Labelmessages},
+     {path:'/publishblog',component:Publishblog},
   ]
   }
   ]

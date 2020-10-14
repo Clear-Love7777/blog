@@ -7,3 +7,10 @@ body,
     padding: 0;
     min-width: 1366px;
 }
+.el-textarea {
+    height: 100%;
+}
+.el-textarea__inner {
+    height: 100%;
+    resize: none;
+}

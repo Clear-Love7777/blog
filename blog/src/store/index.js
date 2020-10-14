@@ -8,6 +8,9 @@ export default new Vuex.Store({
     inputvalue:''
   },
   mutations: {
+    setMdname(state, val) {
+      state.mdname = val
+    },
     setValue(state,val) {
       state.inputvalue = val
     },

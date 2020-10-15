@@ -57,10 +57,11 @@
     </div>
 
     <!-- 右边区域 -->
+    <!-- 分类 -->
     <div class="rightindex">
-      <ul>
+      <ul class="rightindex-sort">
         <li class="rightindex-title"><i class="el-icon-menu"></i>分类</li>
-        <div class="rightindex-sort">
+        <div>
           <button
             v-for="item in sort"
             class="sort"
@@ -71,14 +72,14 @@
           </button>
         </div>
       </ul>
-      <el-divider class="divider"></el-divider>
+   <!-- 标签 -->
       <ul class="rightindex-label">
         <li class="rightindex-title">
           <i class="el-icon-collection-tag"></i>标签
         </li>
         <li v-for="item in label" class="licontent">{{ item.label_name }}</li>
       </ul>
-      <el-divider></el-divider>
+   <!-- 最新文章 -->
       <ul class="rightindex-article">
         <li class="rightindex-title">
           <i class="el-icon-document"></i>最新文章
@@ -86,7 +87,6 @@
         <li v-for="item in article" class="licontent">{{ item.title }}</li>
       </ul>
     </div>
-    
   </div>
 </template>
 
@@ -104,8 +104,21 @@ export default {
     this.getSort();
     this.getLabel();
     this.getNewArticles();
+    //禁止鼠标右键点击
+    (document.oncontextmenu = () => {
+      event.returnValue = false;
+    }),
+      // 禁用选择
+      (document.onselectstart = () => {
+        event.returnValue = false;
+      });
   },
-
+  watch: {
+    $route(to, from) {
+      //监听路由变化
+      this.disableBtn(to.path);
+    },
+  },
   methods: {
     async getSort() {
       const { data: res } = await this.$http.get("getSort");
@@ -135,6 +148,21 @@ export default {
     reload() {
       this.$refs.article.blogAllData();
     },
+    //路由发生改变后 禁用button按钮
+    disableBtn(path) {
+      var btns = document.querySelectorAll(".rightindex-sort button");
+      if (path != "/articles") {
+        btns.forEach((item) => {
+          item.setAttribute("disabled", "true");
+          item.style.cursor = "not-allowed";
+        });
+      } else {
+        btns.forEach((item) => {
+          item.removeAttribute("disabled");
+          item.style.cursor = "pointer";
+        });
+      }
+    },
   },
 };
 </script>
@@ -152,7 +180,7 @@ export default {
     box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   }
 }
-main{
+main {
   margin-top: 50px;
 }
 section {
@@ -257,6 +285,11 @@ section {
   margin-top: 20px;
   font-family: SimSun;
   font-weight: bold;
+   background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
+  padding: 20px 20px;
 }
 .rightindex ul li {
   margin-bottom: 12px;
@@ -270,18 +303,20 @@ section {
   flex-wrap: wrap;
   flex-direction: row;
   width: 350px;
-
   button {
     margin-top: 10px;
     margin-right: 15px;
     width: 80px;
     height: 20px;
-   background-color: rgba(231,76,60);
-  &:nth-child(2n+1){background-color: rgba(112,161,225);}
- &:nth-child(3n){background-color: rgba(112,196,169);}
+    background-color: rgba(231, 76, 60);
+    &:nth-child(2n + 1) {
+      background-color: rgba(112, 161, 225);
+    }
+    &:nth-child(3n) {
+      background-color: rgba(112, 196, 169);
+    }
   }
 }
-
 .sort {
   text-align: center;
   border-radius: 7px;

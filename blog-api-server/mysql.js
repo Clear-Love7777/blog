@@ -1,5 +1,5 @@
 const blog = {
-    host: 'localhost',
+    host: '47.103.205.245',
     user: 'root',
     port:'3308',
     password: '123456',

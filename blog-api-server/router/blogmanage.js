@@ -16,7 +16,7 @@ blogmanage.post('/login',async ctx => {
         ctx.body = {
             code:200,
             tips:'登录成功',
-            id :data[0].id
+            data
         }
     }else{
         ctx.body = {

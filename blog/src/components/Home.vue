@@ -24,7 +24,6 @@
             </svg>
             <div class="Qecard"><img src="../assets/wechat.jpg" alt="" /></div>
           </div>
-
           <!-- QQ -->
           <a href="tencent://QQInterLive/?Cmd=2&Uin=1601645717">
             <el-tooltip
@@ -50,12 +49,10 @@
         </div>
       </div>
     </div>
-
     <div class="mainindex">
       <!-- 路由占位符 -->
       <router-view ref="article"></router-view>
     </div>
-
     <!-- 右边区域 -->
     <!-- 分类 -->
     <div class="rightindex">
@@ -95,9 +92,9 @@ export default {
   data() {
     return {
       inputvalue: "", //搜索框数据
-      sort: [],
-      label: [],
-      article: [],
+      sort: [],//分类数据
+      label: [],//标签数据
+      article: [],//文章
     };
   },
   created() {
@@ -253,7 +250,6 @@ section {
   border-radius: 50%;
   margin: 20px auto 0px;
 }
-
 .leftindex span {
   display: inline-block;
   color: black;

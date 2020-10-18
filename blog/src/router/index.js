@@ -3,6 +3,7 @@
 import Home from '../components/Home.vue'
 import Articles from '../components/Articles.vue'
 import Content from '../components/Content.vue'
+import Daily from '../components/Daily.vue'
 
 
 Vue.use(VueRouter)
@@ -18,6 +19,7 @@ const router = new VueRouter({
      {path:'/content',component:Content},
    ]
   },
+  {path:'/daily',component:Daily},
   ]
 })
 

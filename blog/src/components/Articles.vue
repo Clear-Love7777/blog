@@ -102,7 +102,7 @@ export default {
     font-size: 14px;
   }
   .el-pagination{
-    width: 600px;
+    width: 400px;
    margin: 40px auto;
 }
 }

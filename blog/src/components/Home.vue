@@ -1,89 +1,128 @@
 <template>
-  <div class="main">
-    <!-- 左侧区域 -->
-    <div class="leftindex">
-      <div class="leftindex-header">
-        <img src="..\assets\logo.jpg" alt="" class="touxiang" />
-        <span class="name">Jun Xiao</span><br />
-        <span>Personal blog</span><br />
-        <div class="searchlabel">
-          <input
-            v-model="inputvalue"
-            type="text"
-            value=" 搜索"
-            onfocus="if(value == defaultValue){value=''}"
-            onblur="if(value != defaultValue){value = defaultValue}"
-            @click="search"
-          />
-        </div>
-        <div class="contact">
-          <!-- weixin -->
-          <div class="wechat">
-            <svg class="icon icon-edit" aria-hidden="true">
-              <use xlink:href="#icon-wechat"></use>
-            </svg>
-            <div class="Qecard"><img src="../assets/wechat.jpg" alt="" /></div>
-          </div>
-          <!-- QQ -->
-          <a href="tencent://QQInterLive/?Cmd=2&Uin=1601645717">
-            <el-tooltip
-              class="item"
-              effect="dark"
-              content="点击添加QQ"
-              placement="top"
+  <div id="blog">
+    <!-- 头部导航 -->
+    <header>
+      <section>
+        <a href="javascript:void(0);">
+          <img src="..\assets\logo.jpg" alt="" />
+          <span>June</span>
+        </a>
+        <nav>
+          <li>
+            <router-link to="/articles" @click.native="reload"
+              ><i class="el-icon-s-home"></i>主页</router-link
             >
+          </li>
+          <li>
+            <router-link to="/daily"
+              ><i class="el-icon-s-order"></i>
+              日志</router-link
+            >
+          </li>
+        </nav>
+      </section>
+    </header>
+    <div class="main">
+      <!-- 左侧区域 -->
+      <div class="leftindex">
+        <div class="leftindex-header">
+          <img src="..\assets\logo.jpg" alt="" class="touxiang" />
+          <span class="name">Jun Xiao</span><br />
+          <span>Personal blog</span><br />
+          <div class="searchlabel">
+            <input
+              v-model="inputvalue"
+              type="text"
+              value=" 搜索"
+              onfocus="if(value == defaultValue){value=''}"
+              onblur="if(value != defaultValue){value = defaultValue}"
+              @click="search"
+            />
+          </div>
+          <div class="contact">
+            <!-- weixin -->
+            <div class="wechat">
               <svg class="icon icon-edit" aria-hidden="true">
-                <use xlink:href="#icon-QQ" @click=""></use>
+                <use xlink:href="#icon-wechat"></use>
               </svg>
-            </el-tooltip>
-          </a>
-          <!-- github -->
-          <a href="https://github.com/Clear-Love7777">
-            <el-tooltip content="点击进入GitHub" placement="right">
-              <svg class="icon icon-edit" aria-hidden="true">
-                <use xlink:href="#icon-github"></use>
-              </svg>
-            </el-tooltip>
-          </a>
-          <span>Contact me through these channels</span>
+              <div class="Qecard">
+                <img src="../assets/wechat.jpg" alt="" />
+              </div>
+            </div>
+            <!-- QQ -->
+            <a href="tencent://QQInterLive/?Cmd=2&Uin=1601645717">
+              <el-tooltip
+                class="item"
+                effect="dark"
+                content="点击添加QQ"
+                placement="top"
+              >
+                <svg class="icon icon-edit" aria-hidden="true">
+                  <use xlink:href="#icon-QQ" @click=""></use>
+                </svg>
+              </el-tooltip>
+            </a>
+            <!-- github -->
+            <a href="https://github.com/Clear-Love7777">
+              <el-tooltip content="点击进入GitHub" placement="right">
+                <svg class="icon icon-edit" aria-hidden="true">
+                  <use xlink:href="#icon-github"></use>
+                </svg>
+              </el-tooltip>
+            </a>
+            <span>Contact me through these channels</span>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="mainindex">
-      <!-- 路由占位符 -->
-      <router-view ref="article"></router-view>
-    </div>
-    <!-- 右边区域 -->
-    <!-- 分类 -->
-    <div class="rightindex">
-      <ul class="rightindex-sort">
-        <li class="rightindex-title"><i class="el-icon-menu"></i>分类</li>
-        <div>
-          <button
-            v-for="item in sort"
-            class="sort"
-            :key="item.id"
-            @click="click_sort(item.id)"
+      <div class="mainindex">
+        <!-- 路由占位符 -->
+        <router-view ref="article"></router-view>
+      </div>
+      <!-- 右边区域 -->
+      <!-- 分类 -->
+      <div class="rightindex">
+        <ul class="rightindex-sort">
+          <li class="rightindex-title"><i class="el-icon-menu"></i>分类</li>
+          <div>
+            <button
+              v-for="item in sort"
+              class="sort"
+              :key="item.id"
+              @click="click_sort(item.id)"
+            >
+              {{ item.sort_name }}
+            </button>
+          </div>
+        </ul>
+        <!-- 标签 -->
+        <ul class="rightindex-label">
+          <li class="rightindex-title">
+            <i class="el-icon-collection-tag"></i>标签
+          </li>
+          <li v-for="item in label" class="licontent">{{ item.label_name }}</li>
+        </ul>
+        <!-- 最新文章 -->
+        <ul class="rightindex-article">
+          <li class="rightindex-title">
+            <i class="el-icon-document"></i>最新文章
+          </li>
+          <li
+            v-for="(item, index) in article"
+            v-if="index < 3"
+            :key="index"
+            class="licontent"
           >
-            {{ item.sort_name }}
-          </button>
-        </div>
-      </ul>
-   <!-- 标签 -->
-      <ul class="rightindex-label">
-        <li class="rightindex-title">
-          <i class="el-icon-collection-tag"></i>标签
-        </li>
-        <li v-for="item in label" class="licontent">{{ item.label_name }}</li>
-      </ul>
-   <!-- 最新文章 -->
-      <ul class="rightindex-article">
-        <li class="rightindex-title">
-          <i class="el-icon-document"></i>最新文章
-        </li>
-        <li v-for="item in article" class="licontent">{{ item.title }}</li>
-      </ul>
+            {{ item.title }}
+          </li>
+        </ul>
+      </div>
     </div>
+    <!-- 底部区域 -->
+    <footer>
+      <section>
+        <p>Copyright © 2020 - 2021 Designed by June</p>
+      </section>
+    </footer>
   </div>
 </template>
 
@@ -92,11 +131,12 @@ export default {
   data() {
     return {
       inputvalue: "", //搜索框数据
-      sort: [],//分类数据
-      label: [],//标签数据
-      article: [],//文章
+      sort: [], //分类数据
+      label: [], //标签数据
+      article: [], //文章
     };
   },
+
   created() {
     this.getSort();
     this.getLabel();
@@ -117,6 +157,21 @@ export default {
     },
   },
   methods: {
+    changeOn() {
+      let oAudio = document.querySelector("#audio");
+      if (this.isOff) {
+        oAudio.play(); //让音频文件开始播放
+      } else {
+        oAudio.pause(); //让音频文件暂停播放
+      }
+      this.isOff = !this.isOff;
+    },
+    audioAutoPlay() {
+      let audio = document.getElementById("audio");
+      this.isOff = false;
+      audio.play();
+      document.removeEventListener("touchstart", this.audioAutoPlay);
+    },
     async getSort() {
       const { data: res } = await this.$http.get("getSort");
       if (res.code != 200) return this.$message.error("获取分类失败");
@@ -130,6 +185,7 @@ export default {
     async getNewArticles() {
       const { data: res } = await this.$http.get("getNewArticles");
       if (res.code != 200) return this.$message.error("获取最新文章失败");
+      res.data.reverse();
       this.article = res.data;
     },
     search() {
@@ -165,45 +221,78 @@ export default {
 </script>
 
 <style lang="less" scoped>
+#blog {
+  width: 100vw;
+  min-height: 100vh;
+  background-color: #f5f8f9;
+  position: relative;
+  > header {
+    min-height: 60px;
+    background-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  }
+  > footer {
+    width: 440px;
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+#blog > header {
+  section {
+    width: 80vw;
+    margin: 0 auto;
+    display: flex;
+    a {
+      display: flex;
+      align-items: center;
+      margin-right: 1vw;
+      &:hover span {
+        color: #1e90ff;
+      }
+      img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 20px;
+      }
+      span {
+        color: #000;
+        font-size: 20px;
+        transition: color 0.25s;
+      }
+    }
+  }
+  nav {
+    display: flex;
+    list-style: none;
+    line-height: 60px;
+    li {
+      a {
+        color: #000;
+        transition: color 0.5s;
+        &:hover {
+          color: #1e90ff !important;
+        }
+        font-size: 15px;
+        > i {
+          margin-right: 2px;
+        }
+      }
+    }
+  }
+}
 .main {
   display: flex;
   width: 1500px;
   height: 100vh;
   margin: 0 auto;
-  > header {
-    min-height: 60px;
-    max-height: 60px;
-    background-color: rgba(255, 255, 255, 0.4);
-    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-  }
 }
 main {
   margin-top: 50px;
 }
-section {
-  width: 80vw;
-  margin: 0 auto;
-  > a {
-    display: flex;
-    align-items: center;
-    margin-right: 2vw;
-    &:hover span {
-      color: #1e90ff;
-    }
-    img {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      margin-right: 20px;
-    }
-    span {
-      color: #000;
-      font-size: 20px;
-      transition: color 0.25s;
-    }
-  }
-}
-
 .mainindex {
   flex: 1;
 }
@@ -281,7 +370,7 @@ section {
   margin-top: 20px;
   font-family: SimSun;
   font-weight: bold;
-   background-color: rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.4);
   border-radius: 8px;
   box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   box-sizing: border-box;

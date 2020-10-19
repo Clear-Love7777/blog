@@ -14,12 +14,19 @@
             >
           </li>
           <li>
-            <router-link to="/daily"
-              ><i class="el-icon-s-order"></i>
-              日志</router-link
+            <router-link to="/share"
+              ><i class="el-icon-s-order"></i> 其他</router-link
             >
           </li>
         </nav>
+        <div class="buttons">
+          <el-button type="primary" plain size="mini"  @click="toLogin"
+            >登录</el-button
+          >
+          <el-button type="success" plain size="mini"  @click="toRegister"
+            >注册</el-button
+          >
+        </div>
       </section>
     </header>
     <div class="main">
@@ -157,20 +164,11 @@ export default {
     },
   },
   methods: {
-    changeOn() {
-      let oAudio = document.querySelector("#audio");
-      if (this.isOff) {
-        oAudio.play(); //让音频文件开始播放
-      } else {
-        oAudio.pause(); //让音频文件暂停播放
-      }
-      this.isOff = !this.isOff;
+    toLogin(){
+      this.$router.push('/login')
     },
-    audioAutoPlay() {
-      let audio = document.getElementById("audio");
-      this.isOff = false;
-      audio.play();
-      document.removeEventListener("touchstart", this.audioAutoPlay);
+    toRegister(){
+      this.$router.push('/register')
     },
     async getSort() {
       const { data: res } = await this.$http.get("getSort");
@@ -201,6 +199,10 @@ export default {
     reload() {
       this.$refs.article.blogAllData();
     },
+    //强制刷新页面
+    // reloadDaily(){
+    //      location.reload()
+    // },
     //路由发生改变后 禁用button按钮
     disableBtn(path) {
       var btns = document.querySelectorAll(".rightindex-sort button");
@@ -283,6 +285,17 @@ export default {
       }
     }
   }
+}
+.buttons {
+  position:fixed;
+  right: 180px;
+}
+.el-button {
+  width: 60px;
+  height: 35px;
+  font-size: 14px;
+  margin-top: 10px;
+  margin-right: 10px;
 }
 .main {
   display: flex;

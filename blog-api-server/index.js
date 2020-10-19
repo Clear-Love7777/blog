@@ -212,6 +212,27 @@ index.get('/readmd/:name', async ctx => {
         }
     }
 })
+//用户登录
+index.post('/userLogin',async ctx => {
+    const username = ctx.request.body.username
+    const password = ctx.request.body.password
+    const con = await Mysql.createConnection(blog)
+    var sql = `SELECT * FROM user where username = '${username}' and password= '${password}'`
+    const [data] = await con.query(sql)
+    con.end(function (err) { }) //连接结束
+    if(data.length > 0){
+        ctx.body = {
+            code:200,
+            tips:'登录成功',
+            data
+        }
+    }else{
+        ctx.body = {
+            code:400,
+            tips:'登录失败'
+        } 
+    }
+})
 
 
 module.exports = index

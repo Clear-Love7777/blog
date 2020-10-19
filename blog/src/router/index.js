@@ -3,7 +3,10 @@
 import Home from '../components/Home.vue'
 import Articles from '../components/Articles.vue'
 import Content from '../components/Content.vue'
-import Daily from '../components/Daily.vue'
+import Share from '../components/Share.vue'
+import Login from '../components/Login.vue'
+import Register from '../components/Register.vue'
+
 
 
 Vue.use(VueRouter)
@@ -19,7 +22,10 @@ const router = new VueRouter({
      {path:'/content',component:Content},
    ]
   },
-  {path:'/daily',component:Daily},
+  {path:'/share',component:Share},
+  {path:'/login',component:Login},
+  {path:'/register',component:Register},
+
   ]
 })
 

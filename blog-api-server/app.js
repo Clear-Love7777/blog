@@ -21,8 +21,14 @@ app.use(blogmanage.routes())
 const index = require("./index.js")
 app.use(index.routes())
 
+// app.use(router.routes())
+// app.listen(9025,() => {                                                                          
+//     console.log('app start')
+// })
+// })()
 app.use(router.routes())
-app.listen(9025,() => {                                                                          
+app.listen(80,() => {
     console.log('app start')
 })
+
 })()

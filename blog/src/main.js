@@ -5,9 +5,12 @@ import store from './store/index.js'
 import './assets/css/global.css'
 import './assets/css/atom-one-dark.css'
 
+
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
-axios.defaults.baseURL='http://47.103.205.245:9025/'
+// axios.defaults.baseURL='http://47.103.205.245:9025/'
+axios.defaults.baseURL='http://127.0.0.1:80/'
+
 
 //自定义代码高亮事件
 Vue.directive('highlight', function (el) {

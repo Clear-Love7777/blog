@@ -318,7 +318,7 @@ export default {
    .md{
        height: 500px;
        border-radius: 4px;
-       padding: 0 5px;
+       padding: 0 5px; 
        margin-top: 20px;
        border: 1px solid #DCDFE6;
        overflow-y: scroll;

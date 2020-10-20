@@ -6,7 +6,8 @@
         <img src="https://s1.ax1x.com/2020/10/13/0hgDkF.jpg" />
         <span>博客后台管理系统</span>
       </div>
-      <el-button type="info" @click="logout">退出</el-button>
+       <el-button type="success" @click="tologin" v-show="btnLogin">登录</el-button>
+      <el-button type="info" @click="logout" v-show="btnLogout">退出</el-button>
     </el-header>
     <!-- 主体 -->
     <el-container>
@@ -54,6 +55,8 @@ export default {
     };
   },
   created() {
+   //调用控制登录登出状态函数
+    this.getStatus();
     //禁止鼠标右键点击
     (document.oncontextmenu = () => {
       event.returnValue = false;
@@ -64,16 +67,29 @@ export default {
       });
   },
   methods: {
-    logout() {
-      //清空token
-      window.sessionStorage.clear();
-      //转到登录页面
-      this.$router.push("/login");
+      tologin(){
+      this.$router.push('/login')
     },
     //点击按钮 切换折叠和展开
     toggleCollapse() {
       this.isCollapse = !this.isCollapse;
     },
+     //控制登录登出状态函数
+        getStatus(){
+            if(sessionStorage.getItem('token') == null){
+                this.btnLogin = true
+                this.btnLogout = false
+            }else{
+                this.btnLogin = false
+                this.btnLogout = true
+            }
+        },
+        //登出
+        logout(){
+            window.sessionStorage.removeItem('token')
+            this.reload()
+            this.$message({message: '登出成功',type: 'success',duration:1000})
+        }
   },
 };
 </script>

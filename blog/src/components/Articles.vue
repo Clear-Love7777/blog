@@ -2,9 +2,11 @@
      <!-- 中间区域 -->
     <div class="mainindex">
       <div class="article" v-for="item in blogList" :key="item.id">
+          <a style="cursor:pointer;text-decoration:none;" >
         <div class="mainindex-title" @click="changePath(item)">
           {{ item.title }}
         </div>
+        </a>
         <div class="content">
           <div class="mainindex-date" >
              <i class="el-icon-date"></i>
@@ -20,6 +22,10 @@
           </div>
           <div class="mainindex-countwords">
             <span>字数统计:{{item.content.length}}(字)</span>
+          </div>
+           <div class="mainindex-count">
+           
+            <span>点赞数:{{item.count}}</span>
           </div>
         </div>
      </div>
@@ -59,6 +65,7 @@ export default {
        this.queryInfo.query = this.$store.state.inputvalue 
       const { data: res } = await this.$http.post("blogAllData",this.queryInfo);
       if (res.code != 200) return this.$message.error("获取文章失败");
+       
       this.blogList = res.data;
       this.total = res.total;
     },
@@ -78,6 +85,7 @@ export default {
         changePath(item){
             this.$store.commit('setMdname',item.mdname)
             this.$router.push({path:`/content?${item.mdname}`})
+             window.sessionStorage.setItem('id',item.id)
         },
   //根据点击的分类标签id获取所有有关此分类的数据
         async getAboutSortData(id){

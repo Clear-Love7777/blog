@@ -1,5 +1,6 @@
 (async function run() {
     const Koa = require('koa2')
+    const jwt = require("jsonwebtoken")
     const Router = require('koa-router')
     const Mysql = require('promise-mysql2')
     const blog = require("./mysql.js")
@@ -12,7 +13,44 @@
     app.use(staticServer(__dirname , 'static'));
     app.use(Body())
    
+    app.use(async (ctx, next) => { //后台拦截器
+        var token = ctx.headers.authorization
+        const url = ctx.request.url.split('?')[0]
+      console.log(url);
+      console.log(token);
+        if(url !== '/updateblog' && url !== '/addblog' && url !== '/addcount'
+          && url !== '/addSort' && url !== '/deleteSort' && url !== '/editSort'
+          && url !== '/addLabel'&& url !== '/deleteLabel'&& url !== '/editLabel'
+          && url !== '/deleteArticle')
+        { return await next() }
 
+    
+        if((url === '/updateblog' || url === '/addblog' || url === '/addcount'
+        || url === '/addSort' || url === '/deleteSort' || url === '/editSort'
+        || url === '/addLabel'|| url === '/deleteLabel'|| url === '/editLabel'
+        || url === '/deleteArticle') && (token !== 'null'))
+        {
+          jwt.verify(token, 'I_LOVE_LIFE', (error, decoded) => {
+            if (error) {
+              return ctx.body = {
+                code: '445',
+                tips: "token无效",
+              }
+            }
+          })
+          await next()
+        }
+    
+        if((url === '/updateblog' || url === '/addblog' || url === '/addcount'
+        || url === '/addSort' || url === '/deleteSort' || url === '/editSort'
+        || url === '/addLabel'|| url === '/deleteLabel'|| url === '/editLabel'
+        || url === '/deleteArticle') && (token == 'null')) {
+          return ctx.body = {
+              code: '444',
+              tips: "该功能只有登录用户可以使用",
+            }
+        }
+      })
 
 
 const blogmanage = require("./router/blogmanage.js")

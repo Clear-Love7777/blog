@@ -18,15 +18,16 @@
               ><i class="el-icon-s-order"></i> 其他</router-link
             >
           </li>
-        </nav>
-        <div class="buttons">
-          <el-button type="primary" plain size="mini"  @click="toLogin"
+               <div class="buttons">
+          <el-button type="primary" plain size="mini"  @click="toLogin" v-show="btnLogin"
             >登录</el-button
           >
-          <el-button type="success" plain size="mini"  @click="toRegister"
-            >注册</el-button
+          <el-button type="info" plain size="mini"  @click="logout" v-show="btnLogout"
+            >退出</el-button
           >
         </div>
+        </nav>
+   
       </section>
     </header>
     <div class="main">
@@ -115,7 +116,7 @@
           </li>
           <li
             v-for="(item, index) in article"
-            v-if="index < 3"
+            v-if="index < 5"
             :key="index"
             class="licontent"
           >
@@ -125,11 +126,11 @@
       </div>
     </div>
     <!-- 底部区域 -->
-    <footer>
+    <!-- <footer>
       <section>
         <p>Copyright © 2020 - 2021 Designed by June</p>
       </section>
-    </footer>
+    </footer> -->
   </div>
 </template>
 
@@ -148,6 +149,8 @@ export default {
     this.getSort();
     this.getLabel();
     this.getNewArticles();
+    //调用控制登录登出状态函数
+    this.getStatus();
     //禁止鼠标右键点击
     (document.oncontextmenu = () => {
       event.returnValue = false;
@@ -166,9 +169,6 @@ export default {
   methods: {
     toLogin(){
       this.$router.push('/login')
-    },
-    toRegister(){
-      this.$router.push('/register')
     },
     async getSort() {
       const { data: res } = await this.$http.get("getSort");
@@ -218,6 +218,23 @@ export default {
         });
       }
     },
+      //控制登录登出状态函数
+        getStatus(){
+            if(sessionStorage.getItem('token') == null){
+                this.btnLogin = true
+                this.btnLogout = false
+            }else{
+                this.btnLogin = false
+                this.btnLogout = true
+            }
+        },
+        //登出
+        logout(){
+            //清空token
+            window.sessionStorage.removeItem('token')
+             location.reload()
+            this.$message({message: '登出成功',type: 'success',duration:1000})
+        }
   },
 };
 </script>
@@ -226,7 +243,7 @@ export default {
 #blog {
   width: 100vw;
   min-height: 100vh;
-  background-color: #f5f8f9;
+  // background-color: #f5f8f9;
   position: relative;
   > header {
     min-height: 60px;
@@ -236,8 +253,9 @@ export default {
   > footer {
     width: 440px;
     box-sizing: border-box;
-    position: absolute;
-    bottom: 30px;
+    position: relative;
+    margin-top:20px ;
+    bottom: 0px;
     left: 50%;
     transform: translateX(-50%);
   }
@@ -287,7 +305,7 @@ export default {
   }
 }
 .buttons {
-  position:fixed;
+  position:absolute;
   right: 180px;
 }
 .el-button {

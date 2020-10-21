@@ -77,7 +77,7 @@ export default {
         if (!valid) return
         const { data: res } = await this.$http.post('login', this.loginForm)
         if (res.code !== 200) return this.$message.error('登录失败！')
-          window.sessionStorage.setItem('token', res.data.token);
+          window.sessionStorage.setItem('token', res.token);
           this.$router.push('/admin');
       })
     },

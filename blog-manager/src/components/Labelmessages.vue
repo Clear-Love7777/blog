@@ -113,10 +113,18 @@ export default {
         params: { id },
       });
       if (res.code !== 200) {
-        return this.$message.error("删除标签信息失败！");
+        return    this.$message({
+          message: `${res.tips}`,
+          type: "error",
+          duration: 1000,
+        });
       }
       //提示修改成功
-      this.$message.success("删除标签信息成功！");
+       this.$message({
+          message: `${res.tips}`,
+          type: "success",
+          duration: 1000,
+        });
       // 重新获取标签列表
       this.getLabel();
     },
@@ -133,9 +141,17 @@ export default {
         "editLabel",
         this.editLabelsForm
       );
-      if (res.code !== 200) return this.$message.error("更新标签信息失败！");
+      if (res.code !== 200) return this.$message({
+          message: `${res.tips}`,
+          type: "error",
+          duration: 1000,
+        });
       //提示修改成功
-      this.$message.success("更新标签信息成功！");
+     this.$message({
+          message: `${res.tips}`,
+          type: "success",
+          duration: 1000,
+        });
       //关闭对话框
       this.editDialogVisible = false;
       // 重新获标签列表

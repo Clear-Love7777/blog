@@ -87,7 +87,7 @@ export default {
         //登出
         logout(){
             window.sessionStorage.removeItem('token')
-            this.reload()
+          location.reload()
             this.$message({message: '登出成功',type: 'success',duration:1000})
         }
   },

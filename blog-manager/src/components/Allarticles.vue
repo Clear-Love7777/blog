@@ -36,6 +36,7 @@
         <el-table-column prop="sort_name" label="分类"></el-table-column>
         <el-table-column prop="mdname" label="文件"></el-table-column>
         <el-table-column prop="label_name" label="标签"></el-table-column>
+        <el-table-column prop="count" label="点赞数"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
             <!-- 修改按钮 -->
@@ -254,10 +255,18 @@ export default {
         params: { id },
       });
       if (res.code !== 200) {
-        return this.$message.error("删除失败！");
+        return this.$message({
+          message: `${res.tips}`,
+          type: "error",
+          duration: 1000,
+        });
       }
       //提示修改成功
-      this.$message.success("删除分类信息成功！");
+     this.$message({
+        message: `${res.tips}`,
+        type: "success",
+        duration: 1000,
+      });
       // 重新获取博客列表
       this.blogAllData();
     },
@@ -280,7 +289,16 @@ export default {
     async updateBlog() {
       this.dealBlogForm();
       const { data: res } = await this.$http.put("updateblog", this.blogForm);
-      if (res.code != 200) return this.$message.error("更新失败！");
+      if (res.code != 200) return this.$message({
+          message: `${res.tips}`,
+          type: "error",
+          duration: 1000,
+        });
+        this.$message({
+        message: `${res.tips}`,
+        type: "success",
+        duration: 1000,
+      });
       this.blogAllData();
       this.showTo = true;
       this.showBack = false;

@@ -16,13 +16,13 @@
     app.use(async (ctx, next) => { //后台拦截器
         var token = ctx.headers.authorization
         const url = ctx.request.url.split('?')[0]
-      console.log(url);
-      console.log(token);
+      // console.log(url);
+      // console.log(token);
         if(url !== '/updateblog' && url !== '/addblog' && url !== '/addcount'
           && url !== '/addSort' && url !== '/deleteSort' && url !== '/editSort'
           && url !== '/addLabel'&& url !== '/deleteLabel'&& url !== '/editLabel'
           && url !== '/deleteArticle')
-        { return await next() }
+        { return await next()}
 
     
         if((url === '/updateblog' || url === '/addblog' || url === '/addcount'
@@ -68,5 +68,4 @@ app.use(router.routes())
 app.listen(80,() => {
     console.log('app start')
 })
-
 })()

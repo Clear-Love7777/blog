@@ -1,13 +1,15 @@
 const Router = require("koa-router")
 const Mysql = require("promise-mysql2")
 const blog = require("../mysql.js")
-
+const jwt = require("jsonwebtoken")
 const blogmanage = new Router() 
 
 //登录
 blogmanage.post('/login',async ctx => {
     const username = ctx.request.body.username
     const password = ctx.request.body.password
+    const userdata = {name: username,pwd: password}
+    const secret = "jun"
     const con = await Mysql.createConnection(blog)
     var sql = `SELECT * FROM admin where username = '${username}' and password= '${password}'`
     const [data] = await con.query(sql)
@@ -16,7 +18,7 @@ blogmanage.post('/login',async ctx => {
         ctx.body = {
             code:200,
             tips:'登录成功',
-            data
+            token:jwt.sign(userdata, secret)
         }
     }else{
         ctx.body = {

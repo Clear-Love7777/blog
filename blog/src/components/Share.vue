@@ -15,7 +15,7 @@
           </li>
           <li>
             <router-link to="/share"
-              ><i class="el-icon-s-order"></i> 其他</router-link
+              ><i class="el-icon-s-order"></i> 好物分享</router-link
             >
           </li>
           </li>
@@ -32,27 +32,26 @@
        :collapse-transition="false"
       class="el-menu-vertical-demo"
       text-color="#black"
-      active-text-color="#ffd04b"
       :router="true"
       >
        <el-menu-item index="introduction">
         <span slot="title">自我介绍</span>
       </el-menu-item>
+       
+         <el-menu-item index="beauty">
+        <span slot="title">CSS一键美化</span>
+      </el-menu-item>
 
-         <el-menu-item index="">
-        <span slot="title">百度翻译</span>
+         <el-menu-item index="translation">
+        <span slot="title">在线翻译</span>
       </el-menu-item>
       
-         <el-menu-item index="">
+         <el-menu-item index="recognition">
         <span slot="title">图片识别文字</span>
       </el-menu-item>
-      
-         <el-menu-item index="">
-        <span slot="title"></span>
-      </el-menu-item>
-
     </el-menu>
      </el-aside>
+ 
      <!-- 右侧主体 -->
      <el-main>
         <router-view></router-view> 
@@ -66,19 +65,11 @@ export default {
     return {
        //是否折叠
       isCollapse:false,
-      daily: [],
     };
   },
   created() {
-    this.getDailyMessage();
   },
   methods: {
-    async getDailyMessage() {
-      const { data: res } = await this.$http.get("getDailyMessage");
-      if (res.code != 200) return this.$message.error("获取日志失败");
-      this.daily = res.data;
-      console.log(res.data);
-    },
       //点击按钮 切换折叠和展开
      toggleCollapse(){
       this.isCollapse = ! this.isCollapse 
@@ -142,15 +133,21 @@ export default {
     }
   }
 }
-.user-container{
-    height: 100%;
+
+.el-container{
+  height: 100vh;
 }
 .el-aside {
+background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 10px;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   .el-menu{
     border-right: 0px;
   }
 }
-
+.el-menu-item span{
+    margin-left:20px ;
+}
 .el-submenu{
     font-size: 20px;
 }

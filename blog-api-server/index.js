@@ -179,9 +179,9 @@ index.get('/blogdatadetail', async ctx => {
 index.post('/addblog', async ctx => {
     const data = ctx.request.body
     var con = await Mysql.createConnection(blog)
-    const sql = `INSERT INTO article (title,introduce,date,sortId,mdname,labelId,content) VALUE
+    const sql = `INSERT INTO article (title,introduce,date,sortId,mdname,labelId,content,count) VALUE
     ('${data.title}', '${data.introduce}', '${data.date}', '${data.sortname}', 
-    '${data.mdname}', '${data.labelname}', '${data.content}')`
+    '${data.mdname}', '${data.labelname}', '${data.content}', '${data.count}')`
     const [rs] = await con.query(sql)
     con.end(function (err) {}) //连接结束
 

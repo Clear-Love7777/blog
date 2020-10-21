@@ -15,7 +15,7 @@
           </li>
           <li>
             <router-link to="/share"
-              ><i class="el-icon-s-order"></i> 其他</router-link
+              ><i class="el-icon-s-order"></i> 好物分享</router-link
             >
           </li>
                <div class="buttons">
@@ -346,7 +346,7 @@ main {
   height: 350px;
   background-color: rgba(255, 255, 255, 0.4);
   border-radius: 10px;
-  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.12);
   box-sizing: border-box;
   color: #000;
 }

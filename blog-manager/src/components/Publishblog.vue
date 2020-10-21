@@ -46,6 +46,9 @@
                     <el-form-item label="文件名">
                     <el-input v-model="blogForm.mdname" clearable></el-input>
                 </el-form-item>
+                <el-form-item label="点赞数">
+                    <el-input v-model="blogForm.count" disabled></el-input>
+                </el-form-item>
                 <el-form-item label="技术">
                     <el-select v-model="blogForm.labelname" filterable allow-create 
                     placeholder="请选择技术" style="width:100%;">
@@ -78,7 +81,8 @@ export default {
                 sortname:'',
                 mdname:'',
                labelname:'',
-                content:''
+                content:'',
+                count:'0'
             },
         }
     },
@@ -125,10 +129,9 @@ export default {
             this.blogForm.date = this.date(this.blogForm.date)
             const {data:res} = await this.$http.post('addblog',this.blogForm)
             if(res.code != 200) this.$message({message: `${res.tips}`,type: 'error',duration:1000})
-            this.$message({message: `${res.tips}`,type: 'success',duration:1000})
             this.blogForm = {
                 title:'',introduce:'',date:'',sortname:'',
-                mdname:'',labelname:'',content:''
+                mdname:'',labelname:'',content:'', count:''
             }
             this.showTo = true
             this.showBack = false

@@ -18,16 +18,25 @@
               ><i class="el-icon-s-order"></i> 好物分享</router-link
             >
           </li>
-               <div class="buttons">
-          <el-button type="primary" plain size="mini"  @click="toLogin" v-show="btnLogin"
-            >登录</el-button
-          >
-          <el-button type="info" plain size="mini"  @click="logout" v-show="btnLogout"
-            >退出</el-button
-          >
-        </div>
+          <div class="buttons">
+            <el-button
+              type="primary"
+              plain
+              size="mini"
+              @click="toLogin"
+              v-show="btnLogin"
+              >登录</el-button
+            >
+            <el-button
+              type="info"
+              plain
+              size="mini"
+              @click="logout"
+              v-show="btnLogout"
+              >退出</el-button
+            >
+          </div>
         </nav>
-   
       </section>
     </header>
     <div class="main">
@@ -90,7 +99,7 @@
       <!-- 分类 -->
       <div class="rightindex">
         <ul class="rightindex-sort">
-          <li class="rightindex-title"><i class="el-icon-menu"></i>分类</li>
+          <li class="rightindex-title"><i class="el-icon-menu"></i> 分类</li>
           <div>
             <button
               v-for="item in sort"
@@ -102,17 +111,19 @@
             </button>
           </div>
         </ul>
-        <!-- 标签 -->
+        <!-- 标签
         <ul class="rightindex-label">
           <li class="rightindex-title">
             <i class="el-icon-collection-tag"></i>标签
           </li>
-          <li v-for="item in label" class="licontent">{{ item.label_name }}</li>
-        </ul>
+          <li  v-for="(item, index) in label"
+            v-if="index < 4"
+            :key="index" class="licontent">{{ item.label_name }}</li>
+        </ul> -->
         <!-- 最新文章 -->
         <ul class="rightindex-article">
           <li class="rightindex-title">
-            <i class="el-icon-document"></i>最新文章
+            <i class="el-icon-document"></i> 最新文章
           </li>
           <li
             v-for="(item, index) in article"
@@ -121,6 +132,25 @@
             class="licontent"
           >
             {{ item.title }}
+          </li>
+        </ul>
+        <!-- 评论专区 -->
+        <ul class="rightindex-comment">
+          <li class="rightindex-title">
+            <i class="el-icon-chat-dot-round"></i> 评论专区
+          </li>
+          <li
+            v-for="(item, index) in  comment"
+            v-if="index < 5"
+            :key="index"
+            class="licontent"
+          >
+           {{item.username}} : {{item.content}}
+          </li>
+          <li class="morecomment">
+            <router-link to="/comment" 
+              ><li class="el-icon-thumb"></li>更多评论</router-link
+            >
           </li>
         </ul>
       </div>
@@ -140,15 +170,15 @@ export default {
     return {
       inputvalue: "", //搜索框数据
       sort: [], //分类数据
-      label: [], //标签数据
+      comment:[],//评论数据
       article: [], //文章
     };
   },
 
   created() {
     this.getSort();
-    this.getLabel();
     this.getNewArticles();
+    this.getComment();
     //调用控制登录登出状态函数
     this.getStatus();
     //禁止鼠标右键点击
@@ -167,24 +197,25 @@ export default {
     },
   },
   methods: {
-    toLogin(){
-      this.$router.push('/login')
+    toLogin() {
+      this.$router.push("/login");
     },
     async getSort() {
       const { data: res } = await this.$http.get("getSort");
       if (res.code != 200) return this.$message.error("获取分类失败");
       this.sort = res.data;
     },
-    async getLabel() {
-      const { data: res } = await this.$http.get("getLabel");
-      if (res.code != 200) return this.$message.error("获取标签失败");
-      this.label = res.data;
-    },
     async getNewArticles() {
       const { data: res } = await this.$http.get("getNewArticles");
       if (res.code != 200) return this.$message.error("获取最新文章失败");
       res.data.reverse();
       this.article = res.data;
+    },
+       async getComment() {
+      const { data: res } = await this.$http.get("getComment");
+      if (res.code != 200) return this.$message.error("获取最新评论失败");
+      res.data.reverse();
+      this.comment = res.data;
     },
     search() {
       this.$store.commit("setValue", this.inputvalue);
@@ -218,23 +249,23 @@ export default {
         });
       }
     },
-      //控制登录登出状态函数
-        getStatus(){
-            if(sessionStorage.getItem('token') == null){
-                this.btnLogin = true
-                this.btnLogout = false
-            }else{
-                this.btnLogin = false
-                this.btnLogout = true
-            }
-        },
-        //登出
-        logout(){
-            //清空token
-            window.sessionStorage.removeItem('token')
-             location.reload()
-            this.$message({message: '登出成功',type: 'success',duration:1000})
-        }
+    //控制登录登出状态函数
+    getStatus() {
+      if (sessionStorage.getItem("token") == null) {
+        this.btnLogin = true;
+        this.btnLogout = false;
+      } else {
+        this.btnLogin = false;
+        this.btnLogout = true;
+      }
+    },
+    //登出
+    logout() {
+      //清空token
+      window.sessionStorage.removeItem("token");
+      location.reload();
+      this.$message({ message: "登出成功", type: "success", duration: 1000 });
+    },
   },
 };
 </script>
@@ -254,7 +285,7 @@ export default {
     width: 440px;
     box-sizing: border-box;
     position: relative;
-    margin-top:20px ;
+    margin-top: 20px;
     bottom: 0px;
     left: 50%;
     transform: translateX(-50%);
@@ -305,7 +336,7 @@ export default {
   }
 }
 .buttons {
-  position:absolute;
+  position: absolute;
   right: 180px;
 }
 .el-button {
@@ -406,9 +437,18 @@ main {
   box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   box-sizing: border-box;
   padding: 20px 20px;
-}
-.rightindex ul li {
+   li {
   margin-bottom: 12px;
+}
+.morecomment{
+  position: relative;
+  float: right;
+  font-size: 12px;
+    a{
+       color: #000;
+        transition: color 0.5s;
+    }
+}
 }
 .licontent {
   font-size: 16px;

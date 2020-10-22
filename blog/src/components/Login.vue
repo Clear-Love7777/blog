@@ -13,18 +13,20 @@
         <!-- 用户名 -->
         <el-form-item prop="username">
           <el-input
-           placeholder="请输入账号"
+            placeholder="请输入账号"
             v-model="loginForm.username"
           ></el-input>
         </el-form-item>
         <!-- 密码 -->
         <el-form-item prop="password">
           <el-input
-           placeholder="请输入密码"
+            placeholder="请输入密码"
             v-model="loginForm.password"
             type="password"
           ></el-input>
-       <router-link to="/editpassword" class="forget"> 忘记密码？</router-link>
+          <router-link to="/editpassword" class="forget">
+            忘记密码？</router-link
+          >
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item class="btns">
@@ -70,17 +72,21 @@ export default {
     };
   },
   methods: {
-      //跳转到注册
-      toUserRegister(){
-      this.$router.push('/register')
+    //跳转到注册
+    toUserRegister() {
+      this.$router.push("/register");
     },
     userLogin() {
       this.$refs.loginFormRef.validate(async (valid) => {
         if (!valid) return;
-        const { data: res } = await this.$http.post("userLogin", this.loginForm);
-        if (res.code !== 200)return this.$message.error("登录失败！");
-          window.sessionStorage.setItem('token', res.token)
-          this.$router.push("/home");
+        const { data: res } = await this.$http.post(
+          "userLogin",
+          this.loginForm
+        );
+        if (res.code !== 200) return this.$message.error("登录失败！");
+        window.sessionStorage.setItem("username", this.loginForm.username);
+        window.sessionStorage.setItem("token", res.token);
+        this.$router.push("/home");
       });
     },
   },
@@ -105,9 +111,9 @@ export default {
   justify-content: flex-end;
   margin-top: -40px;
 }
-.forget{
-    margin-left: 5px;
-    font-size: 14px;
+.forget {
+  margin-left: 5px;
+  font-size: 14px;
 }
 .login_form {
   position: absolute;

@@ -125,6 +125,26 @@ index.get('/getNewArticles', async ctx => {
         }
     }
 })
+//获取评论
+index.get('/getComment', async ctx => {
+    const con = await Mysql.createConnection(blog) //连接数据库
+    const sql = `SELECT * FROM comment`
+    const [data] = await con.query(sql)
+    con.end(function (err) {}) //连接结束
+    if (data.length >= 0) {
+        ctx.body = {
+            code: 200,
+            tips: '获取数据成功',
+            data
+        }
+    } else {
+        ctx.body = {
+            code: 400,
+            tips: '获取数据失败'
+        }
+    }
+})
+
 //更新博客
 index.put('/updateblog', async ctx => {
     const data = ctx.request.body
@@ -220,17 +240,22 @@ index.get('/readmd/:name', async ctx => {
 index.post('/userLogin', async ctx => {
     const username = ctx.request.body.username
     const password = ctx.request.body.password
-    const userdata = {name: username,pwd: password}
+    const userdata = {
+        name: username,
+        pwd: password
+    }
     const secret = "jun"
     const con = await Mysql.createConnection(blog)
     var sql = `SELECT * FROM user where username = '${username}' and password= '${password}'`
     const [data] = await con.query(sql)
+    // console.log(data[0].id);
     con.end(function (err) {}) //连接结束
     if (data.length > 0) {
         ctx.body = {
             code: 200,
             tips: '登录成功',
-            token:jwt.sign(userdata, secret)
+            token: jwt.sign(userdata, secret),
+            data: data[0].id
         }
     } else {
         ctx.body = {
@@ -277,6 +302,7 @@ index.post('/userRegister', async ctx => {
     }
 })
 
+
 //点赞数增加
 index.put('/addcount', async ctx => {
     const id = ctx.request.body.id
@@ -284,7 +310,7 @@ index.put('/addcount', async ctx => {
     const con = await Mysql.createConnection(blog)
     const countnumber = `SELECT count FROM article WHERE id = ${id}`
     const [count] = await con.query(countnumber)
-    let number = count[0].count+1
+    let number = count[0].count + 1
     // console.log(count[0].count);
     const sql = `UPDATE article SET count = ${number}  WHERE id = '${id}'`
     const [rs] = await con.query(sql)
@@ -302,7 +328,65 @@ index.put('/addcount', async ctx => {
     }
 })
 
-
-
+//发表评论
+index.post('/postcomment', async ctx => {
+    const titleid = ctx.request.body.tid
+    const username = ctx.request.body.uname
+    const content = ctx.request.body.content
+    const date = ctx.request.body.date
+    const con = await Mysql.createConnection(blog)
+    const sql = `INSERT INTO comment (username,titleid,content,date) VALUE
+    ('${username}', '${titleid}', '${content}','${date}')`
+    const [rs] = await con.query(sql)
+    con.end(function (err) {}) //连接结束
+    if (rs.affectedRows > 0) {
+        ctx.body = {
+            code: 200,
+            tips: '评论成功',
+        }
+    } else {
+        ctx.body = {
+            code: 400,
+            tips: '评论失败'
+        }
+    }
+})
+//获取评论
+index.post('/getComments', async ctx => {
+    const pagenum = ctx.request.body.pagenum - 1
+    const pagesize = ctx.request.body.pagesize
+    const query = ctx.request.body.query
+    // console.log(pagenum,pagesize,query)
+    const con = await Mysql.createConnection(blog)
+    // const sql = `SELECT a.username,a.titleid,a.content,a.date,b.title FROM comment a,article b
+    //     WHERE  a.titleid = b.id`
+    if (query == '' || query == null) {
+        var sql = `SELECT a.username,a.titleid,a.content,a.date,b.title FROM comment a,article b
+        WHERE  a.titleid = b.id LIMIT ${pagenum * pagesize},${pagesize}`
+        var [data] = await con.query(sql)
+    } else {
+        var sql = `SELECT a.username,a.titleid,a.content,a.date,b.title FROM comment a,article b
+        WHERE  a.titleid = b.id like'%${query}%'
+    LIMIT ${pagenum * pagesize},${pagesize}`
+        var [data] = await con.query(sql)
+    }
+    const sql2 = `SELECT a.username,a.titleid,a.content,a.date,b.title FROM comment a,article b
+    WHERE  a.titleid = b.id`
+    const [data2] = await con.query(sql2)
+    con.end(function (err) {}) //连接结束
+    if (data.length >= 0 && data2.length >= 0) {
+        ctx.body = {
+            code: 200,
+            tips: '获取评论成功',
+            data,
+            total: data2.length
+        }
+    } else {
+        ctx.body = {
+            code: 400,
+            tips: '获取失败'
+        }
+    }
+})
 
 module.exports = index

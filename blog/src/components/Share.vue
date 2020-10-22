@@ -63,17 +63,16 @@
 export default {
   data() {
     return {
-       //是否折叠
-      isCollapse:false,
+      //是否折叠
+      isCollapse: false,
     };
   },
-  created() {
-  },
+  created() {},
   methods: {
-      //点击按钮 切换折叠和展开
-     toggleCollapse(){
-      this.isCollapse = ! this.isCollapse 
-  },
+    //点击按钮 切换折叠和展开
+    toggleCollapse() {
+      this.isCollapse = !this.isCollapse;
+    },
   },
 };
 </script>
@@ -134,25 +133,24 @@ export default {
   }
 }
 
-.el-container{
+.el-container {
   height: 100vh;
 }
 .el-aside {
-background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.5);
   border-radius: 10px;
   box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-  .el-menu{
+  .el-menu {
     border-right: 0px;
   }
 }
-.el-menu-item span{
-    margin-left:20px ;
+.el-menu-item span {
+  margin-left: 20px;
 }
-.el-submenu{
-    font-size: 20px;
+.el-submenu {
+  font-size: 20px;
 }
-.toggle-button{
-
+.toggle-button {
   font-size: 10px;
   line-height: 24px;
   color: black;
@@ -160,6 +158,4 @@ background-color: rgba(255, 255, 255, 0.5);
   letter-spacing: 0.2em;
   cursor: pointer;
 }
-
-
 </style>

@@ -72,12 +72,12 @@ blogmanage.delete('/deleteSort', async ctx => {
     if (data.affectedRows > 0) {
         ctx.body = {
             code: 200,
-            data: '删除成功'
+            tips: '删除成功'
         }
     } else {
         ctx.body = {
             code: 400,
-            data: '删除失败'
+            tips: '删除失败'
         }
     }
 
@@ -147,12 +147,12 @@ blogmanage.delete('/deleteLabel', async ctx => {
     if (data.affectedRows > 0) {
         ctx.body = {
             code: 200,
-            data: '删除成功'
+            tips: '删除成功'
         }
     } else {
         ctx.body = {
             code: 400,
-            data: '删除失败'
+            tips: '删除失败'
         }
     }
 
@@ -189,12 +189,33 @@ blogmanage.delete('/deleteArticle', async ctx => {
     if (data.affectedRows > 0) {
         ctx.body = {
             code: 200,
-            data: '删除成功'
+            tips: '删除成功'
         }
     } else {
         ctx.body = {
             code: 400,
-            data: '删除失败'
+            tips: '删除失败'
+        }
+    }
+
+});
+//删除评论接口
+blogmanage.delete('/deleteComment', async ctx => {
+    const id = ctx.request.query.id;
+    const con = await Mysql.createConnection(blog)
+    const sql = `DELETE FROM comment WHERE comment.id = '${id}'`;
+    const [rs] = await con.query(sql)
+    con.end(function (err) {}) //连接结束
+    if (rs.affectedRows > 0) {
+        ctx.body = {
+            code: 200,
+            tips: '删除成功'
+            
+        }
+    } else {
+        ctx.body = {
+            code: 400,
+            tips: '删除失败'
         }
     }
 

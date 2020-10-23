@@ -33,6 +33,9 @@
           <el-menu-item index="labelmessages">
             <span slot="title">标签信息</span>
           </el-menu-item>
+          <el-menu-item index="commentmessages">
+            <span slot="title">评论信息</span>
+          </el-menu-item>
           <el-menu-item index="publishblog">
             <span slot="title">发布博客</span>
           </el-menu-item>

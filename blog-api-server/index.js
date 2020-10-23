@@ -358,19 +358,17 @@ index.post('/getComments', async ctx => {
     const query = ctx.request.body.query
     // console.log(pagenum,pagesize,query)
     const con = await Mysql.createConnection(blog)
-    // const sql = `SELECT a.username,a.titleid,a.content,a.date,b.title FROM comment a,article b
-    //     WHERE  a.titleid = b.id`
     if (query == '' || query == null) {
-        var sql = `SELECT a.username,a.titleid,a.content,a.date,b.title FROM comment a,article b
+        var sql = `SELECT a.id, a.username,a.titleid,a.content,a.date,b.title FROM comment a,article b
         WHERE  a.titleid = b.id LIMIT ${pagenum * pagesize},${pagesize}`
         var [data] = await con.query(sql)
     } else {
-        var sql = `SELECT a.username,a.titleid,a.content,a.date,b.title FROM comment a,article b
-        WHERE  a.titleid = b.id like'%${query}%'
+        var sql = `SELECT  a.id, a.username,a.titleid,a.content,a.date,b.title FROM comment a,article b
+        WHERE  a.titleid = b.id and b.title like'%${query}%'
     LIMIT ${pagenum * pagesize},${pagesize}`
         var [data] = await con.query(sql)
     }
-    const sql2 = `SELECT a.username,a.titleid,a.content,a.date,b.title FROM comment a,article b
+    const sql2 = `SELECT  a.id,a.username,a.titleid,a.content,a.date,b.title FROM comment a,article b
     WHERE  a.titleid = b.id`
     const [data2] = await con.query(sql2)
     con.end(function (err) {}) //连接结束
@@ -388,5 +386,4 @@ index.post('/getComments', async ctx => {
         }
     }
 })
-
 module.exports = index

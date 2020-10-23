@@ -38,14 +38,14 @@
         <span slot="title">自我介绍</span>
       </el-menu-item>
        
+         <el-menu-item index="cheat">
+        <span slot="title">备忘录</span>
+      </el-menu-item>
+
          <el-menu-item index="beauty">
         <span slot="title">CSS一键美化</span>
       </el-menu-item>
 
-         <el-menu-item index="translation">
-        <span slot="title">在线翻译</span>
-      </el-menu-item>
-      
          <el-menu-item index="recognition">
         <span slot="title">图片识别文字</span>
       </el-menu-item>

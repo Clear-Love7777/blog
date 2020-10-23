@@ -9,7 +9,7 @@ import Register from '../components/Register.vue'
 import Comment from '../components/Comment.vue'
 import Beauty from '../components/Beauty.vue'
 import Introduction from '../components/Introduction.vue'
-import Translation from '../components/Translation.vue'
+import Cheat from '../components/Cheat.vue'
 import Recognition from '../components/Recognition.vue'
 
 
@@ -32,7 +32,7 @@ const router = new VueRouter({
   children:[
     {path:'/introduction',component:Introduction},
     {path:'/beauty',component:Beauty},
-    {path:'/translation',component:Translation},
+    {path:'/cheat',component:Cheat},
     {path:'/recognition',component:Recognition},
   ]
 },

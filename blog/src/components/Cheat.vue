@@ -224,16 +224,16 @@
             },
 
             /**        下个月    **/
-            nextMonth() {
-                this.month++;
-                if (this.month === 12) {
-                    this.month = 0;
-                    this.year++
-                }
-                this.$nextTick(() => {
-                    this.dateFun()
-                })
-            },
+            // nextMonth() {
+            //     this.month++;
+            //     if (this.month === 12) {
+            //         this.month = 0;
+            //         this.year++
+            //     }
+            //     this.$nextTick(() => {
+            //         this.dateFun()
+            //     })
+            // },
 
             /**        下一年    **/
             nextYear() {

@@ -15,7 +15,7 @@
           </li>
           <li>
             <router-link to="/share"
-              ><i class="el-icon-s-order"></i> 好物分享</router-link
+              ><i class="el-icon-s-order"></i> 分享</router-link
             >
           </li>
           <div class="buttons">

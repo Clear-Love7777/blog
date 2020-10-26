@@ -59,11 +59,15 @@ app.use(blogmanage.routes())
 const index = require("./index.js")
 app.use(index.routes())
 
+const share = require("./share.js")
+app.use(share.routes())
+
 // app.use(router.routes())
 // app.listen(9025,() => {                                                                          
 //   console.log('app start')
 // })
 // })()
+
 app.use(router.routes())
 app.listen(80,() => {
     console.log('app start')

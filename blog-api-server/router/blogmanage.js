@@ -67,9 +67,9 @@ blogmanage.delete('/deleteSort', async ctx => {
     const id = ctx.request.query.id;
     const con = await Mysql.createConnection(blog)
     const sql = `DELETE FROM sort WHERE sort.id = '${id}'`;
-    const [data] = await con.query(sql)
+    const [rs] = await con.query(sql)
     con.end(function (err) {}) //连接结束
-    if (data.affectedRows > 0) {
+    if (rs.affectedRows > 0) {
         ctx.body = {
             code: 200,
             tips: '删除成功'
@@ -87,7 +87,7 @@ blogmanage.put('/editSort', async ctx => {
     const edit = ctx.request.body;
     const con = await Mysql.createConnection(blog)
     const sql =
-        `UPDATE sort SET sort_name='${edit.sort_name}' WHERE id=${edit.id};`
+        `UPDATE sort SET sort_name='${edit.sort_name}' WHERE id='${edit.id}';`
         const [data] = await con.query(sql)
         con.end(function (err) {}) //连接结束
     if (data.affectedRows > 0) {

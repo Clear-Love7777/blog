@@ -15,7 +15,7 @@
           </li>
           <li>
             <router-link to="/share"
-              ><i class="el-icon-s-order"></i> 好物分享</router-link
+              ><i class="el-icon-s-order"></i> 分享</router-link
             >
           </li>
           </li>
@@ -42,13 +42,6 @@
         <span slot="title">备忘录</span>
       </el-menu-item>
 
-         <el-menu-item index="beauty">
-        <span slot="title">CSS一键美化</span>
-      </el-menu-item>
-
-         <el-menu-item index="recognition">
-        <span slot="title">图片识别文字</span>
-      </el-menu-item>
     </el-menu>
      </el-aside>
  

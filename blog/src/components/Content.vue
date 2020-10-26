@@ -102,7 +102,7 @@ export default {
       // console.log(id);
       const { data: res } = await this.$http.put("/addcount", { id });
       if (res.code !== 200)
-        return this.$message.error({
+        return this.$message({
           message: `${res.tips}`,
           type: "error",
           duration: 1000,
@@ -121,12 +121,12 @@ export default {
           this.form.date = this.date(this.form.date);
       const { data: res } = await this.$http.post("/postcomment", this.form);
       if (res.code !== 200)
-        return this.$message.error({
+        return this.$message({
           message: `${res.tips}`,
           type: "error",
           duration: 1000,
         });
-          this.$message.success({
+          this.$message({
           message: `${res.tips}`,
           type: "success",
           duration: 1000,

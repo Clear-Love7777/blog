@@ -99,7 +99,7 @@
       <!-- 分类 -->
       <div class="rightindex">
         <ul class="rightindex-sort">
-          <li class="rightindex-title"><i class="el-icon-menu"></i> 分类</li>
+          <li class="rightindex-title"><i class="el-icon-menu"></i> 标签云</li>
           <div>
             <button
               v-for="item in sort"
@@ -111,15 +111,6 @@
             </button>
           </div>
         </ul>
-        <!-- 标签
-        <ul class="rightindex-label">
-          <li class="rightindex-title">
-            <i class="el-icon-collection-tag"></i>标签
-          </li>
-          <li  v-for="(item, index) in label"
-            v-if="index < 4"
-            :key="index" class="licontent">{{ item.label_name }}</li>
-        </ul> -->
         <!-- 最新文章 -->
         <ul class="rightindex-article">
           <li class="rightindex-title">
@@ -127,7 +118,7 @@
           </li>
           <li
             v-for="(item, index) in article"
-            v-if="index < 5"
+            v-if="index < 3"
             :key="index"
             class="licontent"
           >
@@ -140,20 +131,59 @@
             <i class="el-icon-chat-dot-round"></i> 评论专区
           </li>
           <li
-            v-for="(item, index) in  comment"
+            v-for="(item, index) in comment"
             v-if="index < 5"
             :key="index"
             class="licontent"
           >
-           {{item.username}} : {{item.content}}
+            {{ item.username }} : {{ item.content }}
           </li>
           <li class="morecomment">
-            <router-link to="/comment" 
-              ><li class="el-icon-thumb"></li>更多评论</router-link
+            <router-link to="/comment"
+              ><li class="el-icon-thumb"></li>
+              更多评论</router-link
             >
           </li>
         </ul>
       </div>
+        <!-- 右下角 -->
+      <div class="weatherBox">
+        <!-- 天气盒子 -->
+        <div class="weather">
+          <!-- <i :class="flag?'el-icon-heavy-rain backtopBlack':'el-icon-heavy-rain backtopWhite'"  -->
+          <i
+            :class="className"
+            @mouseenter="showWeather = true"
+            @mouseleave="showWeather = false"
+          ></i>
+          <div
+            v-show="showWeather"
+            @mouseenter="showWeather = true"
+            @mouseleave="showWeather = false"
+          >
+            <header>
+              <label>{{ city }}</label
+              ><span>简约天气</span>
+            </header>
+            <main>
+              <span>{{ wendu }}</span
+              ><span>{{ type }}</span>
+            </main>
+            <footer>
+              <table>
+                <tr v-for="(item, index) in weatherList" :key="index">
+                  <td align="center">{{ item.date }}</td>
+                  <td align="center">{{ item.type }}</td>
+                  <td align="center">{{ item.wendu }}</td>
+                  <td align="center">{{ item.fengxiang }}</td>
+                </tr>
+              </table>
+            </footer>
+          </div>
+        </div>
+        </div>
+      </div>
+           
     </div>
     <!-- 底部区域 -->
     <!-- <footer>
@@ -168,19 +198,47 @@
 export default {
   data() {
     return {
+      city: "", //当前城市
+      weatherList: [], //最近三天天气数据
+      wendu: "", //当天平均温度
+      type: "", //当天天气状态
+      showWeather: false,
       inputvalue: "", //搜索框数据
       sort: [], //分类数据
-      comment:[],//评论数据
+      comment: [], //评论数据
       article: [], //文章
     };
   },
-
+  computed: {
+    className() {
+      let className = "";
+      if (!this.flag) {
+        if (this.type == "晴") {
+          className = "el-icon-sunny " + "backtopWhite";
+        } else if (this.type == "多云") {
+          className = "el-icon-cloudy " + "backtopWhite";
+        } else {
+          className = "el-icon-heavy-rain " + "backtopWhite";
+        }
+      } else {
+        if (this.type == "晴") {
+          className = "el-icon-sunny " + "backtopBlack";
+        } else if (this.type == "多云") {
+          className = "el-icon-cloudy " + "backtopBlack";
+        } else {
+          className = "el-icon-heavy-rain " + "backtopBlack";
+        }
+      }
+      return className;
+    },
+  },
   created() {
     this.getSort();
     this.getNewArticles();
     this.getComment();
     //调用控制登录登出状态函数
     this.getStatus();
+      this.getLoactionCity();//初始化前获取当前地址
     //禁止鼠标右键点击
     (document.oncontextmenu = () => {
       event.returnValue = false;
@@ -197,6 +255,43 @@ export default {
     },
   },
   methods: {
+    //获取当前地址,使用jsonp解决跨域问题 (get请求)
+    async getLoactionCity() {
+       const data = await this.$jsonp('https://restapi.amap.com/v3/ip?key=b30eb9c64b4094a062fa5cce3b26496e')
+      this.city = data.city;
+      // console.log(data);
+      this.getWeather(data.city);
+    },
+    //根据城市获取城市天气
+    async getWeather(location) {
+      const { data: res } = await this.$http.get(
+        `http://wthrcdn.etouch.cn/weather_mini?city=${location}`
+      );
+      console.log(res.data);
+      if (res.status !== 1000) return this.$message.error("获取天气数据失败");
+      const value = res.data.forecast.slice(0, 3);
+      this.handleWeatherData(value);
+    },
+    //处理天气数据
+    handleWeatherData(value) {
+      value.map((item, index) => {
+        if (index == 0) {
+          item.date = "今天";
+        } else if (index == 1) {
+          item.date = "明天";
+        } else {
+          item.date = "后天";
+        }
+        item.wendu = item.low.split(" ")[1] + "/" + item.high.split(" ")[1];
+      });
+      this.weatherList = value;
+      this.wendu =
+        (Number(value[0].high.slice(3, 5)) + Number(value[0].low.slice(3, 5))) /
+          2 +
+        "℃";
+      this.type = value[0].type;
+    },
+    // 跳转到登录
     toLogin() {
       this.$router.push("/login");
     },
@@ -211,7 +306,7 @@ export default {
       res.data.reverse();
       this.article = res.data;
     },
-       async getComment() {
+    async getComment() {
       const { data: res } = await this.$http.get("getComment");
       if (res.code != 200) return this.$message.error("获取最新评论失败");
       res.data.reverse();
@@ -230,10 +325,6 @@ export default {
     reload() {
       this.$refs.article.blogAllData();
     },
-    //强制刷新页面
-    // reloadDaily(){
-    //      location.reload()
-    // },
     //路由发生改变后 禁用button按钮
     disableBtn(path) {
       var btns = document.querySelectorAll(".rightindex-sort button");
@@ -290,6 +381,15 @@ export default {
     left: 50%;
     transform: translateX(-50%);
   }
+      .weatherBox{
+        position: relative;
+        top: 83vh;
+        right: 30px;
+        box-sizing: border-box;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
 }
 #blog > header {
   section {
@@ -334,6 +434,61 @@ export default {
       }
     }
   }
+}
+#blog .weatherBox{
+    i{
+        padding: 12px 12px;
+        background-color: #eee;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: color .25s;
+    }
+    .weather{
+        position: relative;
+        >div{
+            position: absolute;
+            top: 40px;
+            left: -1px;
+            transform: translate(-100%,-100%);
+            width: 290px;
+            height: 300px;
+            border-radius: 5px;
+            padding: 10px 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background-color: rgba(0,0,0, .2);
+            backdrop-filter: blur(2px);
+            background: url(https://s1.ax1x.com/2020/10/27/BQlUt1.jpg) no-repeat center;
+            background-size: cover;
+            header{
+                display: flex;
+                justify-content: space-between;
+                color: #fff;
+                font-size: 14px;
+            }
+            main{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                color: #fff;
+                padding-bottom:10px ;
+                span:first-child{font-size: 50px;}
+                span:last-child{
+                    font-size: 14px;
+                    background-color: #1e90ff;
+                    border-radius: 5px;
+                    padding: 2px 5px;
+                }
+                border-bottom: 1px solid #fff;
+            }
+            footer{
+                color: #fff;
+                td{width: 25%;}
+            }
+        }
+        i{margin: 10px 0;}
+    }
 }
 .buttons {
   position: absolute;
@@ -437,18 +592,18 @@ main {
   box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   box-sizing: border-box;
   padding: 20px 20px;
-   li {
-  margin-bottom: 12px;
-}
-.morecomment{
-  position: relative;
-  float: right;
-  font-size: 12px;
-    a{
-       color: #000;
-        transition: color 0.5s;
+  li {
+    margin-bottom: 12px;
+  }
+  .morecomment {
+    position: relative;
+    float: right;
+    font-size: 12px;
+    a {
+      color: #000;
+      transition: color 0.5s;
     }
-}
+  }
 }
 .licontent {
   font-size: 16px;

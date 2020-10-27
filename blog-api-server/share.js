@@ -49,6 +49,7 @@ share.post('/addTasks', async ctx => {
     }
 
 })
+
 // 删除任务
 share.delete('/deleteTasks', async ctx => {
     const id = ctx.request.query.id;
@@ -70,6 +71,7 @@ share.delete('/deleteTasks', async ctx => {
     }
 
 })
+
 // 编辑任务
 share.put('/editCheat', async ctx => {
     const edit = ctx.request.body;
@@ -90,24 +92,25 @@ share.put('/editCheat', async ctx => {
         }
     }
 })
+
 //改变状态
-share.put('/doneIt',async ctx =>{
+share.put('/doneIt', async ctx => {
     const isDone = ctx.request.body.isDone;
     const id = ctx.request.body.id;
-    console.log(id,isDone);
+    // console.log(id,isDone);
     const con = await Mysql.createConnection(blog)
     const sql = `UPDATE cheat SET isDone = '${isDone}' WHERE id=${id}`
-    const [data] =await con.query(sql)
-    con.end(function(err){}) //连接结束
-    if(data.affectedRows>0){
+    const [data] = await con.query(sql)
+    con.end(function (err) {}) //连接结束
+    if (data.affectedRows > 0) {
         ctx.body = {
-            code:200,
-            tips:'修改成功'
+            code: 200,
+            tips: '修改成功'
         }
-    }else{
+    } else {
         ctx.body = {
-            code:400,
-            tips:'修改失败'
+            code: 400,
+            tips: '修改失败'
         }
     }
 })

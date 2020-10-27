@@ -1,11 +1,13 @@
-// import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store/index.js'
+import { VueJsonp } from 'vue-jsonp'
 import './assets/css/global.css'
 import './assets/css/atom-one-dark.css'
 
 
+
+Vue.use(VueJsonp)
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
 // axios.defaults.baseURL='http://47.103.205.245:9025/'

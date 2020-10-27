@@ -164,7 +164,7 @@ export default {
         pagesize: 5,
       },
       blogList: [],
-       html:'',
+      html: "",
       showMd: false,
       showTo: true,
       showBack: false,
@@ -180,7 +180,7 @@ export default {
         label_name: "",
         content: "",
       },
-     editBlogDialog: false, //控制编辑博客对话框的显示与隐藏
+      editBlogDialog: false, //控制编辑博客对话框的显示与隐藏
       oldSname: "",
       oldLname: "",
     };
@@ -197,16 +197,16 @@ export default {
     },
   },
   methods: {
-    date(time){
-            const t = new Date(time)
-            const y = t.getFullYear()
-            const m = (t.getMonth() + 1 + '').padStart(2, '0')
-            const d = (t.getDate() + '').padStart(2, '0')
-            const hh = (t.getHours() + '').padStart(2, '0')
-            const mm = (t.getMinutes() + '').padStart(2, '0')
-            const ss = (t.getSeconds() + '').padStart(2, '0')
-            return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
-        },
+    date(time) {
+      const t = new Date(time);
+      const y = t.getFullYear();
+      const m = (t.getMonth() + 1 + "").padStart(2, "0");
+      const d = (t.getDate() + "").padStart(2, "0");
+      const hh = (t.getHours() + "").padStart(2, "0");
+      const mm = (t.getMinutes() + "").padStart(2, "0");
+      const ss = (t.getSeconds() + "").padStart(2, "0");
+      return `${y}-${m}-${d} ${hh}:${mm}:${ss}`;
+    },
     //获取博客数据
     async blogAllData() {
       const { data: res } = await this.$http.post(
@@ -217,13 +217,13 @@ export default {
       this.blogList = res.data;
       this.total = res.total;
     },
-        //获取分类与标签数据
-        async getSLData(){
-            const {data:res} = await this.$http.get("blogdatadetail")
-            if(res.code != 200) return this.$message.error("获取文章失败");
-            this.sortList = res.data.data
-            this.labelList = res.data.data2
-        },
+    //获取分类与标签数据
+    async getSLData() {
+      const { data: res } = await this.$http.get("blogdatadetail");
+      if (res.code != 200) return this.$message.error("获取文章失败");
+      this.sortList = res.data.data;
+      this.labelList = res.data.data2;
+    },
     //监听pagesizes 改变的事件
     handleSizeChange(newSize) {
       this.queryInfo.pagesize = newSize;
@@ -262,7 +262,7 @@ export default {
         });
       }
       //提示修改成功
-     this.$message({
+      this.$message({
         message: `${res.tips}`,
         type: "success",
         duration: 1000,
@@ -289,12 +289,13 @@ export default {
     async updateBlog() {
       this.dealBlogForm();
       const { data: res } = await this.$http.put("updateblog", this.blogForm);
-      if (res.code != 200) return this.$message({
+      if (res.code != 200)
+        return this.$message({
           message: `${res.tips}`,
           type: "error",
           duration: 1000,
         });
-        this.$message({
+      this.$message({
         message: `${res.tips}`,
         type: "success",
         duration: 1000,
@@ -305,13 +306,15 @@ export default {
       this.editBlogDialog = false;
     },
     //处理传入后端的值
-    dealBlogForm(){
-        if(this.blogForm.sort_name == this.oldSname)
-        this.blogForm.sort_name = this.blogForm.sortId
-        if(this.blogForm.label_name == this.oldLname)
-        this.blogForm.label_name = this.blogForm.labelId
-        if(!this.blogForm.mdname.split('.').includes('md')){this.blogForm.mdname += '.md'}
-        this.blogForm.date = this.date(this.blogForm.date)
+    dealBlogForm() {
+      if (this.blogForm.sort_name == this.oldSname)
+        this.blogForm.sort_name = this.blogForm.sortId;
+      if (this.blogForm.label_name == this.oldLname)
+        this.blogForm.label_name = this.blogForm.labelId;
+      if (!this.blogForm.mdname.split(".").includes("md")) {
+        this.blogForm.mdname += ".md";
+      }
+      this.blogForm.date = this.date(this.blogForm.date);
     },
   },
 };
@@ -328,25 +331,25 @@ export default {
 .el-row {
   margin-top: 15px;
 }
-.el-dialog .el-row{
-   .textarea{
-       height: 500px;
-       margin-top: 20px;
-   }
-   .md{
-       height: 500px;
-       border-radius: 4px;
-       padding: 0 5px; 
-       margin-top: 20px;
-       border: 1px solid #DCDFE6;
-       overflow-y: scroll;
-       overflow-x: hidden;
-   }
-}
-.el-form{
+.el-dialog .el-row {
+  .textarea {
+    height: 500px;
     margin-top: 20px;
+  }
+  .md {
+    height: 500px;
+    border-radius: 4px;
+    padding: 0 5px;
+    margin-top: 20px;
+    border: 1px solid #dcdfe6;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
 }
-.el-pagination{
+.el-form {
+  margin-top: 20px;
+}
+.el-pagination {
   margin-top: 10px;
 }
 </style>

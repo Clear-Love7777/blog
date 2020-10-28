@@ -10,14 +10,27 @@
         <nav>
           <li>
             <router-link to="/articles" @click.native="reload"
-              ><i class="el-icon-s-home"></i>主页</router-link
+              ><svg class="homeicon">
+                  <use xlink:href="#icon-home"></use>
+                </svg>主页</router-link
+            >
+          </li>
+            <li>
+            <router-link to="/messageBoard"
+              ><i class="el-icon-edit"></i> 留言板</router-link
             >
           </li>
           <li>
-            <router-link to="/share"
-              ><i class="el-icon-s-order"></i> 分享</router-link
+            <router-link to="/other"
+              ><i class="el-icon-more-outline"></i> 其他</router-link
             >
           </li>
+           <!-- <li>
+            <router-link to="/header"
+              ><i class="el-icon-more-outline"></i> 头部</router-link
+            >
+          </li> -->
+         
           <div class="buttons">
             <el-button
               type="primary"
@@ -238,7 +251,7 @@ export default {
     this.getComment();
     //调用控制登录登出状态函数
     this.getStatus();
-      this.getLoactionCity();//初始化前获取当前地址
+    this.getLoactionCity(); //初始化前获取当前地址
     //禁止鼠标右键点击
     (document.oncontextmenu = () => {
       event.returnValue = false;
@@ -257,7 +270,9 @@ export default {
   methods: {
     //获取当前地址,使用jsonp解决跨域问题 (get请求)
     async getLoactionCity() {
-       const data = await this.$jsonp('https://restapi.amap.com/v3/ip?key=b30eb9c64b4094a062fa5cce3b26496e')
+      const data = await this.$jsonp(
+        "https://restapi.amap.com/v3/ip?key=b30eb9c64b4094a062fa5cce3b26496e"
+      );
       this.city = data.city;
       // console.log(data);
       this.getWeather(data.city);
@@ -267,7 +282,7 @@ export default {
       const { data: res } = await this.$http.get(
         `http://wthrcdn.etouch.cn/weather_mini?city=${location}`
       );
-      console.log(res.data);
+      // console.log(res.data);
       if (res.status !== 1000) return this.$message.error("获取天气数据失败");
       const value = res.data.forecast.slice(0, 3);
       this.handleWeatherData(value);
@@ -381,15 +396,15 @@ export default {
     left: 50%;
     transform: translateX(-50%);
   }
-      .weatherBox{
-        position: relative;
-        top: 83vh;
-        right: 30px;
-        box-sizing: border-box;
-        height: 100vh;
-        display: flex;
-        flex-direction: column;
-    }
+  .weatherBox {
+    position: relative;
+    top: 83vh;
+    right: 30px;
+    box-sizing: border-box;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
 }
 #blog > header {
   section {
@@ -415,6 +430,10 @@ export default {
         transition: color 0.25s;
       }
     }
+    .buttons {
+      position: absolute;
+      right: 180px;
+    }
   }
   nav {
     display: flex;
@@ -435,65 +454,69 @@ export default {
     }
   }
 }
-#blog .weatherBox{
-    i{
-        padding: 12px 12px;
-        background-color: #eee;
-        border-radius: 50%;
-        cursor: pointer;
-        transition: color .25s;
-    }
-    .weather{
-        position: relative;
-        >div{
-            position: absolute;
-            top: 40px;
-            left: -1px;
-            transform: translate(-100%,-100%);
-            width: 290px;
-            height: 300px;
-            border-radius: 5px;
-            padding: 10px 10px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            background-color: rgba(0,0,0, .2);
-            backdrop-filter: blur(2px);
-            background: url(https://s1.ax1x.com/2020/10/27/BQlUt1.jpg) no-repeat center;
-            background-size: cover;
-            header{
-                display: flex;
-                justify-content: space-between;
-                color: #fff;
-                font-size: 14px;
-            }
-            main{
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                color: #fff;
-                padding-bottom:10px ;
-                span:first-child{font-size: 50px;}
-                span:last-child{
-                    font-size: 14px;
-                    background-color: #1e90ff;
-                    border-radius: 5px;
-                    padding: 2px 5px;
-                }
-                border-bottom: 1px solid #fff;
-            }
-            footer{
-                color: #fff;
-                td{width: 25%;}
-            }
+#blog .weatherBox {
+  i {
+    padding: 12px 12px;
+    background-color: #eee;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: color 0.25s;
+  }
+  .weather {
+    position: relative;
+    > div {
+      position: absolute;
+      top: 40px;
+      left: -1px;
+      transform: translate(-100%, -100%);
+      width: 290px;
+      height: 300px;
+      border-radius: 5px;
+      padding: 10px 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background-color: rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(2px);
+      background: url(https://s1.ax1x.com/2020/10/27/BQlUt1.jpg) no-repeat
+        center;
+      background-size: cover;
+      header {
+        display: flex;
+        justify-content: space-between;
+        color: #fff;
+        font-size: 14px;
+      }
+      main {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #fff;
+        padding-bottom: 10px;
+        span:first-child {
+          font-size: 50px;
         }
-        i{margin: 10px 0;}
+        span:last-child {
+          font-size: 14px;
+          background-color: #1e90ff;
+          border-radius: 5px;
+          padding: 2px 5px;
+        }
+        border-bottom: 1px solid #fff;
+      }
+      footer {
+        color: #fff;
+        td {
+          width: 25%;
+        }
+      }
     }
+    i {
+      margin: 10px 0;
+    }
+  }
 }
-.buttons {
-  position: absolute;
-  right: 180px;
-}
+
 .el-button {
   width: 60px;
   height: 35px;

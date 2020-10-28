@@ -9,6 +9,7 @@
   const router = new Router()
   const cors = require("koa2-cors")
   app.use(cors()) //解决跨域问题
+  
   const staticServer = require('koa-static');
   app.use(staticServer(__dirname, 'static'));
   app.use(Body())

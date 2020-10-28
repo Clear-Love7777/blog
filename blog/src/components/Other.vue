@@ -1,27 +1,34 @@
 <template>
   <div id="blog">
+    <Header></Header>
     <!-- 头部导航 -->
-    <header>
+    <!-- <header>
       <section>
         <a href="javascript:void(0);">
           <img src="..\assets\logo.jpg" alt="" />
           <span>June</span>
         </a>
         <nav>
-          <li>
-            <router-link to="/articles"
-              ><i class="el-icon-s-home"></i>主页</router-link
+            <li>
+             <router-link to="/articles" 
+              ><svg class="homeicon">
+                  <use xlink:href="#icon-home"></use>
+                </svg>主页</router-link
+            >
+          </li>
+            <li>
+            <router-link to="/messageBoard"
+              ><i class="el-icon-edit"></i> 留言板</router-link
             >
           </li>
           <li>
-            <router-link to="/share"
-              ><i class="el-icon-s-order"></i> 分享</router-link
+            <router-link to="/other"
+              ><i class="el-icon-more-outline"></i> 其他</router-link
             >
-          </li>
           </li>
         </nav>
       </section>
-    </header>
+    </header> -->
         <el-container> 
        <!-- 侧边栏 -->
       <el-aside :width="isCollapse ? '64px':'200px'">
@@ -53,12 +60,16 @@
   </div>
 </template>
 <script>
+import Header from '../public/Header'
 export default {
   data() {
     return {
       //是否折叠
       isCollapse: false,
     };
+  },
+   components:{
+     Header
   },
   created() {},
   methods: {
@@ -71,60 +82,60 @@ export default {
 </script>
 
 <style lang="less" scoped>
-#blog {
-  width: 100vw;
-  min-height: 100vh;
-  position: relative;
-  > header {
-    min-height: 60px;
-    background-color: rgba(255, 255, 255, 0.4);
-    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-  }
-}
-#blog > header {
-  section {
-    width: 80vw;
-    margin: 0 auto;
-    display: flex;
-    a {
-      display: flex;
-      align-items: center;
-      margin-right: 1vw;
-      &:hover span {
-        color: #1e90ff;
-      }
-      img {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        margin-right: 20px;
-      }
-      span {
-        color: #000;
-        font-size: 20px;
-        transition: color 0.25s;
-      }
-    }
-  }
-  nav {
-    display: flex;
-    list-style: none;
-    line-height: 60px;
-    li {
-      a {
-        color: #000;
-        transition: color 0.5s;
-        &:hover {
-          color: #1e90ff !important;
-        }
-        font-size: 15px;
-        > i {
-          margin-right: 2px;
-        }
-      }
-    }
-  }
-}
+// #blog {
+//   width: 100vw;
+//   min-height: 100vh;
+//   position: relative;
+//   > header {
+//     min-height: 60px;
+//     background-color: rgba(255, 255, 255, 0.4);
+//     box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+//   }
+// }
+// #blog > header {
+//   section {
+//     width: 80vw;
+//     margin: 0 auto;
+//     display: flex;
+//     a {
+//       display: flex;
+//       align-items: center;
+//       margin-right: 1vw;
+//       &:hover span {
+//         color: #1e90ff;
+//       }
+//       img {
+//         width: 40px;
+//         height: 40px;
+//         border-radius: 50%;
+//         margin-right: 20px;
+//       }
+//       span {
+//         color: #000;
+//         font-size: 20px;
+//         transition: color 0.25s;
+//       }
+//     }
+//   }
+//   nav {
+//     display: flex;
+//     list-style: none;
+//     line-height: 60px;
+//     li {
+//       a {
+//         color: #000;
+//         transition: color 0.5s;
+//         &:hover {
+//           color: #1e90ff !important;
+//         }
+//         font-size: 15px;
+//         > i {
+//           margin-right: 2px;
+//         }
+//       }
+//     }
+//   }
+// }
 
 .el-container {
   height: 100vh;

@@ -1,6 +1,5 @@
 // import Vue from 'vue'
 // import VueRouter from 'vue-router'
-
 const Home = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/Home.vue')
 const Articles = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/Articles.vue')
 const Content = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/Content.vue')
@@ -13,6 +12,7 @@ const Cheat = () => import( /* webpackChunkName: "homepage_notfound" */ '../comp
 const MessageBoard = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/MessageBoard.vue')
 const Header = () => import( /* webpackChunkName: "homepage_notfound" */ '../public/Header.vue')
 const Editor = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/Editor.vue')
+const Link = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/Link.vue')
 
 
 
@@ -73,6 +73,10 @@ const routes = [{
   {
     path:'/editor',
     component:Editor
+  },
+  {
+    path:'/link',
+    component:Link
   },
 ]
 

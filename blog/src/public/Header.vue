@@ -16,8 +16,13 @@
             >
           </li>
             <li>
-            <router-link to="/messageBoard"
+            <router-link to="/messageBoard" 
               ><i class="el-icon-edit"></i> 留言板</router-link
+            >
+          </li>
+            <li>
+            <router-link to="/link"
+              ><i class="el-icon-connection"></i> 友情链接</router-link
             >
           </li>
           <li>
@@ -25,8 +30,9 @@
               ><i class="el-icon-more-outline"></i> 其他</router-link
             >
           </li>
+          
          
-          <div class="buttons">
+          <!-- <div class="buttons">
             <el-button
               type="primary"
               plain
@@ -43,7 +49,7 @@
               v-show="btnLogout"
               >退出</el-button
             >
-          </div>
+          </div> -->
         </nav>
       </section>
     </header>

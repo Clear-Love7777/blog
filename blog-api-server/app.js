@@ -22,8 +22,7 @@
     if (url !== '/updateblog' && url !== '/addblog' && url !== '/addcount' &&
       url !== '/addSort' && url !== '/deleteSort' && url !== '/editSort' &&
       url !== '/addLabel' && url !== '/deleteLabel' && url !== '/editLabel' &&
-      url !== '/deleteArticle' && url !== '/postcomment' && url !== '/deleteComment' &&
-      url !== '/addTasks' && url !== '/deleteTasks' && url !== '/editCheat') {
+      url !== '/deleteArticle' && url !== '/postcomment' && url !== '/deleteComment'  && url !== '/deleteTasks' && url !== '/editCheat') {
       return await next()
     }
 
@@ -31,8 +30,8 @@
     if ((url === '/updateblog' || url === '/addblog' || url === '/addcount' ||
         url === '/addSort' || url === '/deleteSort' || url === '/editSort' ||
         url === '/addLabel' || url === '/deleteLabel' || url === '/editLabel' ||
-        url === '/deleteArticle' || url === '/postcomment' || url === '/deleteComment' ||
-        url === '/addTasks' || url === '/deleteTasks' || url === '/editCheat') && (token !== 'null')) {
+        url === '/deleteArticle' || url === '/postcomment' || url === '/deleteComment'
+        || url === '/deleteTasks' || url === '/editCheat') && (token !== 'null')) {
       jwt.verify(token, 'I_LOVE_LIFE', (error, decoded) => {
         if (error) {
           return ctx.body = {
@@ -47,8 +46,8 @@
     if ((url === '/updateblog' || url === '/addblog' || url === '/addcount' ||
         url === '/addSort' || url === '/deleteSort' || url === '/editSort' ||
         url === '/addLabel' || url === '/deleteLabel' || url === '/editLabel' ||
-        url === '/deleteArticle' || url === '/postcomment' || url === '/deleteComment' ||
-        url === '/addTasks' || url === '/deleteTasks' || url === '/editCheat') && (token == 'null')) {
+        url === '/deleteArticle' || url === '/postcomment' || url === '/deleteComment' 
+         || url === '/deleteTasks' || url === '/editCheat') && (token == 'null')) {
       return ctx.body = {
         code: '444',
         tips: "该功能只有登录用户可以使用",
@@ -65,6 +64,9 @@
 
   const share = require("./share.js")
   app.use(share.routes())
+
+  const other = require("./other.js")
+  app.use(other.routes())
 
   // app.use(router.routes())
   // app.listen(9025,() => {                                                                          

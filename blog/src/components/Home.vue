@@ -16,8 +16,13 @@
             >
           </li>
             <li>
-            <router-link to="/messageBoard"
+            <router-link to="/messageBoard"   @click.native="messagereload"
               ><i class="el-icon-edit"></i> 留言板</router-link
+            >
+          </li>
+             <li>
+            <router-link to="/link"
+              ><i class="el-icon-connection"></i> 友情链接</router-link
             >
           </li>
           <li>
@@ -339,6 +344,9 @@ export default {
     //重载 调用子组件中方法重新获取博客数据
     reload() {
       this.$refs.article.blogAllData();
+    },
+    messagereload(){
+      location.reload()
     },
     //路由发生改变后 禁用button按钮
     disableBtn(path) {

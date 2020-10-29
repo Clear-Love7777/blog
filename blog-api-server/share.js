@@ -1,8 +1,8 @@
 const Router = require("koa-router")
 const Mysql = require("promise-mysql2")
 const blog = require("./mysql.js")
-
 const share = new Router()
+
 //获取任务
 share.get('/getTasks', async ctx => {
     const con = await Mysql.createConnection(blog) //连接数据库
@@ -25,10 +25,9 @@ share.get('/getTasks', async ctx => {
 
 //添加任务
 share.post('/addTasks', async ctx => {
-    const data = ctx.request.body
+    // const data = ctx.request.body
     const value = ctx.request.body.value
     const isDone = ctx.request.body.isDone
-    const isEditing = ctx.request.body.isEditing
     const date = ctx.request.body.date
     // console.log(data);
     const con = await Mysql.createConnection(blog)

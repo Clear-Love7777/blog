@@ -88,7 +88,7 @@
 export default {
   data() {
     return {
-      title: "我的备忘录",
+      title: "每日备忘录",
       note: "点击添加新计划 !",
       //控制编辑对话框显示和隐藏
       editFormVisible: false,

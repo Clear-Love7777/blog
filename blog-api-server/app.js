@@ -22,7 +22,9 @@
     if (url !== '/updateblog' && url !== '/addblog' && url !== '/addcount' &&
       url !== '/addSort' && url !== '/deleteSort' && url !== '/editSort' &&
       url !== '/addLabel' && url !== '/deleteLabel' && url !== '/editLabel' &&
-      url !== '/deleteArticle' && url !== '/postcomment' && url !== '/deleteComment'  && url !== '/deleteTasks' && url !== '/editCheat') {
+      url !== '/deleteArticle' && url !== '/postcomment' && url !== '/deleteComment'  
+      && url !== '/deleteTasks' && url !== '/editCheat'&& url !== '/editMessages' && url !== '/deleteMessage'
+      && url !== '/editLinks' && url !== '/deleteLink') {
       return await next()
     }
 
@@ -31,7 +33,8 @@
         url === '/addSort' || url === '/deleteSort' || url === '/editSort' ||
         url === '/addLabel' || url === '/deleteLabel' || url === '/editLabel' ||
         url === '/deleteArticle' || url === '/postcomment' || url === '/deleteComment'
-        || url === '/deleteTasks' || url === '/editCheat') && (token !== 'null')) {
+        || url === '/deleteTasks' || url === '/editCheat' || url === '/editMessages' || url === '/deleteMessage'
+        || url === '/editLinks' || url === '/deleteLink') && (token !== 'null')) {
       jwt.verify(token, 'I_LOVE_LIFE', (error, decoded) => {
         if (error) {
           return ctx.body = {
@@ -47,7 +50,8 @@
         url === '/addSort' || url === '/deleteSort' || url === '/editSort' ||
         url === '/addLabel' || url === '/deleteLabel' || url === '/editLabel' ||
         url === '/deleteArticle' || url === '/postcomment' || url === '/deleteComment' 
-         || url === '/deleteTasks' || url === '/editCheat') && (token == 'null')) {
+         || url === '/deleteTasks' || url === '/editCheat'|| url === '/editMessages' || url === '/deleteMessage'
+         || url === '/editLinks' || url === '/deleteLink' ) && (token == 'null')) {
       return ctx.body = {
         code: '444',
         tips: "该功能只有登录用户可以使用",

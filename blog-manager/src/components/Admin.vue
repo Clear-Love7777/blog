@@ -38,6 +38,12 @@
           <el-menu-item index="commentmessages">
             <span slot="title">评论信息</span>
           </el-menu-item>
+          <el-menu-item index="leaveMessage">
+            <span slot="title">留言信息</span>
+          </el-menu-item>
+          <el-menu-item index="links">
+            <span slot="title">友情链接</span>
+          </el-menu-item>
           <el-menu-item index="publishblog">
             <span slot="title">发布博客</span>
           </el-menu-item>

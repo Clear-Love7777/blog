@@ -91,7 +91,7 @@
                 </div>
               </div>
             </el-row>
-            <el-row :class="isShow">没有更多了~</el-row>
+            <el-row class="nomore">没有更多了~</el-row>
           </scroll-page>
         </el-card>
       </div>
@@ -139,7 +139,6 @@ export default {
       total: "",
       loading: false,
       noData: false,
-      isShow: "hide",
     };
   },
   components: {
@@ -322,5 +321,9 @@ export default {
   .writeTime {
     margin-left: auto;
   }
+}
+.nomore{
+  margin-top:10px ;
+ text-align: center;
 }
 </style>

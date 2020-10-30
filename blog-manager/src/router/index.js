@@ -8,6 +8,10 @@ import Sortmessages from '../components/Sortmessages.vue'
 import Labelmessages from '../components/Labelmessages.vue'
 import Commentmessages from '../components/Commentmessages.vue'
 import Publishblog from '../components/Publishblog.vue'
+import Links from '../components/Links.vue'
+import LeaveMessage from '../components/LeaveMessage.vue'
+
+
 Vue.use(VueRouter)
 
 
@@ -26,6 +30,8 @@ const router = new VueRouter({
      {path:'/labelmessages',component:Labelmessages},
      {path:'/commentmessages',component:Commentmessages},
      {path:'/publishblog',component:Publishblog},
+     {path:'/links',component:Links},
+     {path:'/leaveMessage',component:LeaveMessage},
   ]
   }
   ]

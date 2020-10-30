@@ -26,11 +26,11 @@ other.get('/getMessages',async ctx =>{
 //留言
 other.post('/submitAllMessage',async ctx=>{
     // const data = ctx.request.body
+     // console.log(data);
     const name = ctx.request.body.nickname
     const time = ctx.request.body.date
     const content = ctx.request.body.content
     const email = ctx.request.body.email
-    // console.log(data);
     const con = await Mysql.createConnection(blog) //连接数据库
     const sql = `INSERT INTO message (nickname,create_time,content,email) VALUE
     ('${name}','${time}','${content}','${email}')`
@@ -48,8 +48,50 @@ other.post('/submitAllMessage',async ctx=>{
         }
     }
 })
-
-
+//获取友情链接
+other.get('/getLinkList',async ctx =>{
+    const con = await Mysql.createConnection(blog) //连接数据库
+    const sql =`SELECT * FROM link`
+    const [data] = await con.query(sql)
+    con.end(function(err){})  //连接结束
+    if(data.length>=0){
+        ctx.body = {
+            code:200,
+            tips:"获取数据成功",
+            data
+        }
+    }else{
+        ctx.body = {
+            code:400,
+            tips:"获取数据失败"
+        }
+    }
+})
+//申请友链
+other.post('/submitLinks', async ctx =>{
+    // const data = ctx.request.body;
+    // console.log(data);
+    const name = ctx.request.body.linkname;
+    const introduction = ctx.request.body.introduction;
+    const href = ctx.request.body.href;
+    const email = ctx.request.body.email;
+    const con = await Mysql.createConnection(blog) //连接数据库
+    const sql =`INSERT INTO link (linkname,introduction,href,email) VALUE
+    ('${name}','${introduction}','${href}','${email}')` 
+    const [rs] = await con.query(sql)
+    con.end(function(err){}) //连接结束
+    if(rs.affectedRows >0){
+        ctx.body = {
+            code:200,
+            tips:'申请成功'
+        }
+    }else{
+        ctx.body = {
+            code:400,
+            tips:'申请失败'
+        }
+    }
+})
 
 
 

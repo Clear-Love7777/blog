@@ -10,8 +10,8 @@ const Comment = () => import( /* webpackChunkName: "homepage_notfound" */ '../co
 const Introduction = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/Introduction.vue')
 const Cheat = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/Cheat.vue')
 const MessageBoard = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/MessageBoard.vue')
-const Header = () => import( /* webpackChunkName: "homepage_notfound" */ '../public/Header.vue')
-const ApplyLink = () => import( /* webpackChunkName: "homepage_notfound" */ '../public/ApplyLink.vue')
+const Header = () => import( /* webpackChunkName: "homepage_notfound" */ '../publicvue/Header.vue')
+const ApplyLink = () => import( /* webpackChunkName: "homepage_notfound" */ '../publicvue/ApplyLink.vue')
 const Editor = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/Editor.vue')
 const Link = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/Link.vue')
 

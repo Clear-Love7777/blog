@@ -101,7 +101,7 @@
 <script>
 import Avatar from "vue-avatar";
 import Editor from "./Editor";
-import Header from "../public/Header";
+import Header from "../publicvue/Header";
 export default {
   data() {
     return {

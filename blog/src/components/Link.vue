@@ -23,8 +23,8 @@
 </template>
 
 <script>
-import Header from "../public/Header";
-import ApplyLink from "../public/ApplyLink";
+import Header from "../publicvue/Header";
+import ApplyLink from "../publicvue/ApplyLink";
 export default {
   data() {
     return {

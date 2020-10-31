@@ -60,7 +60,7 @@
   </div>
 </template>
 <script>
-import Header from '../public/Header'
+import Header from '../publicvue/Header'
 export default {
   data() {
     return {

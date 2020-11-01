@@ -8,6 +8,7 @@ const Login = () => import( /* webpackChunkName: "homepage_notfound" */ '../comp
 const Register = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/Register.vue')
 const Comment = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/Comment.vue')
 const Introduction = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/Introduction.vue')
+const HotTop = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/HotTop.vue')
 const Cheat = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/Cheat.vue')
 const MessageBoard = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/MessageBoard.vue')
 const Header = () => import( /* webpackChunkName: "homepage_notfound" */ '../publicvue/Header.vue')
@@ -52,6 +53,10 @@ const routes = [{
       {
         path: '/cheat',
         component: Cheat
+      },
+      {
+        path: '/hotTop',
+        component: HotTop
       },
     ]
   },

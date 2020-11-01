@@ -181,6 +181,11 @@ export default {
           type: "error",
           duration: 1000,
         });
+          this.$message({
+          message: `${res.tips}`,
+          type: "success",
+          duration: 1000,
+        });
       this.blogForm = {
         title: "",
         introduce: "",

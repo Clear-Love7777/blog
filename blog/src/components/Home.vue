@@ -203,12 +203,6 @@
       </div>
            
     </div>
-    <!-- 底部区域 -->
-    <!-- <footer>
-      <section>
-        <p>Copyright © 2020 - 2021 Designed by June</p>
-      </section>
-    </footer> -->
   </div>
 </template>
 
@@ -346,7 +340,7 @@ export default {
       this.$refs.article.blogAllData();
     },
     messagereload(){
-      location.reload()
+     location.reload();
     },
     //路由发生改变后 禁用button按钮
     disableBtn(path) {
@@ -386,32 +380,15 @@ export default {
 
 <style lang="less" scoped>
 #blog {
-  width: 100vw;
-  min-height: 100vh;
+  width: 100%;
+  height: 100%;
   // background-color: #f5f8f9;
   position: relative;
   > header {
+    width:100%;
     min-height: 60px;
     background-color: rgba(255, 255, 255, 0.4);
     box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-  }
-  > footer {
-    width: 440px;
-    box-sizing: border-box;
-    position: relative;
-    margin-top: 20px;
-    bottom: 0px;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  .weatherBox {
-    position: relative;
-    top: 83vh;
-    right: 30px;
-    box-sizing: border-box;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
   }
 }
 #blog > header {
@@ -440,7 +417,7 @@ export default {
     }
     .buttons {
       position: absolute;
-      right: 180px;
+      right: 10%;
     }
   }
   nav {
@@ -463,6 +440,13 @@ export default {
   }
 }
 #blog .weatherBox {
+      position: fixed;
+    top: 90%;
+    right: 9%;
+    box-sizing: border-box;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
   i {
     padding: 12px 12px;
     background-color: #eee;
@@ -477,8 +461,8 @@ export default {
       top: 40px;
       left: -1px;
       transform: translate(-100%, -100%);
-      width: 290px;
-      height: 300px;
+      width: 280px;
+      height: 280px;
       border-radius: 5px;
       padding: 10px 10px;
       display: flex;
@@ -496,6 +480,8 @@ export default {
         font-size: 14px;
       }
       main {
+        height:100vh;
+        width:100vw;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -512,12 +498,10 @@ export default {
         }
         border-bottom: 1px solid #fff;
       }
-      footer {
-        color: #fff;
-        td {
-          width: 25%;
-        }
-      }
+        footer{
+                color: #fff;
+                td{width: 25%;}
+            }
     }
     i {
       margin: 10px 0;
@@ -534,33 +518,33 @@ export default {
 }
 .main {
   display: flex;
-  width: 1500px;
-  height: 100vh;
+  min-width: 80%;
+  max-width: 80%;
+  height: 100%;
   margin: 0 auto;
 }
-main {
-  margin-top: 50px;
-}
+
 .mainindex {
   flex: 1;
 }
 .Qecard {
-  margin-top: 125px;
+  top: 42%;
+  left:-8%;
   position: absolute;
   display: none;
 }
 .Qecard img {
-  width: 175px;
-  height: 175px;
+  width: 25%;
+  height:  25%;
 }
 .wechat:hover .Qecard {
   display: block;
 }
 .leftindex {
-  width: 250px;
+  width: 19%;
   margin-top: 20px;
   text-align: center;
-  height: 350px;
+  height: 23.5%;
   background-color: rgba(255, 255, 255, 0.4);
   border-radius: 10px;
   box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.12);
@@ -568,13 +552,13 @@ main {
   color: #000;
 }
 .searchlabel input {
-  width: 200px;
+  width: 80%;
   height: 30px;
   border-radius: 5px;
   background-image: url(../assets/search.png);
   background-size: 25px 25px;
   background-repeat: no-repeat;
-  background-position: 175px 2px;
+  background-position:95% 2px;
   font-size: 16px;
 }
 .searchlabel img {
@@ -582,8 +566,8 @@ main {
 }
 .leftindex .touxiang {
   display: block;
-  width: 125px;
-  height: 125px;
+  width: 40%;
+  height: 40%;
   border-radius: 50%;
   margin: 20px auto 0px;
 }
@@ -600,7 +584,7 @@ main {
 
 .icon-edit {
   margin-top: 25px;
-  margin-left: 40px;
+  margin-left: 19%;
   float: left;
 }
 
@@ -608,8 +592,8 @@ main {
   font-size: 12px;
 }
 .rightindex {
-  height: 100vh;
-  width: 350px;
+  height: 100%;
+  width: 22%;
 }
 .rightindex-title {
   font-size: 16px;
@@ -640,11 +624,10 @@ main {
   font-size: 16px;
   color: grey;
 }
-.rightindex-sort {
+.rightindex-sort{
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  width: 350px;
   button {
     margin-top: 10px;
     margin-right: 15px;

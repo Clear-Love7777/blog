@@ -42,7 +42,7 @@
       <span class="add-item" @click="addIt">{{ note }}</span>
     </p>
     <!-- 编辑任务 -->
-    <el-dialog title="任务" :visible.sync="editFormVisible">
+    <el-dialog title="任务" :visible.sync="editFormVisible" :modal-append-to-body='false'>
       <el-form :model="editCheatForm">
         <el-form-item label="任务">
           <el-input v-model="editCheatForm.value"></el-input>
@@ -57,7 +57,7 @@
       </div>
     </el-dialog>
     <!-- 添加任务对话框 -->
-    <el-dialog title="任务" :visible.sync="dialogFormVisible">
+    <el-dialog title="任务" :visible.sync="dialogFormVisible" :modal-append-to-body='false'>
       <el-form :model="addingDraft">
         <el-form-item>
           <el-input

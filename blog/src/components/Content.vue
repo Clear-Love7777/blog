@@ -27,7 +27,7 @@
     </div>
    
     <!-- 评论对话框 -->
-    <el-dialog title="评论" :visible.sync="dialogFormVisible">
+    <el-dialog title="评论" :visible.sync="dialogFormVisible" :modal-append-to-body='false'>
       <el-form :model="form">
         <el-form-item :label-width="formLabelWidth">
           <el-input
@@ -147,8 +147,9 @@ export default {
 <style lang="less" scoped>
 @import "../assets/css/md.css";
 #content {
-  max-width: 95%;
-  min-width: 95%;
+  
+  max-width: 100%;
+  min-width: 100%;
   margin: auto;
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 10px;

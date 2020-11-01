@@ -113,7 +113,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style>
 .editor {
     line-height: normal !important;
     height: 800px;

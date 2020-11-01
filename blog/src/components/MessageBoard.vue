@@ -45,10 +45,10 @@
                 label="内容"
                 prop="content"
               >
-                <Editor
+                <editor
                   :value="ruleForm.content"
                   @listenToChildEvent="showMsgFromChild"
-                ></Editor>
+                ></editor>
               </el-form-item>
             </el-row>
             <el-row>
@@ -106,7 +106,7 @@ export default {
   data() {
     return {
       rules: {
-        name: [
+        nickname: [
           { required: true, message: "请输入昵称", trigger: "blur" },
           {
             min: 3,

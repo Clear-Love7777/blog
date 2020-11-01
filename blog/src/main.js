@@ -4,7 +4,8 @@ import store from './store/index.js'
 import { VueJsonp } from 'vue-jsonp'
 import './assets/css/global.css'
 import './assets/css/atom-one-dark.css'
-
+import  "../static/js/canvas-ribbon"
+import "../static/js/clicklove"
 
 
 Vue.use(VueJsonp)

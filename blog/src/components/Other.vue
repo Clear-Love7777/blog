@@ -48,9 +48,9 @@
          <el-menu-item index="cheat">
         <span slot="title">备忘录</span>
       </el-menu-item>
-    <el-menu-item index="hotTop">
+    <!-- <el-menu-item index="hotTop">
         <span slot="title">热读榜</span>
-      </el-menu-item>
+      </el-menu-item> -->
 
     </el-menu>
      </el-aside>

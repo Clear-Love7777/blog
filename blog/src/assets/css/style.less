@@ -1,0 +1,80 @@
+// 设置常见的屏幕尺寸 修改里面的html文字大小
+a {
+	text-decoration: none;
+}
+
+// 一定要写到最上面 样式有层叠性
+html {
+	font-size: 16px;
+}
+
+// 我们此次定义的划分的份数 为 120
+@no: 120;
+.header2{display: none;}
+//小于1024 隐藏头像
+@media (max-width:1024px) {
+	.leftindex {
+		display: none;
+	}
+}
+// 小于900隐藏
+@media (max-width:900px) {
+	.rightindex {
+		display: none;
+	}
+	header {
+       display:none;
+	}
+	.header2{
+		display: block;
+	}
+}
+
+
+//字体设置
+@media screen and (min-width: 375px){
+
+ }
+//1024
+
+@media (min-width:1024px) {
+	html {
+		font-size: 1280px/@no;
+	}
+}
+//1100
+@media (min-width:1100px) {
+	html {
+		font-size: 1280px/@no;
+	}
+}
+//1280
+@media (min-width:1280px) {
+	html {
+		font-size: 1280px/@no;
+	}
+}
+//1360
+@media (min-width:1366px) {
+	html {
+		font-size: 1366px/@no;
+	}
+}
+//1440
+@media (min-width:1440px) {
+	html {
+		font-size: 1440px/@no;
+	}
+}
+//1680
+@media (min-width:1680px) {
+	html {
+		font-size: 1680px/@no;
+	}
+}
+//1920
+@media (min-width:1920px) {
+	html {
+		font-size: 1920px/@no;
+	}
+}

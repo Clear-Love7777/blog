@@ -146,6 +146,7 @@ export default {
 
 <style lang="less" scoped>
 @import "../assets/css/md.css";
+
 #content {
   
   max-width: 100%;

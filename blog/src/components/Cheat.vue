@@ -254,11 +254,12 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style  lang="less" scoped>
+@no:15;
 #cheat {
   position: relative;
   display: inline-block;
-  min-height: 300px;
+  min-height: 300rem/@no;
   background-color: rgba(255, 255, 255, 0.4);
   border-radius: 8px;
   box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
@@ -269,7 +270,7 @@ export default {
 .line {
   border: 1px solid #ddd;
   margin: 10px 0;
-  width: 800px;
+  width: 800rem/@no;
 }
 h2 {
   font-size: 25px;
@@ -288,14 +289,14 @@ p > span.add-item {
   text-decoration: underline;
 }
 p > span.add-item:hover {
-  font-size: 16px;
+  font-size: 16rem/@no;
   color: orange;
   font-weight: bold;
   text-decoration: none;
 }
 .cheatdate {
-  font-size: 12px;
-  margin-left: 50px;
+  font-size: 12rem/@no;
+  margin-left: 50rem/@no;
 }
 .buttons {
   float: right;

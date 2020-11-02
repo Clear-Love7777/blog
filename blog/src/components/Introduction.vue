@@ -29,30 +29,31 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@no:15;
 #me {
  white-space: nowrap;
  display: inline-block;
-  height: 380px;
+  height: 380rem/@no;
   background-color: rgba(255, 255, 255, 0.4);
-  border-radius: 8px;
-  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-  padding: 20px 20px;
+  border-radius: 8rem/@no;
+  box-shadow: 0 2rem/@no 10rem/@no 0 rgba(0, 0, 0, 0.12);
+  padding: 20rem/@no 20rem/@no;
   box-sizing: border-box;
   color: #000;
   h1 {
-    font-size: 30px;
+    font-size: 30rem/@no;
   }
   .line {
     border: 1px solid #ddd;
-    margin: 10px 0;
+    margin: 10rem/@no 0;
   }
   nav {
     li {
-      margin: 10px 0;
+      margin: 10rem/@no 0;
     }
   }
   .title {
-    font-size: 18px;
+    font-size: 18rem/@no;
     font-weight: bold;
     color: darkcyan;
   }

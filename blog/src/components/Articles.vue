@@ -52,7 +52,7 @@ export default {
         //当前每页显示多少条数据
         pagesize: 5,
       },
-      total:0,
+      total: 0,
       blogList: [],
     };
   },
@@ -103,40 +103,45 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@no:15;
 .mainindex {
   width: 100%;
+  flex-wrap: wrap;
   flex-direction: column;
   .mainindex-title {
     color: black;
-    font-size: 25px;
+    font-size: 24rem/@no;
   }
   .content span {
-    margin-left: 5px;
-    font-size: 14px;
+    margin-left: 5rem/@no;
+    font-size: 14rem/@no;
   }
   .el-pagination {
-    width: 400px;
-    margin: 40px auto;
+    margin-top: 25rem/@no;
+    position:absolute;
+    left:50%;
+    transform: translateX(-50%);
   }
 }
 .content {
   display: flex;
+  flex-wrap: wrap;
 }
 .article {
-  margin: 25px 33px 12px 33px;
+  margin: 25rem/@no 33rem/@no 12rem/@no ;
   background-color: rgba(255, 255, 255, 0.4);
-  border-radius: 10px;
-  box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.12);
-  padding: 25px 25px;
+  border-radius: 10rem/@no;
+  box-shadow: 0 3rem/@no 12rem/@no 0 rgba(0, 0, 0, 0.12);
+  padding: 25rem/@no 25rem/@no;
   box-sizing: border-box;
   color: #000;
 }
 .article div {
-  font-size: 12px;
+  font-size: 12rem/@no;
   color: grey;
-  margin-right: 10px;
+  margin-right: 10rem/@no;
 }
 .mainindex-title {
-  margin-bottom: 10px;
+  margin-bottom: 10rem/@no;
 }
 </style>

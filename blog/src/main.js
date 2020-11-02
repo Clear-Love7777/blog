@@ -1,17 +1,20 @@
 import App from './App.vue'
 import router from './router'
 import store from './store/index.js'
-import { VueJsonp } from 'vue-jsonp'
+import {
+  VueJsonp
+} from 'vue-jsonp'
+import './assets/css/style.less'
 import './assets/css/global.css'
 import './assets/css/atom-one-dark.css'
-import  "../static/js/canvas-ribbon"
+import "../static/js/canvas-ribbon"
 import "../static/js/clicklove"
 
 
 Vue.use(VueJsonp)
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
-axios.defaults.baseURL='http://47.103.205.245:9025/'
+axios.defaults.baseURL = 'http://47.103.205.245:9025/'
 // axios.defaults.baseURL='http://127.0.0.1:80/'
 
 
@@ -30,7 +33,7 @@ Vue.directive('highlight', function (el) {
   })
 })
 
-Vue.filter('dateFormat', function(originVal) {
+Vue.filter('dateFormat', function (originVal) {
   const dt = new Date(originVal)
 
   const y = dt.getFullYear()

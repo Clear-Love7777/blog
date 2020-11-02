@@ -1,6 +1,39 @@
 <template>
   <div id="blog">
     <!-- 头部导航 -->
+    <header class="header2">
+      <el-dropdown>
+  <el-button  >
+    菜单<i class="el-icon-arrow-down el-icon--right"></i>
+  </el-button>
+  <el-dropdown-menu slot="dropdown">
+    <el-dropdown-item>
+       <router-link to="/articles" @click.native="reload"
+              ><svg class="homeicon">
+                  <use xlink:href="#icon-home" style="color:black"></use>
+                </svg><span style="color:black">主页</span></router-link
+            >
+    </el-dropdown-item>
+    <el-dropdown-item>
+      <router-link to="/messageBoard"  @click.native="messagereload"
+              ><i class="el-icon-edit" style="color:black"></i><span style="color:black">留言板</span></router-link
+            >
+    </el-dropdown-item>
+      <el-dropdown-item>
+      <router-link to="/other"
+              ><i class="el-icon-more-outline" style="color:black"></i><span style="color:black">其他</span></router-link
+            >
+    </el-dropdown-item>
+    <el-dropdown-item>
+      <router-link to="/link"
+              ><i class="el-icon-connection" style="color:black"></i> <span style="color:black">友情链接</span></router-link
+            >
+    </el-dropdown-item>
+  
+  </el-dropdown-menu>
+</el-dropdown>
+      <span>JuneBlog</span>
+    </header>
     <header>
       <section>
         <a href="javascript:void(0);">
@@ -16,7 +49,7 @@
             >
           </li>
             <li>
-            <router-link to="/messageBoard"   @click.native="messagereload"
+            <router-link to="/messageBoard"  @click.native="messagereload"
               ><i class="el-icon-edit"></i> 留言板</router-link
             >
           </li>
@@ -30,13 +63,8 @@
               ><i class="el-icon-more-outline"></i> 其他</router-link
             >
           </li>
-           <!-- <li>
-            <router-link to="/header"
-              ><i class="el-icon-more-outline"></i> 头部</router-link
-            >
-          </li> -->
          
-          <div class="buttons">
+        <div class="buttons">
             <el-button
               type="primary"
               plain
@@ -379,16 +407,36 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@no: 15;
 #blog {
   width: 100%;
   height: 100%;
   // background-color: #f5f8f9;
-  position: relative;
+  // position: relative;
   > header {
-    width:100%;
-    min-height: 60px;
+    width: 100%;
+    height: 60rem / @no;
     background-color: rgba(255, 255, 255, 0.4);
-    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2rem / @no 10rem / @no 0 rgba(0, 0, 0, 0.12);
+  }
+  > .header2 {
+  
+    width: 100%;
+    height: 60rem / @no;
+    background-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 2rem / @no 10rem / @no 0 rgba(0, 0, 0, 0.12);
+    .el-dropdown{
+        position: absolute;
+        top:14rem / @no;
+        left:14rem / @no;
+    }
+    span {
+      font-size: 24rem / @no;
+      position: absolute;
+      top: 16rem / @no;
+      left: 50%;
+      transform: translateX(-50%);
+    }
   }
 }
 #blog > header {
@@ -404,14 +452,14 @@ export default {
         color: #1e90ff;
       }
       img {
-        width: 40px;
-        height: 40px;
+        width: 40rem / @no;
+        height: 40rem / @no;
         border-radius: 50%;
-        margin-right: 20px;
+        margin-right: 20rem / @no;
       }
       span {
         color: #000;
-        font-size: 20px;
+        font-size: 20rem / @no;
         transition: color 0.25s;
       }
     }
@@ -423,7 +471,7 @@ export default {
   nav {
     display: flex;
     list-style: none;
-    line-height: 60px;
+    line-height: 60rem / @no;
     li {
       a {
         color: #000;
@@ -431,24 +479,24 @@ export default {
         &:hover {
           color: #1e90ff !important;
         }
-        font-size: 15px;
+        font-size: 15rem / @no;
         > i {
-          margin-right: 2px;
+          margin-right: 2rem / @no;
         }
       }
     }
   }
 }
 #blog .weatherBox {
-      position: fixed;
-    top: 90%;
-    right: 9%;
-    box-sizing: border-box;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+  position: fixed;
+  top: 90%;
+  right: 9%;
+  box-sizing: border-box;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   i {
-    padding: 12px 12px;
+    padding: 12rem / @no 12rem / @no;
     background-color: #eee;
     border-radius: 50%;
     cursor: pointer;
@@ -458,18 +506,18 @@ export default {
     position: relative;
     > div {
       position: absolute;
-      top: 40px;
-      left: -1px;
+      top: 40rem / @no;
+      left: -1rem / @no;
       transform: translate(-100%, -100%);
-      width: 280px;
-      height: 280px;
-      border-radius: 5px;
-      padding: 10px 10px;
+      width: 260rem / @no;
+      height: 240rem / @no;
+      border-radius: 5rem / @no;
+      padding: 10rem / @no 10rem / @no;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       background-color: rgba(0, 0, 0, 0.2);
-      backdrop-filter: blur(2px);
+      backdrop-filter: blur(2rem / @no);
       background: url(https://s1.ax1x.com/2020/10/27/BQlUt1.jpg) no-repeat
         center;
       background-size: cover;
@@ -477,44 +525,48 @@ export default {
         display: flex;
         justify-content: space-between;
         color: #fff;
-        font-size: 14px;
+        font-size: 14rem / @no;
       }
       main {
-        height:100vh;
-        width:100vw;
+        height: 100vh;
+        width: 100vw;
         display: flex;
         justify-content: space-between;
         align-items: center;
         color: #fff;
-        padding-bottom: 10px;
+        padding-bottom: 10rem / @no;
         span:first-child {
-          font-size: 50px;
+          font-size: 50rem / @no;
         }
         span:last-child {
-          font-size: 14px;
+          font-size: 14rem / @no;
           background-color: #1e90ff;
-          border-radius: 5px;
-          padding: 2px 5px;
+          border-radius: 5rem / @no;
+          padding: 2rem / @no 5rem / @no;
         }
-        border-bottom: 1px solid #fff;
+        border-bottom: 1rem / @no solid #fff;
       }
-        footer{
-                color: #fff;
-                td{width: 25%;}
-            }
+      footer {
+        color: #fff;
+        td {
+          width: 25%;
+        }
+      }
     }
     i {
-      margin: 10px 0;
+      margin: 10rem / @no 0;
     }
   }
 }
 
-.el-button {
-  width: 60px;
-  height: 35px;
-  font-size: 14px;
-  margin-top: 10px;
-  margin-right: 10px;
+.buttons {
+  margin-right: 10rem / @no;
+  .el-button {
+    width: 60rem / @no;
+    height: 35rem / @no;
+    font-size: 14rem / @no;
+    padding: 10% 15% !important;
+  }
 }
 .main {
   display: flex;
@@ -528,38 +580,40 @@ export default {
   flex: 1;
 }
 .Qecard {
-  top: 42%;
-  left:-8%;
+  top: 440rem / @no;
+  left: 180rem / @no;
   position: absolute;
   display: none;
 }
 .Qecard img {
-  width: 25%;
-  height:  25%;
+  width: 250rem / @no;
+  height: 250rem / @no;
 }
 .wechat:hover .Qecard {
   display: block;
 }
+
 .leftindex {
   width: 19%;
-  margin-top: 20px;
+  margin-top: 20rem / @no;
   text-align: center;
   height: 23.5%;
   background-color: rgba(255, 255, 255, 0.4);
-  border-radius: 10px;
-  box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 10rem / @no;
+  box-shadow: 0 12rem / @no 12rem / @no 0 rgba(0, 0, 0, 0.12);
   box-sizing: border-box;
   color: #000;
 }
+
 .searchlabel input {
   width: 80%;
-  height: 30px;
-  border-radius: 5px;
+  height: 30rem / @no;
+  border-radius: 5rem / @no;
   background-image: url(../assets/search.png);
-  background-size: 25px 25px;
+  background-size: 25rem / @no 25rem / @no;
   background-repeat: no-repeat;
-  background-position:95% 2px;
-  font-size: 16px;
+  background-position: 95% 2rem / @no;
+  font-size: 16rem / @no;
 }
 .searchlabel img {
   float: right;
@@ -569,51 +623,51 @@ export default {
   width: 40%;
   height: 40%;
   border-radius: 50%;
-  margin: 20px auto 0px;
+  margin: 20rem / @no auto;
 }
 .leftindex span {
   display: inline-block;
   color: black;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  margin-bottom: 20px;
+  margin-bottom: 20rem / @no;
 }
 .leftindex .name {
-  margin-top: 15px;
-  margin-bottom: 5px;
+  margin-top: 15rem / @no;
+  margin-bottom: 5rem / @no;
 }
 
 .icon-edit {
-  margin-top: 25px;
+  margin-top: 25rem / @no;
   margin-left: 19%;
   float: left;
 }
 
 .leftindex .contact span {
-  font-size: 12px;
+  font-size: 12rem / @no;
 }
 .rightindex {
   height: 100%;
   width: 22%;
 }
 .rightindex-title {
-  font-size: 16px;
+  font-size: 16rem / @no;
 }
 .rightindex ul {
-  margin-top: 20px;
+  margin-top: 20rem / @no;
   font-family: SimSun;
   font-weight: bold;
   background-color: rgba(255, 255, 255, 0.4);
-  border-radius: 8px;
-  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 8rem / @no;
+  box-shadow: 0 2rem / @no 10rem / @no 0 rgba(0, 0, 0, 0.12);
   box-sizing: border-box;
-  padding: 20px 20px;
+  padding: 20rem / @no 20rem / @no;
   li {
-    margin-bottom: 12px;
+    margin-bottom: 12rem / @no;
   }
   .morecomment {
     position: relative;
     float: right;
-    font-size: 12px;
+    font-size: 14rem / @no;
     a {
       color: #000;
       transition: color 0.5s;
@@ -621,18 +675,19 @@ export default {
   }
 }
 .licontent {
-  font-size: 16px;
+  font-size: 16rem / @no;
   color: grey;
 }
-.rightindex-sort{
+.rightindex-sort {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
   button {
-    margin-top: 10px;
-    margin-right: 15px;
-    width: 80px;
-    height: 20px;
+    margin-top: 10rem / @no;
+    margin-right: 5%;
+    width: 27%;
+    height: 24rem / @no;
+    padding: 0px 1%;
     background-color: rgba(231, 76, 60);
     &:nth-child(2n + 1) {
       background-color: rgba(112, 161, 225);
@@ -644,8 +699,8 @@ export default {
 }
 .sort {
   text-align: center;
-  border-radius: 7px;
-  font-size: 16px;
+  border-radius: 7rem / @no;
+  font-size: 16rem / @no;
   color: #fff;
   border: none;
 }

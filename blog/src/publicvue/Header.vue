@@ -7,6 +7,11 @@
     菜单<i class="el-icon-arrow-down el-icon--right"></i>
   </el-button>
   <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item>
+      <router-link to="/login" 
+              ><span style="color:black"  v-show="btnLogin">登录</span></router-link
+            >
+    </el-dropdown-item>
     <el-dropdown-item>
        <router-link to="/articles" 
               ><svg class="homeicon">
@@ -29,7 +34,10 @@
               ><i class="el-icon-connection" style="color:black"></i> <span style="color:black">友情链接</span></router-link
             >
     </el-dropdown-item>
-  
+   <el-dropdown-item>
+     <span style="color:black"  @click="logout"
+              v-show="btnLogout" >退出</span> 
+    </el-dropdown-item>
   </el-dropdown-menu>
 </el-dropdown>
       <span>JuneBlog</span>
@@ -37,7 +45,7 @@
     <header>
       <section>
         <a href="javascript:void(0);">
-          <img src="..\assets\logo.jpg" alt="" />
+          <img src="https://s1.ax1x.com/2020/11/04/BcKfBV.jpg" alt="" />
           <span>June</span>
         </a>
         <nav>
@@ -133,25 +141,25 @@ export default {
   // background-color: #f5f8f9;
   position: relative;
   > header {
-    min-height: 60rem/@no;
+    min-height: 60px;
     background-color: rgba(255, 255, 255, 0.4);
-    box-shadow: 0 2rem/@no 10rem/@no 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   }
    > .header2 {
   
     width: 100%;
-    height: 60rem / @no;
+    height: 60px;
     background-color: rgba(255, 255, 255, 0.4);
-    box-shadow: 0 2rem / @no 10rem / @no 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     .el-dropdown{
         position: absolute;
         top:14rem / @no;
         left:14rem / @no;
     }
     span {
-      font-size: 24rem / @no;
+      font-size: 24px;
       position: absolute;
-      top: 16rem / @no;
+      top: 16px;
       left: 50%;
       transform: translateX(-50%);
     }
@@ -170,14 +178,14 @@ export default {
         color: #1e90ff;
       }
       img {
-        width: 40rem/@no;
-        height: 40rem/@no;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
         margin-right: 20rem/@no;
       }
       span {
         color: #000;
-        font-size: 20rem/@no;
+        font-size: 20px;
         transition: color 0.25s;
       }
     }
@@ -185,7 +193,7 @@ export default {
   nav {
     display: flex;
     list-style: none;
-    line-height: 60rem/@no;
+    line-height: 60px;
     li {
       a {
         color: #000;
@@ -193,7 +201,7 @@ export default {
         &:hover {
           color: #1e90ff !important;
         }
-        font-size: 15rem/@no;
+        font-size: 15px;
         > i {
           margin-right: 2rem/@no;
         }

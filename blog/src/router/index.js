@@ -6,6 +6,7 @@ const Content = () => import( /* webpackChunkName: "homepage_notfound" */ '../co
 const Other = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/Other.vue')
 const Login = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/Login.vue')
 const Register = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/Register.vue')
+const Editpassword = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/Editpassword.vue')
 const Comment = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/Comment.vue')
 const Introduction = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/Introduction.vue')
 const HotTop = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/HotTop.vue')
@@ -67,6 +68,10 @@ const routes = [{
   {
     path: '/register',
     component: Register
+  },
+  {
+    path: '/editpassword',
+    component: Editpassword
   },
   {
     path:'/messageBoard',

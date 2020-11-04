@@ -1,6 +1,5 @@
 <template>
   <div class="login_container">
-    <img src="..\assets\背景.jpg" width="100%" height="100%" alt="" />
     <div class="login_box">
       <!-- 登录表单区域 -->
       <el-form
@@ -97,7 +96,7 @@ export default {
     };
   },
   methods: {
-    //跳转到注册
+    //跳转到登录
     toUserLogin() {
       this.$router.push("/login");
     },
@@ -117,6 +116,10 @@ export default {
 <style lang="less" scoped>
 .login_container {
   height: 100%;
+  width: 100%;
+   background: url("https://s1.ax1x.com/2020/11/04/BcunZ8.jpg");
+    background-size: 100% 100%;
+    position: fixed;
 }
 .login_box {
   width: 450px;

@@ -50,7 +50,7 @@ export default {
 
 <style lang="less" scoped>
 .links {
-  width: 65%;
+  width: 65vw;
   margin: 0 auto;
   text-align: center;
   h2 {

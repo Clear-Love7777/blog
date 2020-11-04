@@ -7,6 +7,11 @@
     菜单<i class="el-icon-arrow-down el-icon--right"></i>
   </el-button>
   <el-dropdown-menu slot="dropdown">
+      <el-dropdown-item>
+      <router-link to="/login" 
+              ><span style="color:black"  v-show="btnLogin">登录</span></router-link
+            >
+    </el-dropdown-item>
     <el-dropdown-item>
        <router-link to="/articles" @click.native="reload"
               ><svg class="homeicon">
@@ -14,6 +19,7 @@
                 </svg><span style="color:black">主页</span></router-link
             >
     </el-dropdown-item>
+   
     <el-dropdown-item>
       <router-link to="/messageBoard"  @click.native="messagereload"
               ><i class="el-icon-edit" style="color:black"></i><span style="color:black">留言板</span></router-link
@@ -29,7 +35,10 @@
               ><i class="el-icon-connection" style="color:black"></i> <span style="color:black">友情链接</span></router-link
             >
     </el-dropdown-item>
-  
+   <el-dropdown-item>
+     <span style="color:black"  @click="logout"
+              v-show="btnLogout" >退出</span> 
+    </el-dropdown-item>
   </el-dropdown-menu>
 </el-dropdown>
       <span>JuneBlog</span>
@@ -37,7 +46,7 @@
     <header>
       <section>
         <a href="javascript:void(0);">
-          <img src="..\assets\logo.jpg" alt="" />
+          <img src="https://s1.ax1x.com/2020/11/04/BcKfBV.jpg" alt="" />
           <span>June</span>
         </a>
         <nav>
@@ -89,7 +98,7 @@
       <!-- 左侧区域 -->
       <div class="leftindex">
         <div class="leftindex-header">
-          <img src="..\assets\logo.jpg" alt="" class="touxiang" />
+          <img src="https://s1.ax1x.com/2020/11/04/BcKfBV.jpg" alt="" class="touxiang" />
           <span class="name">Jun Xiao</span><br />
           <span>Personal blog</span><br />
           <div class="searchlabel">
@@ -109,7 +118,7 @@
                 <use xlink:href="#icon-wechat"></use>
               </svg>
               <div class="Qecard">
-                <img src="../assets/wechat.jpg" alt="" />
+                <img src="https://s1.ax1x.com/2020/11/04/BcQQiD.jpg" alt="" />
               </div>
             </div>
             <!-- QQ -->
@@ -178,7 +187,7 @@
           </li>
           <li
             v-for="(item, index) in comment"
-            v-if="index < 5"
+            v-if="index < 3"
             :key="index"
             class="licontent"
           >
@@ -282,11 +291,11 @@ export default {
     //禁止鼠标右键点击
     (document.oncontextmenu = () => {
       event.returnValue = false;
-    }),
+    })
       // 禁用选择
-      (document.onselectstart = () => {
-        event.returnValue = false;
-      });
+      // (document.onselectstart = () => {
+      //   event.returnValue = false;
+      // });
   },
   watch: {
     $route(to, from) {
@@ -411,29 +420,27 @@ export default {
 #blog {
   width: 100%;
   height: 100%;
-  // background-color: #f5f8f9;
-  // position: relative;
   > header {
     width: 100%;
-    height: 60rem / @no;
+    height: 60px;
     background-color: rgba(255, 255, 255, 0.4);
-    box-shadow: 0 2rem / @no 10rem / @no 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   }
   > .header2 {
   
     width: 100%;
-    height: 60rem / @no;
+    height: 60px;
     background-color: rgba(255, 255, 255, 0.4);
-    box-shadow: 0 2rem / @no 10rem / @no 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     .el-dropdown{
         position: absolute;
-        top:14rem / @no;
-        left:14rem / @no;
+        top:14px;
+        left:14px;
     }
     span {
-      font-size: 24rem / @no;
+      font-size: 24px;
       position: absolute;
-      top: 16rem / @no;
+      top: 16px;
       left: 50%;
       transform: translateX(-50%);
     }
@@ -452,14 +459,14 @@ export default {
         color: #1e90ff;
       }
       img {
-        width: 40rem / @no;
-        height: 40rem / @no;
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
-        margin-right: 20rem / @no;
+        margin-right: 20px;
       }
       span {
         color: #000;
-        font-size: 20rem / @no;
+        font-size: 20px;
         transition: color 0.25s;
       }
     }
@@ -471,7 +478,7 @@ export default {
   nav {
     display: flex;
     list-style: none;
-    line-height: 60rem / @no;
+    line-height: 60px;
     li {
       a {
         color: #000;
@@ -479,9 +486,9 @@ export default {
         &:hover {
           color: #1e90ff !important;
         }
-        font-size: 15rem / @no;
+        font-size: 15px;
         > i {
-          margin-right: 2rem / @no;
+          margin-right: 2px;
         }
       }
     }
@@ -506,10 +513,10 @@ export default {
     position: relative;
     > div {
       position: absolute;
-      top: 40rem / @no;
+      top: 50rem / @no;
       left: -1rem / @no;
       transform: translate(-100%, -100%);
-      width: 260rem / @no;
+      width: 220rem / @no;
       height: 240rem / @no;
       border-radius: 5rem / @no;
       padding: 10rem / @no 10rem / @no;
@@ -560,24 +567,25 @@ export default {
 }
 
 .buttons {
-  margin-right: 10rem / @no;
+  margin-right: 10px;
   .el-button {
-    width: 60rem / @no;
-    height: 35rem / @no;
-    font-size: 14rem / @no;
+    width: 60px;
+    height: 35px;
+    font-size: 14px;
     padding: 10% 15% !important;
   }
 }
 .main {
   display: flex;
-  min-width: 80%;
-  max-width: 80%;
+  min-width: 80vw;
+  max-width: 80vw;
   height: 100%;
   margin: 0 auto;
 }
 
 .mainindex {
   flex: 1;
+  width: 0;
 }
 .Qecard {
   top: 440rem / @no;
@@ -594,13 +602,13 @@ export default {
 }
 
 .leftindex {
-  width: 19%;
-  margin-top: 20rem / @no;
+  width: 230px;
+  margin-top: 20px;
   text-align: center;
   height: 23.5%;
   background-color: rgba(255, 255, 255, 0.4);
-  border-radius: 10rem / @no;
-  box-shadow: 0 12rem / @no 12rem / @no 0 rgba(0, 0, 0, 0.12);
+  border-radius: 10px;
+  box-shadow: 0 12px 12px 0 rgba(0, 0, 0, 0.12);
   box-sizing: border-box;
   color: #000;
 }
@@ -609,7 +617,7 @@ export default {
   width: 80%;
   height: 30rem / @no;
   border-radius: 5rem / @no;
-  background-image: url(../assets/search.png);
+  background-image: url(https://s1.ax1x.com/2020/11/04/BcQyyn.png);
   background-size: 25rem / @no 25rem / @no;
   background-repeat: no-repeat;
   background-position: 95% 2rem / @no;
@@ -647,27 +655,27 @@ export default {
 }
 .rightindex {
   height: 100%;
-  width: 22%;
+  width: 250px;
 }
 .rightindex-title {
-  font-size: 16rem / @no;
+  font-size: 16px;
 }
 .rightindex ul {
-  margin-top: 20rem / @no;
+  margin-top: 18px;
   font-family: SimSun;
   font-weight: bold;
   background-color: rgba(255, 255, 255, 0.4);
-  border-radius: 8rem / @no;
-  box-shadow: 0 2rem / @no 10rem / @no 0 rgba(0, 0, 0, 0.12);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   box-sizing: border-box;
-  padding: 20rem / @no 20rem / @no;
+  padding: 20px 20px;
   li {
-    margin-bottom: 12rem / @no;
+    margin-bottom: 12px;
   }
   .morecomment {
     position: relative;
     float: right;
-    font-size: 14rem / @no;
+    font-size: 14px;
     a {
       color: #000;
       transition: color 0.5s;
@@ -675,7 +683,7 @@ export default {
   }
 }
 .licontent {
-  font-size: 16rem / @no;
+  font-size: 14px;
   color: grey;
 }
 .rightindex-sort {
@@ -683,10 +691,10 @@ export default {
   flex-wrap: wrap;
   flex-direction: row;
   button {
-    margin-top: 10rem / @no;
-    margin-right: 5%;
+    margin-top: 10px;
+    margin-right: 10px;
     width: 27%;
-    height: 24rem / @no;
+    height: 24px;
     padding: 0px 1%;
     background-color: rgba(231, 76, 60);
     &:nth-child(2n + 1) {
@@ -699,8 +707,8 @@ export default {
 }
 .sort {
   text-align: center;
-  border-radius: 7rem / @no;
-  font-size: 16rem / @no;
+  border-radius: 7px;
+  font-size: 13px;
   color: #fff;
   border: none;
 }

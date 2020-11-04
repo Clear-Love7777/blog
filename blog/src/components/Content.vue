@@ -146,11 +146,10 @@ export default {
 
 <style lang="less" scoped>
 @import "../assets/css/md.css";
-
+@no:15;
 #content {
-  
-  max-width: 100%;
-  min-width: 100%;
+  max-width: 94%;
+  min-width: 94%;
   margin: auto;
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 10px;
@@ -170,8 +169,8 @@ export default {
     width: 2.5em;
     position: relative;
     left: 30%;
-    margin-top: 15px;
-    margin-bottom: 5px;
+    margin-top: 15rem/@no;
+    margin-bottom: 5rem/@no;
   }
   .span1 {
     position: relative;
@@ -179,14 +178,14 @@ export default {
   }
   .span2 {
     position: relative;
-    left: 50%;
+    left: 52%;
   }
   .comment {
     width: 2.5em;
     position: relative;
     left: 60%;
-    margin-top: 15px;
-    margin-bottom: 5px;
+    margin-top: 15rem/@no;
+    margin-bottom: 5rem/@no;
   }
   .icon {
     width: 2.5em;
@@ -200,13 +199,13 @@ export default {
   }
 }
 .dialog-footer {
-  margin-top: -20px;
+  margin-top: -20rem/@no;
 }
 .el-icon-pie-chart {
-  margin-right: 3px;
+  margin-right: 3rem/@no;
 }
 .commentdate {
   float: right;
-  margin-top: -5px;
+  margin-top: -5rem/@no;
 }
 </style>

@@ -35,7 +35,7 @@
       :current-page="queryInfo.pagenum"
       :page-sizes="[1, 2, 5, 10]"
       :page-size="queryInfo.pagesize"
-      layout="total, sizes, prev, pager, next, jumper"
+      layout="prev, pager, next"
       :total="total"
     ></el-pagination>
   </div>
@@ -110,11 +110,11 @@ export default {
   flex-direction: column;
   .mainindex-title {
     color: black;
-    font-size: 24rem/@no;
+    font-size: 24px;
   }
   .content span {
     margin-left: 5rem/@no;
-    font-size: 14rem/@no;
+    font-size: 14px;
   }
   .el-pagination {
     margin-top: 25rem/@no;

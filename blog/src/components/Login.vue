@@ -1,13 +1,12 @@
 <template>
   <div class="login_container">
-    <img src="..\assets\背景.jpg" width="100%" height="100%" alt="" />
     <div class="login_box">
       <!-- 登录表单区域 -->
       <el-form
         ref="loginFormRef"
         :model="loginForm"
         :rules="loginFormRules"
-        label-width="0px"
+           label-width="0px"
         class="login_form"
       >
         <!-- 用户名 -->
@@ -94,32 +93,36 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@no:15;
 .login_container {
   height: 100%;
+  width: 100%;
+   background: url("https://s1.ax1x.com/2020/11/04/BcunZ8.jpg");
+    background-size: 100% 100%;
+    position: fixed;
 }
 .login_box {
-  width: 450px;
-  height: 300px;
-  border-radius: 3px;
+  height:400px;
+  width: 500px;
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%,-80%);
 }
 .btns {
   display: flex;
   justify-content: flex-end;
-  margin-top: -40px;
+  margin-top: -40rem/@no;
 }
 .forget {
-  margin-left: 5px;
+  margin-left: 5rem/@no;
   font-size: 14px;
 }
 .login_form {
   position: absolute;
+  width:450px;
   bottom: 35px;
-  width: 100%;
-  padding: 0 20px;
+  padding: 0 20rem/@no;
   box-sizing: border-box;
 }
 </style>

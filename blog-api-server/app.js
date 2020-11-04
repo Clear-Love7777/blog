@@ -72,14 +72,14 @@
   const other = require("./other.js")
   app.use(other.routes())
 
-  // app.use(router.routes())
-  // app.listen(9025,() => {                                                                          
-  //   console.log('app start')
-  // })
-  // })()
-
   app.use(router.routes())
-  app.listen(80, () => {
+  app.listen(9025,() => {                                                                          
     console.log('app start')
   })
-})()
+  })()
+
+//   app.use(router.routes())
+//   app.listen(80, () => {
+//     console.log('app start')
+//   })
+// })()

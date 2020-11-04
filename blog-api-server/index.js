@@ -302,6 +302,30 @@ index.post('/userRegister', async ctx => {
     }
 })
 
+//用户查询密码
+index.post('/getPwd',async ctx =>{
+    // const data1= ctx.request.body;
+    // console.log(data1);
+    const username = ctx.request.body.username;
+    // console.log(username);
+    const con = await Mysql.createConnection(blog)
+    const sql = `SELECT password FROM user WHERE username ='${username}'`
+    const [data] = await con.query(sql)
+    // console.log(data[0].password);
+    con.end(function(err){}) //连接结束
+    if(data.length>= 0 ){
+        ctx.body= {
+            code:200,
+            tips:'查询密码成功',
+            data:data[0].password
+        }
+    }else{
+        ctx.body = {
+            code:400,
+            tips:'查询密码失败'
+        }
+    }
+})
 
 //点赞数增加
 index.put('/addcount', async ctx => {

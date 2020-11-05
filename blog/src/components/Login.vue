@@ -1,5 +1,6 @@
 <template>
   <div class="login_container">
+   
     <div class="login_box">
       <!-- 登录表单区域 -->
       <el-form
@@ -8,9 +9,12 @@
         :rules="loginFormRules"
            label-width="0px"
         class="login_form"
-      >
+      >  
+    
+
         <!-- 用户名 -->
         <el-form-item prop="username">
+            <router-link to="/articles" class="back">回到主页</router-link>
           <el-input
             placeholder="请输入账号"
             v-model="loginForm.username"
@@ -124,5 +128,9 @@ export default {
   bottom: 35px;
   padding: 0 20rem/@no;
   box-sizing: border-box;
+}
+.back{
+   font-size: 14px;
+  margin-left: 5rem/@no;
 }
 </style>

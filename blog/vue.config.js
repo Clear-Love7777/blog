@@ -3,7 +3,6 @@ module.exports = {
     //自动打开浏览器
     open: true
   },
-  
   chainWebpack: config => {
     //在html页面引用的配置
     config.set('externals', {

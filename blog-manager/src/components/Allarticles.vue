@@ -8,7 +8,7 @@
       </el-breadcrumb>
       <!-- 搜索与查找区域 -->
       <el-row :gutter="20">
-        <el-col :span="8">
+        <el-col :span="9">
           <el-input
             placeholder="请输入内容"
             v-model="queryInfo.query"
@@ -36,7 +36,6 @@
         <el-table-column prop="sort_name" label="分类"></el-table-column>
         <el-table-column prop="mdname" label="文件"></el-table-column>
         <el-table-column prop="label_name" label="标签"></el-table-column>
-        <el-table-column prop="count" label="点赞数"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
             <!-- 修改按钮 -->

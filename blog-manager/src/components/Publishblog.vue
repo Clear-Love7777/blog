@@ -80,6 +80,9 @@
         <el-form-item label="点赞数">
           <el-input v-model="blogForm.count" disabled></el-input>
         </el-form-item>
+        <el-form-item label="浏览量">
+          <el-input v-model="blogForm.readcount" disabled></el-input>
+        </el-form-item>
         <el-form-item label="技术">
           <el-select
             v-model="blogForm.labelname"
@@ -123,6 +126,7 @@ export default {
         labelname: "",
         content: "",
         count: "0",
+        readcount: "0",
       },
     };
   },

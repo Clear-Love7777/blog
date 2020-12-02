@@ -12,14 +12,14 @@ index.post('/blogAllData', async ctx => {
     const con = await Mysql.createConnection(blog) //连接数据库
     if (query == '' || query == null) {
         var sql = `SELECT a.id,a.date,a.title,a.date,
-        a.content,a.sortId,a.labelId,a.introduce,a.mdname,a.count,b.sort_name,
+        a.content,a.sortId,a.labelId,a.introduce,a.mdname,a.count,a.readcount,b.sort_name,
         c.label_name FROM article a,sort b,label c 
         WHERE a.sortId = b.id and a.labelId = c.id
         LIMIT ${pagenum * pagesize},${pagesize}`
         var [data] = await con.query(sql)
     } else {
         var sql = `SELECT a.id,a.date,a.title,a.date,
-        a.content,a.sortId,a.labelId,a.introduce,a.mdname,a.count,b.sort_name,
+        a.content,a.sortId,a.labelId,a.introduce,a.mdname,a.count,a.readcount,b.sort_name,
         c.label_name FROM article a,sort b,label c 
         WHERE a.sortId = b.id and a.labelId = c.id and a.title like '%${query}%'
         LIMIT ${pagenum * pagesize},${pagesize}`
@@ -67,7 +67,7 @@ index.get('/getAboutSortData', async ctx => {
     const id = ctx.request.query.id
 
     const con = await Mysql.createConnection(blog)
-    var sql = `SELECT a.id,a.date,a.title,
+    var sql = `SELECT a.id,a.date,a.title,a.readcount,
                     a.content,a.sortId,a.labelId,a.introduce,a.mdname,a.count,b.sort_name,
                  c.label_name FROM article a,sort b,label c 
                  WHERE a.sortId = '${id}' and a.sortId = b.id and a.labelId = c.id`
@@ -199,9 +199,9 @@ index.get('/blogdatadetail', async ctx => {
 index.post('/addblog', async ctx => {
     const data = ctx.request.body
     var con = await Mysql.createConnection(blog)
-    const sql = `INSERT INTO article (title,introduce,date,sortId,mdname,labelId,content,count) VALUE
+    const sql = `INSERT INTO article (title,introduce,date,sortId,mdname,labelId,content,count,readcount) VALUE
     ('${data.title}', '${data.introduce}', '${data.date}', '${data.sortname}', 
-    '${data.mdname}', '${data.labelname}', '${data.content}', '${data.count}')`
+    '${data.mdname}', '${data.labelname}', '${data.content}', '${data.count}','${data.readcount}')`
     const [rs] = await con.query(sql)
     con.end(function (err) {}) //连接结束
 
@@ -332,7 +332,7 @@ index.put('/addcount', async ctx => {
     const id = ctx.request.body.id
     // console.log(id);
     const con = await Mysql.createConnection(blog)
-    const countnumber = `SELECT count FROM article WHERE id = ${id}`
+    const countnumber = `SELECT count FROM article WHERE id = '${id}'`
     const [count] = await con.query(countnumber)
     let number = count[0].count + 1
     // console.log(count[0].count);
@@ -348,6 +348,31 @@ index.put('/addcount', async ctx => {
         ctx.body = {
             code: 400,
             tips: '点赞失败',
+        }
+    }
+})
+// 浏览量增加
+index.put('/addRead', async ctx => {
+    const id = ctx.request.body.id
+    // console.log(id);
+    const con = await Mysql.createConnection(blog)
+    const readnumber = `SELECT readcount FROM article WHERE id = '${id}'`
+    const [readcount] = await con.query(readnumber)
+
+    let number = readcount[0].readcount + 1
+    console.log(readcount[0].readcount);
+    const sql = `UPDATE article SET readcount = ${number} WHERE id = '${id}'`
+    const [rs] = await con.query(sql)
+    con.end(function (err) {}) //连接结束
+    if (rs.affectedRows > 0) {
+        ctx.body = {
+            code: 200,
+            tips: '获取成功',
+        }
+    } else {
+        ctx.body = {
+            code: 400,
+            tips: '获取失败',
         }
     }
 })

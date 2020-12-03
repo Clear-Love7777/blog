@@ -60,6 +60,7 @@ export default {
       this.queryInfo.pagesize = newSize;
       this.getComments();
     },
+    
     //监听页码值改变的事件
     handleCurrentChange(newPage) {
       //  console.log(newPage);

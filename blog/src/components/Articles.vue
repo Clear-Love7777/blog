@@ -73,7 +73,7 @@ export default {
       if (res.code != 200) return this.$message.error("获取文章失败");
 
       this.blogList = res.data;
-      console.log(this.blogList);
+      // console.log(this.blogList);
       this.total = res.total;
     },
     //监听pagesizes 改变的事件

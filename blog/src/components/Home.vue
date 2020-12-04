@@ -201,41 +201,32 @@
           </li>
         </ul>
       </div>
-        <!-- 右下角 -->
-      <div class="weatherBox">
-        <!-- 天气盒子 -->
-        <div class="weather">
-          <!-- <i :class="flag?'el-icon-heavy-rain backtopBlack':'el-icon-heavy-rain backtopWhite'"  -->
-          <i
-            :class="className"
-            @mouseenter="showWeather = true"
-            @mouseleave="showWeather = false"
-          ></i>
-          <div
-            v-show="showWeather"
-            @mouseenter="showWeather = true"
-            @mouseleave="showWeather = false"
-          >
-            <header>
-              <label>{{ city }}</label
-              ><span>简约天气</span>
-            </header>
-            <main>
-              <span>{{ wendu }}</span
-              ><span>{{ type }}</span>
-            </main>
-            <footer>
-              <table>
-                <tr v-for="(item, index) in weatherList" :key="index">
-                  <td align="center">{{ item.date }}</td>
-                  <td align="center">{{ item.type }}</td>
-                  <td align="center">{{ item.wendu }}</td>
-                  <td align="center">{{ item.fengxiang }}</td>
-                </tr>
-              </table>
-            </footer>
-          </div>
-        </div>
+         <!-- 右下角天气 -->
+        <div class="weatherBox">
+            <!-- 天气盒子 -->
+            <div class="weather">
+                <!-- <i :class="flag?'el-icon-heavy-rain backtopBlack':'el-icon-heavy-rain backtopWhite'"  -->
+                <i :class="className" 
+                    @mouseenter="showWeather = true" @mouseleave="showWeather = false"></i>
+                <div v-show="showWeather" @mouseenter="showWeather = true" 
+                    @mouseleave="showWeather = false">
+                    <header><label>{{city}}</label><span>简约天气</span></header>
+                    <main>
+                    <span>{{wendu}}</span> 
+                    <span>{{type}}</span>
+                    </main>
+                    <footer>
+                        <table>
+                            <tr v-for="(item,index) in weatherList" :key="index">
+                                <td align="center">{{item.date}}</td>
+                                <td align="center">{{item.type}}</td>
+                                <td align="center">{{item.wendu}}</td>
+                                <td align="center">{{item.fengxiang}}</td>
+                            </tr>
+                        </table>
+                    </footer>
+                </div>
+            </div>
         </div>
       </div>
            
@@ -314,34 +305,27 @@ export default {
       this.getWeather(data.city);
     },
     //根据城市获取城市天气
-    async getWeather(location) {
-      const { data: res } = await this.$http.get(
-        `http://wthrcdn.etouch.cn/weather_mini?city=${location}`
-      );
-      // console.log(res.data);
-      if (res.status !== 1000) return this.$message.error("获取天气数据失败");
-      const value = res.data.forecast.slice(0, 3);
-      this.handleWeatherData(value);
-    },
-    //处理天气数据
-    handleWeatherData(value) {
-      value.map((item, index) => {
-        if (index == 0) {
-          item.date = "今天";
-        } else if (index == 1) {
-          item.date = "明天";
-        } else {
-          item.date = "后天";
-        }
-        item.wendu = item.low.split(" ")[1] + "/" + item.high.split(" ")[1];
-      });
-      this.weatherList = value;
-      this.wendu =
-        (Number(value[0].high.slice(3, 5)) + Number(value[0].low.slice(3, 5))) /
-          2 +
-        "℃";
-      this.type = value[0].type;
-    },
+        async getWeather(location){
+            const {data:res} = await this.$http.get(`http://wthrcdn.etouch.cn/weather_mini?city=${location}`)
+            if(res.status !== 1000) return this.$message.error('获取天气数据失败')
+            const value = res.data.forecast.slice(0,3)
+            this.handleWeatherData(value)
+        },
+      //处理天气数据
+        handleWeatherData(value){
+            value.map( (item,index) => {
+                if(index == 0){item.date = '今天';}
+                else if(index == 1){item.date = '明天';}
+                else{item.date = '后天';}
+                item.wendu = item.low.split(' ')[1] + '/' + item.high.split(' ')[1]
+            })
+            this.weatherList = value
+            let high = Number(value[0].high.split(' ')[1].split('').filter(item => item !== '℃' && item).join(''))
+            let low = Number(value[0].low.split(' ')[1].split('').filter(item => item !== '℃' && item).join(''))
+            this.wendu = (high + low) / 2 + '℃'
+            this.type = value[0].type
+            // console.log(this.type);
+        },
     // 跳转到登录
     toLogin() {
       this.$router.push("/login");
@@ -525,7 +509,7 @@ export default {
       justify-content: space-between;
       background-color: rgba(0, 0, 0, 0.2);
       backdrop-filter: blur(2rem / @no);
-      background: url(https://s1.ax1x.com/2020/10/27/BQlUt1.jpg) no-repeat
+      background: url(https://s3.ax1x.com/2020/12/04/DbnFHJ.gif) no-repeat
         center;
       background-size: cover;
       header {
@@ -538,20 +522,20 @@ export default {
         height: 100vh;
         width: 100vw;
         display: flex;
-        justify-content: space-between;
         align-items: center;
         color: #fff;
-        padding-bottom: 10rem / @no;
         span:first-child {
-          font-size: 50rem / @no;
+          font-size: 45rem / @no;
         }
         span:last-child {
-          font-size: 14rem / @no;
+          position: relative;
+          left: 35rem / @no;
+          font-size: 16rem / @no;
           background-color: #1e90ff;
           border-radius: 5rem / @no;
           padding: 2rem / @no 5rem / @no;
         }
-        border-bottom: 1rem / @no solid #fff;
+        border-bottom: 1px solid #fff;
       }
       footer {
         color: #fff;

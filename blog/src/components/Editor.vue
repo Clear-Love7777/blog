@@ -92,7 +92,6 @@ export default {
       },
     };
   },
-  
   mounted() {
     addQuillTitle();
     // document.querySelector(".ql-bold").click();

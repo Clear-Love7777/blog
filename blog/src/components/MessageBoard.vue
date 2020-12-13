@@ -90,6 +90,7 @@
                   </div>
                 </div>
               </div>
+              
             </el-row>
             <el-row class="nomore">没有更多了~</el-row>
           </scroll-page>
@@ -100,6 +101,7 @@
 </template>
 <script>
 import Avatar from "vue-avatar";
+
 import Editor from "./Editor";
 import Header from "../publicvue/Header";
 export default {

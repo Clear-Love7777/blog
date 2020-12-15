@@ -9,13 +9,13 @@ const Register = () => import( /* webpackChunkName: "homepage_notfound" */ '../c
 const Editpassword = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/Editpassword.vue')
 const Comment = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/Comment.vue')
 const Introduction = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/Introduction.vue')
-const HotTop = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/HotTop.vue')
 const Cheat = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/Cheat.vue')
 const MessageBoard = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/MessageBoard.vue')
 const Header = () => import( /* webpackChunkName: "homepage_notfound" */ '../publicvue/Header.vue')
-const ApplyLink = () => import( /* webpackChunkName: "homepage_notfound" */ '../publicvue/ApplyLink.vue')
 const Editor = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/Editor.vue')
 const Link = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/Link.vue')
+const Self = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/Self.vue')
+
 
 
 
@@ -55,10 +55,6 @@ const routes = [{
         path: '/cheat',
         component: Cheat
       },
-      {
-        path: '/hotTop',
-        component: HotTop
-      },
     ]
   },
   {
@@ -90,13 +86,13 @@ const routes = [{
     component:Link
   },
   {
-    path:'/applyLink',
-    component:ApplyLink
+    path:'/self',
+    component:Self
   },
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  // mode: 'history',
   routes
 })
 

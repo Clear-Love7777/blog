@@ -16,7 +16,8 @@
 
   app.use(async (ctx, next) => { //后台拦截器
     var token = ctx.headers.authorization
-    const url = ctx.request.url.split('?')[0]
+    const url = ctx.request.url
+    // const url = ctx.request.url.split('?')[0]
     // console.log(url);
     // console.log(token);
     if (url !== '/updateblog' && url !== '/addblog' && url !== '/addcount' &&
@@ -72,14 +73,15 @@
   const other = require("./other.js")
   app.use(other.routes())
 
+  // app.use(router.routes())
+  // app.listen(9025,() => {                                                                          
+  //   console.log('app start')
+  // })
+  // })()
+
   app.use(router.routes())
-  app.listen(9025,() => {                                                                          
+
+  app.listen(80, () => {
     console.log('app start')
   })
-  })()
-
-//   app.use(router.routes())
-//   app.listen(80, () => {
-//     console.log('app start')
-//   })
-// })()
+})()

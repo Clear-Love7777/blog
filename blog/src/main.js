@@ -13,9 +13,9 @@ import "../static/js/clicklove"
 Vue.use(VueJsonp)
 Vue.config.productionTip = false
 Vue.prototype.$http = axios
-axios.defaults.baseURL = 'http://47.103.205.245:9025/'
+// axios.defaults.baseURL = 'http://47.103.205.245:9025/'
 
-// axios.defaults.baseURL='http://127.0.0.1:80/'
+axios.defaults.baseURL='http://127.0.0.1:80/'
 
 
 //axios请求拦截器 在请求有权限的接口时 必须在请求头里面设置一个字段Authorization 此字段的值必须等于token的值
@@ -25,6 +25,8 @@ axios.interceptors.request.use(config => {
   //在最后必须return config
   return config
 })
+
+
 //自定义代码高亮事件
 Vue.directive('highlight', function (el) {
   let blocks = el.querySelectorAll('pre code');

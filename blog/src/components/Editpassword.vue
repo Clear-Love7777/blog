@@ -6,13 +6,23 @@
         <!-- 用户名 -->
         <el-form-item prop="username">
           <el-input
+            prefix-icon="el-icon-user-solid"
             placeholder="请输入账号"
             v-model="queryForm.username"
+          ></el-input>
+        </el-form-item>
+        <!-- 邮箱 -->
+        <el-form-item prop="email">
+          <el-input
+            prefix-icon="el-icon-message"
+            placeholder="请输入邮箱"
+            v-model="queryForm.email"
           ></el-input>
         </el-form-item>
         <!-- 您的密码是 -->
         <el-form-item prop="password">
           <el-input
+            prefix-icon="el-icon-lock"
             placeholder="您的密码是"
             v-model="password"
           ></el-input>
@@ -32,6 +42,7 @@ export default {
     return {
       queryForm: {
         username: "",
+        email: "",
       },
       password: "",
     };
@@ -42,10 +53,19 @@ export default {
       this.$router.push("/login");
     },
     async getPwd() {
-        // console.log(this.queryForm);
+      // console.log(this.queryForm);
       const { data: res } = await this.$http.post("getPwd", this.queryForm);
-      if (res.code != 200) return this.$message({message:`${res.tips}`,type:"error",duration:1000});
-      this.$message({message:`${res.tips}`,type:"success",duration:1000});
+      if (res.code != 200)
+        return this.$message({
+          message: `${res.tips}`,
+          type: "error",
+          duration: 1000,
+        });
+      this.$message({
+        message: `${res.tips}`,
+        type: "success",
+        duration: 1000,
+      });
       this.password = res.data;
     },
   },

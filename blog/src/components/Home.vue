@@ -8,9 +8,7 @@
   </el-button>
   <el-dropdown-menu slot="dropdown">
       <el-dropdown-item>
-      <router-link to="/login" 
-              ><span style="color:black"  v-show="btnLogin">登录</span></router-link
-            >
+      <router-link to="/login"><span style="color:black" v-show="btnLogin">登录</span></router-link>
     </el-dropdown-item>
     <el-dropdown-item>
        <router-link to="/articles" @click.native="reload"
@@ -180,26 +178,6 @@
             {{ item.title }}
           </li>
         </ul>
-        <!-- 评论专区 -->
-        <ul class="rightindex-comment">
-          <li class="rightindex-title">
-            <i class="el-icon-chat-dot-round"></i> 评论专区
-          </li>
-          <li
-            v-for="(item, index) in comment"
-            v-if="index < 3"
-            :key="index"
-            class="licontent"
-          >
-            {{ item.username }} : {{ item.content }}
-          </li>
-          <li class="morecomment">
-            <router-link to="/comment"
-              ><li class="el-icon-thumb"></li>
-              更多评论</router-link
-            >
-          </li>
-        </ul>
       </div>
          <!-- 右下角天气 -->
         <div class="weatherBox">
@@ -236,6 +214,7 @@
 
 <script>
 export default {
+      inject:['reload'],//注入重载方法
   data() {
     return {
       city: "", //当前城市
@@ -275,7 +254,6 @@ export default {
   created() {
     this.getSort();
     this.getNewArticles();
-    this.getComment();
     //调用控制登录登出状态函数
     this.getStatus();
     this.getLoactionCity(); //初始化前获取当前地址
@@ -341,12 +319,6 @@ export default {
       res.data.reverse();
       this.article = res.data;
     },
-    async getComment() {
-      const { data: res } = await this.$http.get("getComment");
-      if (res.code != 200) return this.$message.error("获取最新评论失败");
-      res.data.reverse();
-      this.comment = res.data;
-    },
     search() {
       this.$store.commit("setValue", this.inputvalue);
       this.$refs.article.blogAllData();
@@ -357,9 +329,9 @@ export default {
       this.$refs.article.getAboutSortData(id);
     },
     //重载 调用子组件中方法重新获取博客数据
-    reload() {
-      this.$refs.article.blogAllData();
-    },
+    // reload() {
+    //   this.$refs.article.blogAllData();
+    // },
     messagereload(){
      location.reload();
     },
@@ -392,7 +364,7 @@ export default {
     logout() {
       //清空token
       window.sessionStorage.removeItem("token");
-      location.reload();
+      this.reload();
       this.$message({ message: "登出成功", type: "success", duration: 1000 });
     },
   },

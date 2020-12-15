@@ -25,11 +25,9 @@ share.get('/getTasks', async ctx => {
 
 //添加任务
 share.post('/addTasks', async ctx => {
-    // const data = ctx.request.body
     const value = ctx.request.body.value
     const isDone = ctx.request.body.isDone
     const date = ctx.request.body.date
-    // console.log(data);
     const con = await Mysql.createConnection(blog)
     const sql = `INSERT INTO cheat (value,isDone,date) VALUE
     ('${value}','${isDone}','${date}')`
@@ -74,7 +72,6 @@ share.delete('/deleteTasks', async ctx => {
 // 编辑任务
 share.put('/editCheat', async ctx => {
     const edit = ctx.request.body;
-    // console.log(edit);
     const con = await Mysql.createConnection(blog)
     const sql = `UPDATE cheat SET value = '${edit.value}',date = '${edit.date}' WHERE id= '${edit.id}';`
     const [rs] = await con.query(sql) //连接结束
@@ -96,7 +93,6 @@ share.put('/editCheat', async ctx => {
 share.put('/doneIt', async ctx => {
     const isDone = ctx.request.body.isDone;
     const id = ctx.request.body.id;
-    // console.log(id,isDone);
     const con = await Mysql.createConnection(blog)
     const sql = `UPDATE cheat SET isDone = '${isDone}' WHERE id=${id}`
     const [data] = await con.query(sql)

@@ -125,25 +125,6 @@ index.get('/getNewArticles', async ctx => {
         }
     }
 })
-//获取评论
-index.get('/getComment', async ctx => {
-    const con = await Mysql.createConnection(blog) //连接数据库
-    const sql = `SELECT * FROM comment`
-    const [data] = await con.query(sql)
-    con.end(function (err) {}) //连接结束
-    if (data.length >= 0) {
-        ctx.body = {
-            code: 200,
-            tips: '获取数据成功',
-            data
-        }
-    } else {
-        ctx.body = {
-            code: 400,
-            tips: '获取数据失败'
-        }
-    }
-})
 
 //更新博客
 index.put('/updateblog', async ctx => {
@@ -244,18 +225,22 @@ index.post('/userLogin', async ctx => {
         name: username,
         pwd: password
     }
+    // console.log(userdata);
     const secret = "jun"
     const con = await Mysql.createConnection(blog)
     var sql = `SELECT * FROM user where username = '${username}' and password= '${password}'`
-    const [data] = await con.query(sql)
+    const [res] = await con.query(sql)
     // console.log(data[0].id);
     con.end(function (err) {}) //连接结束
-    if (data.length > 0) {
+    if (res.length > 0) {
         ctx.body = {
             code: 200,
             tips: '登录成功',
+            username:res[0].username,
+            email:res[0].email,
+            id:res[0].id,
+            avatar:res[0].avatar,
             token: jwt.sign(userdata, secret),
-            data: data[0].id
         }
     } else {
         ctx.body = {
@@ -268,6 +253,8 @@ index.post('/userLogin', async ctx => {
 index.post('/userRegister', async ctx => {
     const username = ctx.request.body.username.trim()
     const password = ctx.request.body.password.trim()
+    const email = ctx.request.body.email.trim()
+    const avatar = ctx.request.body.avatar.trim()
     const con = await Mysql.createConnection(blog)
     const [data] = await con.query(`SELECT * FROM user`)
     con.end(function (err) {}) //连接结束
@@ -282,8 +269,8 @@ index.post('/userRegister', async ctx => {
 
     if (code != 201) {
         const con = await Mysql.createConnection(blog)
-        const sql = `INSERT INTO user (username,password)
-                     VALUE('${username}', '${password}')`
+        const sql = `INSERT INTO user (username,password,email,avatar,praised)
+                    VALUE('${username}', '${password}', '${email}', '${avatar}',0)`
         const [rs] = await con.query(sql)
         con.end(function (err) {}) //连接结束
 
@@ -304,12 +291,11 @@ index.post('/userRegister', async ctx => {
 
 //用户查询密码
 index.post('/getPwd',async ctx =>{
-    // const data1= ctx.request.body;
-    // console.log(data1);
+
     const username = ctx.request.body.username;
-    // console.log(username);
+    const email = ctx.request.body.email;
     const con = await Mysql.createConnection(blog)
-    const sql = `SELECT password FROM user WHERE username ='${username}'`
+    const sql = `SELECT password FROM user WHERE username ='${username}' and email = '${email}'`
     const [data] = await con.query(sql)
     // console.log(data[0].password);
     con.end(function(err){}) //连接结束
@@ -354,13 +340,12 @@ index.put('/addcount', async ctx => {
 // 浏览量增加
 index.put('/addRead', async ctx => {
     const id = ctx.request.body.id
-    // console.log(id);
     const con = await Mysql.createConnection(blog)
     const readnumber = `SELECT readcount FROM article WHERE id = '${id}'`
     const [readcount] = await con.query(readnumber)
 
     let number = readcount[0].readcount + 1
-    console.log(readcount[0].readcount);
+    // console.log(readcount[0].readcount);
     const sql = `UPDATE article SET readcount = ${number} WHERE id = '${id}'`
     const [rs] = await con.query(sql)
     con.end(function (err) {}) //连接结束
@@ -376,63 +361,55 @@ index.put('/addRead', async ctx => {
         }
     }
 })
+//根据博客id获取该博客的所有评论
+index.get('/getAllComment/:id',async ctx => {
+    const blog_id = ctx.params.id 
+    // console.log(blog_id);
+    const connection = await Mysql.createConnection(blog)
+    const sql = `SELECT a.id,a.content,a.date,a.agree_count,a.user_id,a.agree_user_id,b.username,b.avatar,b.praised 
+                 FROM blog_comment a,user b WHERE a.blog_id = ${blog_id} and a.user_id = b.id`
+    const [data] = await connection.query(sql)
+    const sql2 = `SELECT a.respondent_id,a.reply_content,b.username 
+                  FROM reply_comment a,user b WHERE a.blog_id = ${blog_id} and a.commentator_id = b.id`
+    const [data2] = await connection.query(sql2)
+    connection.end(function (err) { }) //连接结束
 
-//发表评论
-index.post('/postcomment', async ctx => {
-    const titleid = ctx.request.body.tid
-    const username = ctx.request.body.uname
-    const content = ctx.request.body.content
-    const date = ctx.request.body.date
+    if (data.length >= 0) {
+        ctx.body = {
+            data,
+            data2,
+            code:200,
+            tips:'获取评论数据成功'
+        }
+    } else {
+        ctx.body = {
+            code:400,
+            tips:'获取评论数据失败'
+        }
+    }
+})
+
+//添加用户的评论
+index.post('/addComment',async ctx => {
+    const commentForm = ctx.request.body
     const con = await Mysql.createConnection(blog)
-    const sql = `INSERT INTO comment (username,titleid,content,date) VALUE
-    ('${username}', '${titleid}', '${content}','${date}')`
+    // console.log(commentForm);
+    const sql = `INSERT INTO blog_comment (blog_id,user_id,content,date,agree_count,agree_user_id) VALUE
+    (${commentForm.blog_id}, ${commentForm.user_id},'${commentForm.content.trim()}', 
+    '${commentForm.date.trim()}', ${commentForm.agree_count}, '[]')`
     const [rs] = await con.query(sql)
-    con.end(function (err) {}) //连接结束
+    con.end(function (err) { }) //连接结束
     if (rs.affectedRows > 0) {
         ctx.body = {
-            code: 200,
-            tips: '评论成功',
+            code:200,
+            tips:'发表评论成功'
         }
     } else {
         ctx.body = {
-            code: 400,
-            tips: '评论失败'
+            code:400,
+            tips:'发表评论失败'
         }
     }
 })
-//获取评论
-index.post('/getComments', async ctx => {
-    const pagenum = ctx.request.body.pagenum - 1
-    const pagesize = ctx.request.body.pagesize
-    const query = ctx.request.body.query
-    // console.log(pagenum,pagesize,query)
-    const con = await Mysql.createConnection(blog)
-    if (query == '' || query == null) {
-        var sql = `SELECT a.id, a.username,a.titleid,a.content,a.date,b.title FROM comment a,article b
-        WHERE  a.titleid = b.id LIMIT ${pagenum * pagesize},${pagesize}`
-        var [data] = await con.query(sql)
-    } else {
-        var sql = `SELECT  a.id, a.username,a.titleid,a.content,a.date,b.title FROM comment a,article b
-        WHERE  a.titleid = b.id and b.title like'%${query}%'
-    LIMIT ${pagenum * pagesize},${pagesize}`
-        var [data] = await con.query(sql)
-    }
-    const sql2 = `SELECT  a.id,a.username,a.titleid,a.content,a.date,b.title FROM comment a,article b
-    WHERE  a.titleid = b.id`
-    const [data2] = await con.query(sql2)
-    con.end(function (err) {}) //连接结束
-    if (data.length >= 0 && data2.length >= 0) {
-        ctx.body = {
-            code: 200,
-            tips: '获取评论成功',
-            data,
-            total: data2.length
-        }
-    } else {
-        ctx.body = {
-            code: 400,
-            tips: '获取失败'
-        }
-    }
-})
+
 module.exports = index

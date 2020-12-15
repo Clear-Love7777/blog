@@ -1,111 +1,306 @@
 <template>
-  <div class="mainindex">
-    <div class="comment" v-for="item in comment">
-      <div class="mainindex-title">文章： {{ item.title }}</div>
-      <div class="contentdate">
-        <div class="mainindex-content" @click="changePath(item)">
-          {{ item.username }}: {{ item.content }}
+    <div class="comment">
+        <div class="title-comment">
+            <span>评论</span>
+            <span>共{{commentList.length}}条评论</span>
+            <div></div>
         </div>
-        <div class="mainindex-date" @click="changePath(item)">
-          {{ item.date | dateFormat }}
+        <div class="yours-comment">
+            <div class="part-one">
+                <img src="https://s1.ax1x.com/2020/11/04/BcKfBV.jpg" alt="">
+                <div class="triangle"></div>
+                <textarea placeholder="评论" maxlength=140 v-model="commentForm.content"></textarea>
+            </div>
+            <div class="part-two">
+                <span>140</span>
+                <button @click="submitComment">评论</button>
+            </div>
         </div>
-      </div>
+        <div class="others-comment">
+            <div class="title">
+                <span>所有评论</span>
+                <div></div>
+            </div>
+            <div class="others-comment-item" v-for="(item,index) in commentList" :key="item.id">
+                <img :src="item.avatar" alt="">
+                <div class="right">
+                    <div class="content">
+                        <span>{{item.username}}：</span>
+                        <span>{{item.content}}</span>
+                    </div>
+                    <div class="time">
+                        <span>{{item.date | dateFormat}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="empty" v-if="commentList.length == 0">
+                暂无评论
+            </div>
+        </div>
     </div>
-    <!-- 分页区域 -->
-    <el-pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page="queryInfo.pagenum"
-      :page-sizes="[3, 5, 10, 15]"
-      :page-size="queryInfo.pagesize"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="total"
-    ></el-pagination>
-  </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      queryInfo: {
-        query: "",
-        //当前页数
-        pagenum: 1,
-        //当前每页显示多少条数据
-        pagesize: 5,
-      },
-      total: 0,
-      comment: [],
-    };
-  },
-  created() {
-    this.getComments();
-  },
-  methods: {
-    //获取评论
-    async getComments() {
-      const { data: res } = await this.$http.post(
-        "getComments",
-        this.queryInfo
-      );
-      if (res.code != 200) return this.$message.error("获取评论失败");
-      this.comment = res.data;
-      this.total = res.total;
-      //   console.log(res.data);
+    inject:['reload'],//注入重载方法
+    props:{
+        'commentList':Array,
+        'id':Number,
+        'getBlogComment':Function
     },
-    //监听pagesizes 改变的事件
-    handleSizeChange(newSize) {
-      //  console.log(newSize);
-      this.queryInfo.pagesize = newSize;
-      this.getComments();
+    data(){
+        return {
+            commentForm:{//评论表单
+                blog_id:'',
+                user_id:'',
+                content:'',
+                date:new Date(),
+                agree_count:0
+            },
+        } 
     },
-    
-    //监听页码值改变的事件
-    handleCurrentChange(newPage) {
-      //  console.log(newPage);
-      this.queryInfo.pagenum = newPage;
-      this.getComments();
+    created(){
+        let userForm = JSON.parse(window.sessionStorage.getItem('userForm'))
+        if(userForm !== null) {
+            this.commentForm.user_id = userForm.id
+            this.user_avatar = userForm.avatar
+        }else{
+            this.user_avatar = 'https://s3.ax1x.com/2020/12/09/r9jlDg.png'
+        }
     },
-  },
-};
+    methods:{
+        //处理时间格式
+        dealDate(time){
+            const t = new Date(time)
+            const y = t.getFullYear()
+            const m = (t.getMonth() + 1 + '').padStart(2, '0')
+            const d = (t.getDate() + '').padStart(2, '0')
+            const hh = (t.getHours() + '').padStart(2, '0')
+            const mm = (t.getMinutes() + '').padStart(2, '0')
+            const ss = (t.getSeconds() + '').padStart(2, '0')
+            return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
+        },
+        //提交评论
+        async submitComment(){
+            if(!window.sessionStorage.token)  
+            return this.$message({message:'您还没有登录，请点击右上角的登录链接',type:'error',duration:1000,offset:5})
+            if(this.commentForm.content.length === 0) 
+            return this.$message({message:'您还没有评论',type:'error',duration:1000,offset:5})
+            this.commentForm.blog_id = this.id
+            this.commentForm.date = this.dealDate(this.commentForm.date)
+            const {data:res} = await this.$http.post('addComment',this.commentForm)
+            if(res.code != 200) {
+                this.commentForm.content = ''
+                return this.$message({message:`${res.tips}`,type:'error',duration:1000,offset:5})
+            }
+            this.$message({message:`${res.tips}`,type:'success',duration:1000,offset:5})
+            this.reload()
+        },
+    }
+}
 </script>
 
 <style lang="less" scoped>
-.main-index {
-  width: 100%;
-  flex-direction: column;
+.comment{
+    box-sizing: border-box;
+    padding: 0 20px;
 }
-.comment {
-  width: 52vw;
-  margin: 25px 33px 12px 33px;
-  background-color: rgba(255, 255, 255, 0.4);
-  border-radius: 10px;
-  box-shadow: 0 3px 12px 0 rgba(0, 0, 0, 0.12);
-  padding: 20px 15px 20px 20px;
-  box-sizing: border-box;
-  color: #000;
+.title-comment{
+    span:first-child{font-size: 18px;}
+    span:nth-child(2){
+        font-size: 12px;
+        margin-left: 20px;
+        color: #666;
+    }
+    div{
+        border: 1px solid #2468F2;
+        margin: 10px 0 20px 0;
+    }
 }
-.mainindex-title {
-  font-size: 14px;
-  font-weight: bold;
+.yours-comment{
+    .part-one{
+        display: flex;
+        box-sizing: border-box;
+        position: relative;
+        img{
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+        .triangle{
+            position: absolute;
+            top: 12px;
+            left:65px;
+            width: 0;
+            height: 0;
+            border-width:6px 10px 6px 0;
+            border-style: solid;
+            border-color: transparent #CDCDCD transparent transparent;
+            &::after{
+                content: "";
+                position: absolute;
+                top: -5px;
+                left:3px;
+                width: 0;
+                height: 0;
+                border-width:5px 8px 5px 0;
+                border-style: solid;
+                border-color: transparent #fff transparent transparent;
+            }
+        } 
+        textarea{
+            resize: none;
+            width: 100%;
+            border-color: #CDCDCD;
+            border-radius: 2px;
+            outline: #CDCDCD;
+            padding: 3px 0 0 5px;
+        }
+    }
+    .part-two{
+        margin-top: 20px;
+        display: flex;
+        justify-content: flex-end;
+        span{color: #666;font-size: 14px;}
+        button{
+            margin-left: 10px;
+            height: 20px;
+            width: 44px;
+            color: #fff;
+            background-color: #2468F2;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            border-radius: 2px;
+            font-size: 12px;
+            &:hover{opacity: 0.8;}
+        }
+    }
 }
-.mainindex-content {
-  font-size: 16px;
+.others-comment{
+    .title{
+        span{font-size: 14px;}
+        div{border: 1px solid #CFCFCF;margin-top: 5px;}
+    }
+    .others-comment-item{
+        padding: 15px 0;
+        display: flex;
+        border-bottom: 1px dotted #ccc;
+        img{
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+        .right{
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            .content{
+                font-size: 14px;
+                span:first-child{color: #2468F2;}
+            }
+            .reply-comment{
+                min-height: 40px;
+                box-sizing: border-box;
+                background-color: #F8F8F8;
+                border: 1px solid #D9D9D9;
+                margin-top: 10px;
+                display: flex;
+                align-items: center;
+                padding-left:20px;
+                span{font-size: 12px;}
+                span:first-child{color: #2468F2;}
+            }
+            .time{
+                margin-top: 20px;
+                display: flex;
+                justify-content: space-between;
+                font-size: 12px;
+                >span{color: #999;}
+                .operate{
+                    span:first-child{
+                        cursor: pointer;
+                        &:hover{color: #2468F2;}
+                        i{margin-right: 2px;}
+                    }
+                    span:nth-child(2){
+                        margin: 0 10px;
+                        color: #CFDBED;
+                    }
+                    span:last-child{
+                        cursor: pointer;
+                        &:hover{color: #2468F2;text-decoration: underline;}
+                    }
+                }
+            }
+            .replyBox{
+                position: relative;
+                box-sizing: border-box;
+                padding: 20px;
+                height: 100px;
+                background-color: #F8F8F8;
+                border: 1px solid #D9D9D9;
+                margin-top: 20px;
+                .triangle{
+                    position: absolute;
+                    top: -10px;
+                    right:5px;
+                    width: 0;
+                    height: 0;
+                    border-width:0 10px 10px 10px;
+                    border-style: solid;
+                    border-color: transparent transparent #CDCDCD transparent;
+                    &::after{
+                        content: "";
+                        position: absolute;
+                        top: 1px;
+                        right: -9px;
+                        width: 0;
+                        height: 0;
+                        border-width: 0 9px 9px 9px;
+                        border-style: solid;
+                        border-color: transparent transparent #F8F8F8 transparent;
+                    }
+                }
+                textarea{
+                    width: 100%;
+                    resize: none;
+                    border-radius: 2px;
+                    border: 1px solid #CDCDCD;
+                    outline: #CDCDCD;
+                    padding: 3px 0 0 5px;
+                }
+                div:last-child{
+                    margin-top: 10px;
+                    display: flex;
+                    justify-content: flex-end;
+                    span{color: #666;font-size: 14px;}
+                    button{
+                        margin-left: 10px;
+                        height: 20px;
+                        width: 44px;
+                        color: #fff;
+                        background-color: #2468F2;
+                        border: none;
+                        outline: none;
+                        cursor: pointer;
+                        border-radius: 2px;
+                        font-size: 12px;
+                        &:hover{opacity: 0.8;}
+                    }
+                }
+            }
+        }
+    }
 }
-.mainindex-date {
-  position: relative;
-  float: right;
-  font-size: 10px;
+.empty{
+    text-align: center;
+    margin: 50px 0;
+    color: red;
 }
-div {
-  margin-bottom: 10px;
-}
-.el-pagination {
-  width: 400px;
-  margin-top: 30px;
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+.changeColor{
+    color: #2468F2!important;
 }
 </style>

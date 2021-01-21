@@ -128,7 +128,7 @@
                 placement="top"
               >
                 <svg class="icon icon-edit" aria-hidden="true">
-                  <use xlink:href="#icon-QQ" @click=""></use>
+                  <use xlink:href="#icon-QQ" ></use>
                 </svg>
               </el-tooltip>
             </a>
@@ -171,7 +171,7 @@
           </li>
           <li
             v-for="(item, index) in article"
-            v-if="index < 3"
+             v-if="index<3"
             :key="index"
             class="licontent"
           >
@@ -207,14 +207,13 @@
             </div>
         </div>
       </div>
-           
     </div>
-  </div>
+  </div> 
 </template>
 
 <script>
 export default {
-      inject:['reload'],//注入重载方法
+  inject: ["reload"], //注入重载方法
   data() {
     return {
       city: "", //当前城市
@@ -258,13 +257,13 @@ export default {
     this.getStatus();
     this.getLoactionCity(); //初始化前获取当前地址
     //禁止鼠标右键点击
-    (document.oncontextmenu = () => {
+    document.oncontextmenu = () => {
       event.returnValue = false;
-    })
-      // 禁用选择
-      // (document.onselectstart = () => {
-      //   event.returnValue = false;
-      // });
+    };
+    // 禁用选择
+    // (document.onselectstart = () => {
+    //   event.returnValue = false;
+    // });
   },
   watch: {
     $route(to, from) {
@@ -283,27 +282,45 @@ export default {
       this.getWeather(data.city);
     },
     //根据城市获取城市天气
-        async getWeather(location){
-            const {data:res} = await this.$http.get(`http://wthrcdn.etouch.cn/weather_mini?city=${location}`)
-            if(res.status !== 1000) return this.$message.error('获取天气数据失败')
-            const value = res.data.forecast.slice(0,3)
-            this.handleWeatherData(value)
-        },
-      //处理天气数据
-        handleWeatherData(value){
-            value.map( (item,index) => {
-                if(index == 0){item.date = '今天';}
-                else if(index == 1){item.date = '明天';}
-                else{item.date = '后天';}
-                item.wendu = item.low.split(' ')[1] + '/' + item.high.split(' ')[1]
-            })
-            this.weatherList = value
-            let high = Number(value[0].high.split(' ')[1].split('').filter(item => item !== '℃' && item).join(''))
-            let low = Number(value[0].low.split(' ')[1].split('').filter(item => item !== '℃' && item).join(''))
-            this.wendu = (high + low) / 2 + '℃'
-            this.type = value[0].type
-            // console.log(this.type);
-        },
+    async getWeather(location) {
+      const { data: res } = await this.$http.get(
+        `http://wthrcdn.etouch.cn/weather_mini?city=${location}`
+      );
+      if (res.status !== 1000) return this.$message.error("获取天气数据失败");
+      const value = res.data.forecast.slice(0, 3);
+      this.handleWeatherData(value);
+    },
+    //处理天气数据
+    handleWeatherData(value) {
+      value.map((item, index) => {
+        if (index == 0) {
+          item.date = "今天";
+        } else if (index == 1) {
+          item.date = "明天";
+        } else {
+          item.date = "后天";
+        }
+        item.wendu = item.low.split(" ")[1] + "/" + item.high.split(" ")[1];
+      });
+      this.weatherList = value;
+      let high = Number(
+        value[0].high
+          .split(" ")[1]
+          .split("")
+          .filter((item) => item !== "℃" && item)
+          .join("")
+      );
+      let low = Number(
+        value[0].low
+          .split(" ")[1]
+          .split("")
+          .filter((item) => item !== "℃" && item)
+          .join("")
+      );
+      this.wendu = (high + low) / 2 + "℃";
+      this.type = value[0].type;
+      // console.log(this.type);
+    },
     // 跳转到登录
     toLogin() {
       this.$router.push("/login");
@@ -332,8 +349,8 @@ export default {
     // reload() {
     //   this.$refs.article.blogAllData();
     // },
-    messagereload(){
-     location.reload();
+    messagereload() {
+      location.reload();
     },
     //路由发生改变后 禁用button按钮
     disableBtn(path) {
@@ -383,15 +400,14 @@ export default {
     box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
   }
   > .header2 {
-  
     width: 100%;
     height: 60px;
     background-color: rgba(255, 255, 255, 0.4);
     box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-    .el-dropdown{
-        position: absolute;
-        top:14px;
-        left:14px;
+    .el-dropdown {
+      position: absolute;
+      top: 14px;
+      left: 14px;
     }
     span {
       font-size: 24px;

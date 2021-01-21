@@ -80,7 +80,6 @@
   // })()
 
   app.use(router.routes())
-
   app.listen(80, () => {
     console.log('app start')
   })

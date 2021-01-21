@@ -13,7 +13,7 @@
               留言说明:
             </p>
             <div class="pspan">
-              <p>务必填写有效的邮箱地址，否则不会收到回复信息的~</p>
+              <p>务必填写有效的邮箱地址，否则不会收到回复信息的</p>
               <span class="writeTime">{{ writeMessageTime }}</span>
             </div>
           </el-row>

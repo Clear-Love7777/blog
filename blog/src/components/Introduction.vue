@@ -16,6 +16,7 @@
       </li>
       <li class="title">近期愿望：</li>
       <li>希望能找到一份适合的工作</li>
+      
     </nav>
   </div>
 </template>

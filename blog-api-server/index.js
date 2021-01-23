@@ -269,8 +269,8 @@ index.post('/userRegister', async ctx => {
 
     if (code != 201) {
         const con = await Mysql.createConnection(blog)
-        const sql = `INSERT INTO user (username,password,email,avatar,praised)
-                    VALUE('${username}', '${password}', '${email}', '${avatar}',0)`
+        const sql = `INSERT INTO user (username,password,email,avatar)
+                    VALUE('${username}', '${password}', '${email}', '${avatar}')`
         const [rs] = await con.query(sql)
         con.end(function (err) {}) //连接结束
 
@@ -366,7 +366,7 @@ index.get('/getAllComment/:id',async ctx => {
     const blog_id = ctx.params.id 
     // console.log(blog_id);
     const connection = await Mysql.createConnection(blog)
-    const sql = `SELECT a.id,a.content,a.date,a.agree_count,a.user_id,a.agree_user_id,b.username,b.avatar,b.praised 
+    const sql = `SELECT a.id,a.content,a.date,a.agree_count,a.user_id,a.agree_user_id,b.username,b.avatar
                  FROM blog_comment a,user b WHERE a.blog_id = ${blog_id} and a.user_id = b.id`
     const [data] = await connection.query(sql)
     const sql2 = `SELECT a.respondent_id,a.reply_content,b.username 

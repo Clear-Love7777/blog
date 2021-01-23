@@ -3,12 +3,12 @@
     <!-- 头部导航 -->
     <header class="header2">
       <el-dropdown>
-  <el-button  >
+   <el-button  >
     菜单<i class="el-icon-arrow-down el-icon--right"></i>
-  </el-button>
-  <el-dropdown-menu slot="dropdown">
+   </el-button>
+   <el-dropdown-menu slot="dropdown">
       <el-dropdown-item>
-      <router-link to="/login"><span style="color:black" v-show="btnLogin">登录</span></router-link>
+     <span style="color:black"  @click="toLogin" v-show="btnLogin">登录</span>
     </el-dropdown-item>
     <el-dropdown-item>
        <router-link to="/articles" @click.native="reload"
@@ -38,9 +38,10 @@
               v-show="btnLogout" >退出</span> 
     </el-dropdown-item>
   </el-dropdown-menu>
-</el-dropdown>
+  </el-dropdown>
       <span>JuneBlog</span>
     </header>
+
     <header>
       <section>
         <a href="javascript:void(0);">
@@ -65,11 +66,15 @@
               ><i class="el-icon-connection"></i> 友情链接</router-link
             >
           </li>
+           <li>
+            <a @click="toSelf"><i class="el-icon-star-off"></i> 个人中心</a>
+          </li>
           <li>
             <router-link to="/other"
               ><i class="el-icon-more-outline"></i> 其他</router-link
             >
           </li>
+          
          
         <div class="buttons">
             <el-button
@@ -171,7 +176,7 @@
           </li>
           <li
             v-for="(item, index) in article"
-             v-if="index<3"
+             v-if =" index < 3"
             :key="index"
             class="licontent"
           >
@@ -210,7 +215,6 @@
     </div>
   </div> 
 </template>
-
 <script>
 export default {
   inject: ["reload"], //注入重载方法

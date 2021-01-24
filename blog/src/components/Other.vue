@@ -1,34 +1,6 @@
 <template>
   <div id="blog">
     <Header></Header>
-    <!-- 头部导航 -->
-    <!-- <header>
-      <section>
-        <a href="javascript:void(0);">
-          <img src="..\assets\logo.jpg" alt="" />
-          <span>June</span>
-        </a>
-        <nav>
-            <li>
-             <router-link to="/articles" 
-              ><svg class="homeicon">
-                  <use xlink:href="#icon-home"></use>
-                </svg>主页</router-link
-            >
-          </li>
-            <li>
-            <router-link to="/messageBoard"
-              ><i class="el-icon-edit"></i> 留言板</router-link
-            >
-          </li>
-          <li>
-            <router-link to="/other"
-              ><i class="el-icon-more-outline"></i> 其他</router-link
-            >
-          </li>
-        </nav>
-      </section>
-    </header> -->
         <el-container> 
        <!-- 侧边栏 -->
       <el-aside :width="isCollapse ? '64px':'200px'">
@@ -51,7 +23,6 @@
     <!-- <el-menu-item index="hotTop">
         <span slot="title">热读榜</span>
       </el-menu-item> -->
-
     </el-menu>
      </el-aside>
  

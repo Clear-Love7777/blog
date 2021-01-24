@@ -24,14 +24,18 @@
               ><i class="el-icon-edit" style="color:black"></i><span style="color:black">留言板</span></router-link
             >
     </el-dropdown-item>
-      <el-dropdown-item>
-      <router-link to="/other"
-              ><i class="el-icon-more-outline" style="color:black"></i><span style="color:black">其他</span></router-link
-            >
-    </el-dropdown-item>
-    <el-dropdown-item>
+     <el-dropdown-item>
       <router-link to="/link"
               ><i class="el-icon-connection" style="color:black"></i> <span style="color:black">友情链接</span></router-link
+            >
+    </el-dropdown-item>
+       <el-dropdown-item>
+            <router-link to="" @click.native="toSelf"><i class="el-icon-star-off"></i> 个人中心
+            </router-link>   
+    </el-dropdown-item>
+      <el-dropdown-item>
+      <router-link to="/other"
+              ><i class="el-icon-more-outline" style="color:black"></i><span style="color:black">分享</span></router-link
             >
     </el-dropdown-item>
    <el-dropdown-item>
@@ -42,6 +46,7 @@
 </el-dropdown>
       <span>JuneBlog</span>
     </header>
+
     <header>
       <section>
         <a href="javascript:void(0);">
@@ -67,13 +72,15 @@
             >
           </li>
           <li>
+            <router-link to="" @click.native="toSelf"><i class="el-icon-star-off"></i> 个人中心
+            </router-link>
+          </li>
+          <li>
             <router-link to="/other"
-              ><i class="el-icon-more-outline"></i> 其他</router-link
+              ><i class="el-icon-more-outline"></i> 分享</router-link
             >
           </li>
-          
-         
-          <!-- <div class="buttons">
+            <div class="buttons">
             <el-button
               type="primary"
               plain
@@ -90,7 +97,7 @@
               v-show="btnLogout"
               >退出</el-button
             >
-          </div> -->
+          </div>
         </nav>
       </section>
     </header>
@@ -112,6 +119,11 @@ export default {
          // 跳转到登录
     toLogin() {
       this.$router.push("/login");
+    },
+      toSelf(){
+            if(!window.sessionStorage.token)  
+            return this.$message({message:'您还没有登录，请点击右上角的登录按钮',type:'error',duration:1000,offset:5})
+            this.$router.push("/self");
     },
         //控制登录登出状态函数
     getStatus() {
@@ -189,7 +201,20 @@ export default {
         transition: color 0.25s;
       }
     }
+    .buttons {
+      position: absolute;
+      right: 10%;
+    }
   }
+  .buttons {
+  margin-right: 10px;
+  .el-button {
+    width: 60px;
+    height: 35px;
+    font-size: 14px;
+    padding: 10% 15% !important;
+  }
+}
   nav {
     display: flex;
     list-style: none;
@@ -208,9 +233,6 @@ export default {
       }
     }
   }
-  //  .buttons {
-  // position: absolute;
-  // right: 180px;
-  // }
+  
 }
 </style>

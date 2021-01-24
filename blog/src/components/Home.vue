@@ -23,9 +23,13 @@
               ><i class="el-icon-edit" style="color:black"></i><span style="color:black">留言板</span></router-link
             >
     </el-dropdown-item>
+       <el-dropdown-item>
+            <router-link to="" @click.native="toSelf"><i class="el-icon-star-off"></i> 个人中心
+            </router-link>   
+    </el-dropdown-item>
       <el-dropdown-item>
       <router-link to="/other"
-              ><i class="el-icon-more-outline" style="color:black"></i><span style="color:black">其他</span></router-link
+              ><i class="el-icon-more-outline" style="color:black"></i><span style="color:black">分享</span></router-link
             >
     </el-dropdown-item>
     <el-dropdown-item>
@@ -67,15 +71,14 @@
             >
           </li>
            <li>
-            <a @click="toSelf"><i class="el-icon-star-off"></i> 个人中心</a>
+            <router-link to="" @click.native="toSelf"><i class="el-icon-star-off"></i> 个人中心
+            </router-link>
           </li>
           <li>
             <router-link to="/other"
-              ><i class="el-icon-more-outline"></i> 其他</router-link
+              ><i class="el-icon-more-outline"></i> 分享</router-link
             >
           </li>
-          
-         
         <div class="buttons">
             <el-button
               type="primary"
@@ -328,6 +331,11 @@ export default {
     // 跳转到登录
     toLogin() {
       this.$router.push("/login");
+    },
+    toSelf(){
+            if(!window.sessionStorage.token)  
+            return this.$message({message:'您还没有登录，请点击右上角的登录按钮',type:'error',duration:1000,offset:5})
+            this.$router.push("/self");
     },
     async getSort() {
       const { data: res } = await this.$http.get("getSort");

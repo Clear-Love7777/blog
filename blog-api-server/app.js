@@ -3,16 +3,23 @@
   const jwt = require("jsonwebtoken")
   const Router = require('koa-router')
   const Mysql = require('promise-mysql2')
+  const Static = require('koa-static-cache')
   const blog = require("./mysql.js")
-  const Body = require('koa-body')
+  const  koaBody = require('koa-body')
+  const cors = require("koa2-cors")
+
   const app = new Koa()
   const router = new Router()
-  const cors = require("koa2-cors")
+
   app.use(cors()) //解决跨域问题
   
   const staticServer = require('koa-static');
   app.use(staticServer(__dirname, 'static'));
-  app.use(Body())
+   app.use(koaBody({ multipart: true })) //支持文件上传
+  app.use(Static("./static", { //加载静态资源
+    prefix: "/static",
+    gzip: true,
+}))
 
   app.use(async (ctx, next) => { //后台拦截器
     var token = ctx.headers.authorization
@@ -72,6 +79,9 @@
 
   const other = require("./other.js")
   app.use(other.routes())
+
+  const user = require("./user.js")
+  app.use(user.routes())
 
   // app.use(router.routes())
   // app.listen(9025,() => {                                                                          

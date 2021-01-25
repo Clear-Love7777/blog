@@ -27,6 +27,13 @@ axios.interceptors.request.use(config => {
 })
 
 
+//解决路由跳转报错（Avoided redundant navigation to current location ）
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+    return originalPush.call(this, location).catch(err => err)
+}
+
+
 //自定义代码高亮事件
 Vue.directive('highlight', function (el) {
   let blocks = el.querySelectorAll('pre code');

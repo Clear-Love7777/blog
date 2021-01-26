@@ -12,6 +12,7 @@
           ></el-input>
         </el-form-item>
         <!-- 邮箱 -->
+        
         <el-form-item prop="email">
           <el-input
             prefix-icon="el-icon-message"

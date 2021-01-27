@@ -4,7 +4,6 @@
     <div class="line"></div>
     <!-- 内容 -->
     <ul>
-      
       <li v-for="(item, index) in cheatList">
         <span class="value"   :class="{ done: !item.isDone }">
           {{ index + 1 }}.{{ item.value }}

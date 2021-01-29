@@ -348,7 +348,6 @@ export default {
       res.data.reverse();
       this.article = res.data;
     },
-    
     search() {
       this.$store.commit("setValue", this.inputvalue);
       this.$refs.article.blogAllData();

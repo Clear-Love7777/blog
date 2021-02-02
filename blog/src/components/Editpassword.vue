@@ -93,7 +93,7 @@ export default {
 .btns {
   display: flex;
   justify-content: flex-end;
-}
+}   
 .forget {
   margin-left: 5px;
   font-size: 14px;

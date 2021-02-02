@@ -15,6 +15,8 @@ const Header = () => import( /* webpackChunkName: "homepage_notfound" */ '../pub
 const Editor = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/Editor.vue')
 const Link = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/Link.vue')
 const Self = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/Self.vue')
+const ReSetPwd = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/ReSetPwd.vue')
+
 
 
 
@@ -88,6 +90,10 @@ const routes = [{
   {
     path:'/self',
     component:Self
+  },
+  {
+    path:'/resetpwd',
+    component:ReSetPwd
   },
 ]
 

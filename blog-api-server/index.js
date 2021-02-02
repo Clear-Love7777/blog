@@ -2,6 +2,7 @@ const Router = require("koa-router")
 const Mysql = require("promise-mysql2")
 const blog = require("./mysql.js")
 const jwt = require("jsonwebtoken")
+const Md5 = require("md5")
 
 const index = new Router()
 //获取所有最新的文章
@@ -220,7 +221,7 @@ index.get('/readmd/:name', async ctx => {
 //用户登录
 index.post('/userLogin', async ctx => {
     const username = ctx.request.body.username
-    const password = ctx.request.body.password
+    const password = Md5(ctx.request.body.password.trim())
     const userdata = {
         name: username,
         pwd: password

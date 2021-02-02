@@ -166,7 +166,7 @@ export default {
             this.updateSessionStorage()
             this.reload()
         },
-        //更新本地存储
+        //更新本地存储 
         updateSessionStorage(){
             let userForm = {
                 id:this.userForm.id,
@@ -231,10 +231,7 @@ export default {
         //进入相应的博客
         changePath(item){
             this.$store.commit('setMdname',item.mdname)
-            this.$router.push({path:`/blog/article?${item.mdname}`})
-            if(window.sessionStorage.token){
-                this.saveOperateLog(item.title)
-            }
+            this.$router.push({path:`/content?${item.mdname}`}) 
         },
 
   },

@@ -11,8 +11,8 @@ const user = new Router()
 //重置密码
 user.put('/resetpwd',async ctx => {
     const username = ctx.request.body.username.trim()
+    console.log(ctx.request.body);
     const password = Md5(ctx.request.body.password.trim())
-
     const connection = await Mysql.createConnection(blog)
     const sql = `UPDATE user SET password='${password}' WHERE username='${username}'`
     const [res] = await connection.query(sql)
@@ -31,12 +31,111 @@ user.put('/resetpwd',async ctx => {
     }
 })
 
+//检查用户名是否已经被注册
+user.post('/checkUname',async ctx => {
+    const username = ctx.request.body.username.trim()
+    const status = ctx.request.body.status.trim()
+
+    if(username.length == 0){
+        ctx.body = {
+            code:400,
+            tips:'请输入昵称'
+        }
+    }else if(username.length < 2){
+        ctx.body = {
+            code:400,
+            tips:'昵称不能少于两位'
+        }
+    }else if(username.length > 10){
+        ctx.body = {
+            code:400,
+            tips:'昵称超出限制'
+        }
+    }else{
+        const connection = await Mysql.createConnection(blog)
+        const [res] = await connection.query(`SELECT * FROM user`)
+        connection.end((err) => console.log(err))
+
+        let flag = res.some(item => {
+            if (item.username === username) {
+                if(status === '注册'){
+                    ctx.body = {
+                        code:400,
+                        tips:'昵称已经被注册'
+                    }
+                }else{
+                    ctx.body = {
+                        code:400,
+                        tips:'未作出修改'
+                    }  
+                }
+                return true
+            }
+        })
+
+        if(!flag){
+            ctx.body = {
+                code:200,
+                tips:'昵称可用~'
+            }
+        }
+    }
+})
+
+//注册
+user.post('/register',async ctx => {
+    const username = ctx.request.body.username.trim()
+    const password = Md5(ctx.request.body.password.trim())
+    const email = ctx.request.body.email.trim()
+    const avatar = ctx.request.body.avatar.trim()
+
+    const connection = await Mysql.createConnection(blog)
+    const sql = `INSERT INTO user (username,password,email,avatar,praised)
+                    VALUE('${username}', '${password}', '${email}', '${avatar}',0)`
+    const [res] = await connection.query(sql)
+    connection.end((err) => console.log(err))
+
+    if (res.affectedRows > 0) {
+        ctx.body = {
+            code:200,
+            tips:'注册成功',
+        }
+    } else {
+        ctx.body = {
+            code:400,
+            tips:'注册失败',
+        }
+    }
+})
+
+//验证用户身份
+user.post('/checkUidentity',async ctx => {
+    const username = ctx.request.body.username.trim()
+    const email = ctx.request.body.email.trim()
+
+    const connection = await Mysql.createConnection(blog)
+    const sql = `SELECT * FROM user WHERE username='${username}' and email='${email}'`
+    const [res] = await connection.query(sql)
+    connection.end((err) => console.log(err))
+
+    if(res.length === 1){
+        ctx.body = {
+            code:200,
+            tips:'身份验证成功',
+        }
+    }else{
+        ctx.body = {
+            code:400,
+            tips:'身份验证失败，请重新验证',
+        }
+    }
+})
+
 //修改用户个人信息
 user.put('/reviseUinformation',async ctx => {
     const username = ctx.request.body.username.trim()
     const email = ctx.request.body.email.trim()
     const id = ctx.request.body.id
-
     const connection = await Mysql.createConnection(blog)
     const sql = `UPDATE user SET username='${username}',email='${email}' WHERE id=${id}`
     const [res] = await connection.query(sql)

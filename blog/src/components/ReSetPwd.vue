@@ -90,6 +90,7 @@ export default {
     created(){
         this.getUsername()
     },
+    
     methods:{
         getUsername(){
                    this.validateFormTwo.username = window.sessionStorage.getItem('username')

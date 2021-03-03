@@ -34,9 +34,9 @@ export default {
 #me {
  white-space: nowrap;
  display: inline-block;
-  height: 380rem/@no;
+  height: 450rem/@no;
   background-color: rgba(255, 255, 255, 0.4);
-  border-radius: 8rem/@no;
+  border-radius: 10rem/@no;
   box-shadow: 0 2rem/@no 10rem/@no 0 rgba(0, 0, 0, 0.12);
   padding: 20rem/@no 20rem/@no;
   box-sizing: border-box;
@@ -51,10 +51,11 @@ export default {
   nav {
     li {
       margin: 10rem/@no 0;
+      font-size:18rem/@no ;
     }
   }
   .title {
-    font-size: 18rem/@no;
+    font-size: 25rem/@no;
     font-weight: bold;
     color: darkcyan;
   }

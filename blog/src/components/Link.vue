@@ -64,7 +64,7 @@ export default {
     flex-wrap: wrap;
     .el-card {
       margin: 0 10px 20px;
-      width: 23%;
+      width: 30%;
       box-sizing: border-box;
       text-align: left;
       background-color: unset;

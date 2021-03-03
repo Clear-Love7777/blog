@@ -52,7 +52,7 @@ export default {
     return {
       //这是登录表单的数据绑定对象
       loginForm: {
-        username: "user",
+        username: "風見鶴島",
         password: "123456",
       },
       //这是表单的验证规则对象
@@ -111,7 +111,7 @@ export default {
 .login_container {
   height: 100%;
   width: 100%;
-  background: url("https://s1.ax1x.com/2020/11/04/BcunZ8.jpg");
+  background: url("https://www.hualigs.cn/image/603eee352906e.jpg");
   background-size: 100% 100%;
   position: fixed;
 }

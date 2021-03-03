@@ -20,9 +20,11 @@
          <el-menu-item index="cheat">
         <span slot="title">备忘录</span>
       </el-menu-item>
-    <!-- <el-menu-item index="hotTop">
-        <span slot="title">热读榜</span>
-      </el-menu-item> -->
+
+    <el-menu-item index="hotTop">
+        <span slot="title">排行榜</span>
+      </el-menu-item>
+
     </el-menu>
      </el-aside>
  
@@ -56,60 +58,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-// #blog {
-//   width: 100vw;
-//   min-height: 100vh;
-//   position: relative;
-//   > header {
-//     min-height: 60px;
-//     background-color: rgba(255, 255, 255, 0.4);
-//     box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
-//   }
-// }
-// #blog > header {
-//   section {
-//     width: 80vw;
-//     margin: 0 auto;
-//     display: flex;
-//     a {
-//       display: flex;
-//       align-items: center;
-//       margin-right: 1vw;
-//       &:hover span {
-//         color: #1e90ff;
-//       }
-//       img {
-//         width: 40px;
-//         height: 40px;
-//         border-radius: 50%;
-//         margin-right: 20px;
-//       }
-//       span {
-//         color: #000;
-//         font-size: 20px;
-//         transition: color 0.25s;
-//       }
-//     }
-//   }
-//   nav {
-//     display: flex;
-//     list-style: none;
-//     line-height: 60px;
-//     li {
-//       a {
-//         color: #000;
-//         transition: color 0.5s;
-//         &:hover {
-//           color: #1e90ff !important;
-//         }
-//         font-size: 15px;
-//         > i {
-//           margin-right: 2px;
-//         }
-//       }
-//     }
-//   }
-// }
 
 .el-container {
   height: 100vh;

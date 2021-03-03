@@ -52,7 +52,7 @@ export default {
       var url = window.location.href;
       var mdname = url.split("?")[1];
       const { data: res } = await this.$http.get(`readmd/${mdname}`);
-      if (res.code != 200) return this.$message.error(`${res.tips}`);
+      // if (res.code != 200) return this.$message.error(`${res.tips}`);
       this.html = converter.makeHtml(res.data[0].content);
       var titleid = window.sessionStorage.getItem('titleid')
       this.blog_id = titleid

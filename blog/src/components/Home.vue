@@ -501,8 +501,8 @@ export default {
       top: 50rem / @no;
       left: -1rem / @no;
       transform: translate(-100%, -100%);
-      width: 220rem / @no;
-      height: 240rem / @no;
+      width: 260rem / @no;
+      height: 280rem / @no;
       border-radius: 5rem / @no;
       padding: 10rem / @no 10rem / @no;
       display: flex;
@@ -510,7 +510,7 @@ export default {
       justify-content: space-between;
       background-color: rgba(0, 0, 0, 0.2);
       backdrop-filter: blur(2rem / @no);
-      background: url(https://s3.ax1x.com/2020/12/04/DbnFHJ.gif) no-repeat
+      background: url(https://www.hualigs.cn/image/603ee9aa3768a.jpg) no-repeat
         center;
       background-size: cover;
       header {

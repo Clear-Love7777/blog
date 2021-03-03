@@ -93,7 +93,67 @@ other.post('/submitLinks', async ctx =>{
     }
 })
 
+//博客浏览量排行榜
+other.get('/topViews',async ctx => {
+    const connection = await Mysql.createConnection(blog)
+    const sql = `SELECT id,title,date,mdname,readcount FROM article ORDER BY readcount DESC LIMIT 0,5`
+    const [data] = await connection.query(sql)
+    connection.end(function (err) { }) //连接结束
 
+    if (data.length >= 0) {
+        ctx.body = {
+            data,
+            code:200,
+            tips:'获取数据成功'
+        }
+    } else {
+        ctx.body = {
+            code:400,
+            tips:'获取数据失败'
+        }
+    }
+})
+//博客点赞排行榜
+other.get('/topThumbs',async ctx => {
+    const connection = await Mysql.createConnection(blog)
+    const sql = `SELECT id,title,date,mdname,count FROM article ORDER BY count DESC LIMIT 0,5`
+    const [data] = await connection.query(sql)
+    connection.end(function (err) { }) //连接结束
+
+    if (data.length >= 0) {
+        ctx.body = {
+            data,
+            code:200,
+            tips:'获取数据成功'
+        }
+    } else {
+        ctx.body = {
+            code:400,
+            tips:'获取数据失败'
+        }
+    }
+})
+
+//博客评论排行榜
+other.get('/topComments',async ctx => {
+    const connection = await Mysql.createConnection(blog)
+    const sql = `SELECT id,date,content,count FROM blog_comment ORDER BY count DESC LIMIT 0,5`
+    const [data] = await connection.query(sql)
+    connection.end(function (err) { }) //连接结束
+
+    if (data.length >= 0) {
+        ctx.body = {
+            data,
+            code:200,
+            tips:'获取数据成功'
+        }
+    } else {
+        ctx.body = {
+            code:400,
+            tips:'获取数据失败'
+        }
+    }
+})
 
 
 

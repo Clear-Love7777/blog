@@ -3,6 +3,7 @@
         <div class="title-comment">
             <span>评论</span>
             <span>共{{commentList.length}}条评论</span>
+            <span class="dianzan">感觉不错点个赞吧！<i class="el-icon-thumb" @click="addcount"></i></span>
             <div></div>
         </div>
         <div class="yours-comment">
@@ -30,6 +31,9 @@
                     </div>
                     <div class="time">
                         <span>{{item.date | dateFormat}}</span>
+                        <div class="operate">
+                              <span><i class="el-icon-thumb" @click="agreeUser(item)"></i>{{item.count}}</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -55,7 +59,7 @@ export default {
                 user_id:'',
                 content:'',
                 date:new Date(),
-                agree_count:0
+                count:0
             },
         } 
     },
@@ -80,6 +84,13 @@ export default {
             const ss = (t.getSeconds() + '').padStart(2, '0')
             return `${y}-${m}-${d} ${hh}:${mm}:${ss}`
         },
+        // 点赞
+        async addcount(){
+        var id = window.sessionStorage.getItem("titleid");
+        const {data:res} = await this.$http.put("/addcount",{id});
+            if(res.code!=200)return this.$message({message:`${res.tips}`,type:"error",duration:1000});
+        this.$message({message:`${res.tips}`,type:"success",duration:1000});
+        },
         //提交评论
         async submitComment(){
             if(!window.sessionStorage.token)  
@@ -96,6 +107,17 @@ export default {
             this.$message({message:`${res.tips}`,type:'success',duration:1000,offset:5})
             this.reload()
         },
+      //点赞
+        async agreeUser(data){
+            if(!window.sessionStorage.token) 
+            return this.$message({message:'您还没有登录，请点击右上角的登录链接',type:'error',duration:1000,offset:5})
+            // console.log(data);
+            const {data:res} = await this.$http.put('addThumbs',data)
+            if(res.code != 200) return this.$message({message:`${res.tips}`,type:'error'})
+            this.$message({message:`${res.tips}`,type:'success'})
+            this.reload()
+        },
+      
     }
 }
 </script>
@@ -104,6 +126,14 @@ export default {
 .comment{
     box-sizing: border-box;
     padding: 0 20px;
+}
+.dianzan{
+    padding: 5px 20px;
+    float:right;
+    font-size: 14px;
+    .el-icon-thumb{
+    cursor:pointer;
+    } 
 }
 .title-comment{
     span:first-child{font-size: 18px;}

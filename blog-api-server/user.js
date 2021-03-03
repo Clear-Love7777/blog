@@ -182,7 +182,7 @@ user.post('/uploadImg', async ctx =>{
     // console.log(file);
     const username = ctx.request.body.username
     const oldAvatar = ctx.request.body.avatar.split('/').reverse()[0]
-    const oldAvatarPath = path.join(__dirname , "../avatar/") + oldAvatar
+    const oldAvatarPath = path.join(__dirname , "./avatar/") + oldAvatar
     fs.access(oldAvatarPath,async err => {
         if(!err)
         await fs.unlink(oldAvatarPath.trim(), (err) => { if (err) throw err })//删除指定文件    
@@ -190,7 +190,7 @@ user.post('/uploadImg', async ctx =>{
 
     const reader = fs.createReadStream(file.path) // 创建可读流
     let name = username + (new Date()).getTime() + ".png"//设置文件名称
-    let filePath = path.join(__dirname , "../avatar/") + name//绝对路径
+    let filePath = path.join(__dirname , "./avatar/") + name//绝对路径
     const upStream = fs.createWriteStream(filePath) // 创建可写流
     reader.pipe(upStream) // 可读流通过管道写入可写流
     
@@ -217,7 +217,7 @@ user.post('/uploadImg', async ctx =>{
 //展示上传的图片
 user.get('/showImg/:name', async ctx =>{
     const name = ctx.params.name
-    const filePath = path.join(__dirname, `../avatar/${name}`); //默认图片地址
+    const filePath = path.join(__dirname, `./avatar/${name}`); //默认图片地址
     const file = fs.readFileSync(filePath); //读取文件
     let mimeType = mime.lookup(filePath); //读取图片文件类型
 	ctx.set('content-type', mimeType); //设置返回类型

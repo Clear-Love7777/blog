@@ -16,6 +16,8 @@ const Editor = () => import( /* webpackChunkName: "homepage_notfound" */ '../com
 const Link = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/Link.vue')
 const Self = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/Self.vue')
 const ReSetPwd = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/ReSetPwd.vue')
+const HotTop = () => import( /* webpackChunkName: "homepage_notfound" */ '../components/HotTop.vue')
+
 
 
 
@@ -57,6 +59,10 @@ const routes = [{
         path: '/cheat',
         component: Cheat
       },
+      {
+        path:'/hotTop',
+        component:HotTop
+      },
     ]
   },
   {
@@ -95,6 +101,7 @@ const routes = [{
     path:'/resetpwd',
     component:ReSetPwd
   },
+ 
 ]
 
 const router = new VueRouter({

@@ -107,6 +107,26 @@ index.get('/getLabel', async ctx => {
         }
     }
 })
+// 获取评论信息
+index.get('/getComments', async ctx => {
+    const con = await Mysql.createConnection(blog) //链接数据库
+    const sql = `SELECT  a.content,a.date,a.count,b.username,c.title FROM blog_comment a,user b,article c 
+    WHERE a.blog_id = c.id and a.user_id = b.id`
+    const [data] = await con.query(sql)
+    con.end(function(err){} ) //连接结束
+    if(data.length > 0) {
+        ctx.body = {
+            code:200,
+            tips:'获取数据成功',
+            data
+        }
+    }else{
+        ctx.body = {
+            code:400,
+            tip:'获取数据失败'
+        }
+    }
+})
 //获取最新文章
 index.get('/getNewArticles', async ctx => {
     const con = await Mysql.createConnection(blog) //连接数据库

@@ -179,6 +179,7 @@ export default {
       }
       this.blogForm.date = this.date(this.blogForm.date);
       const { data: res } = await this.$http.post("addblog", this.blogForm);
+     console.log(this.blogForm);
       if (res.code != 200)
         this.$message({
           message: `${res.tips}`,

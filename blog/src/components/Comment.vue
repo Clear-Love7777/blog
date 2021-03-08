@@ -111,7 +111,7 @@ export default {
         async agreeUser(data){
             if(!window.sessionStorage.token) 
             return this.$message({message:'您还没有登录，请点击右上角的登录链接',type:'error',duration:1000,offset:5})
-            // console.log(data);
+            console.log(data);
             const {data:res} = await this.$http.put('addThumbs',data)
             if(res.code != 200) return this.$message({message:`${res.tips}`,type:'error'})
             this.$message({message:`${res.tips}`,type:'success'})

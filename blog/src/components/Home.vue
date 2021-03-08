@@ -501,8 +501,8 @@ export default {
       top: 50rem / @no;
       left: -1rem / @no;
       transform: translate(-100%, -100%);
-      width: 260rem / @no;
-      height: 280rem / @no;
+      width: 200rem / @no;
+      height: 260rem / @no;
       border-radius: 5rem / @no;
       padding: 10rem / @no 10rem / @no;
       display: flex;

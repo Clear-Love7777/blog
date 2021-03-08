@@ -7,7 +7,7 @@
         <el-breadcrumb-item>评论信息</el-breadcrumb-item>
       </el-breadcrumb>
       <!-- 搜索与查找区域 -->
-      <el-row :gutter="20">
+      <!-- <el-row :gutter="20">
         <el-col :span="8">
           <el-input
             placeholder="请输入内容"
@@ -22,13 +22,14 @@
             ></el-button>
           </el-input>
         </el-col>
-      </el-row>
+      </el-row> -->
       <!-- 主体 -->
       <el-table :data="commentlist" style="width: 100%" border stripe>
         <el-table-column type="index" label="#"></el-table-column>
         <el-table-column prop="title" label="文章题目"></el-table-column>
         <el-table-column prop="username" label="用户名"></el-table-column>
         <el-table-column prop="content" label="评论内容"></el-table-column>
+        <el-table-column prop="count" label="赞"></el-table-column>
         <el-table-column prop="date" label="日期">
           <template slot-scope="scope">
             {{ scope.row.date | dateFormat }}
@@ -48,7 +49,7 @@
         </el-table-column>
       </el-table>
       <!-- 分页区域 -->
-      <el-pagination
+      <!-- <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="queryInfo.pagenum"
@@ -56,7 +57,7 @@
         :page-size="queryInfo.pagesize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
-      ></el-pagination>
+      ></el-pagination> -->
     </div>
    
   </section>
@@ -93,10 +94,10 @@ export default {
         },
         //获取评论
         async getComments(){
-            const {data:res} = await this.$http.post("getComments",this.queryInfo)
+            const {data:res} = await this.$http.get("getComments")
             if(res.code != 200) return this.$message.error("获取评论内容失败");
             this.commentlist = res.data
-            this.total = res.total
+            console.log(res.data);
         },
     //监听pagesizes 改变的事件
     handleSizeChange(newSize) {
